@@ -1,0 +1,38 @@
+{% extends 'main_template.html' %}
+{% load translate %}
+{% load i18n %}
+{% load static %}
+{% block title %}{% trans 'اگردونه شانس' %}{% endblock title %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/wheel_of_luck.css' %}">
+{% endblock stylesheet %}
+{% block main %}
+<section>
+    <div class="title">
+        <h1>{% trans 'گردونه شانس' %}</h1>
+    </div>
+    <div>
+        {% for wheel_of_luck in wheel_of_lucks %}
+            <div class="wheel-main-div" id="{{wheel_of_luck.id}}">
+                <div class="title">
+                    <h2>{{wheel_of_luck.title|translate}}</h2>
+                </div>
+                <div class="wheel-container">
+                    <div class="wheel-spin"></div>
+                    <div class="wheel">
+                        {% for gift in wheel_of_luck.gifts.all %}
+                        <div class="number-wheel" style="--ndeg: {{wheel_of_luck.gifts.all|length}} ;--i: {{ forloop.counter }};--color: {{gift.color}};--background_color: {{gift.background_color}};"><span>{{gift.title|translate}}</span></div>   
+                        {% endfor %}    
+                    </div>
+                </div>
+            </div>
+        {% endfor %}   
+    </div>
+</section>
+<section>
+{% include 'partials/social_media.html' %}
+</section>  
+{% endblock main %}
+{% block script %}
+<script src="{% static 'js/wheel_of_luck.js' %}"></script>
+{% endblock script %}

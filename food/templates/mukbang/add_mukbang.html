@@ -1,0 +1,29 @@
+{% extends 'main_template.html' %}
+{% load translate %}
+{% load i18n %}
+{% block title %}{% trans 'اضافه کردن موکبنگ' %}{% endblock title %}
+{% block main %}
+<section>
+    <div>
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-box">
+                <div>
+                    <h1>{% trans 'اضافه کردن موکبنگ' %}</h1>
+                </div>
+                {% csrf_token %}
+                <div>
+                    <div><label for="">{{'توضیحات'}}:</label></div>
+                    <div>{{form.description|translate}}</div>
+                    <div><label for="">{{'ویدئو'}}:</label></div>
+                <div>{{form.video}}</div>
+                <div><label for="">{{'پوستر'}}:</label></div>
+                <div>{{form.poster}}</div>
+            </div>
+            <div>
+                <input type="submit" value="{{'ذخیره'}}">
+            </div>
+        </div>
+        </form>
+    </div>
+</section>
+{% endblock main %}

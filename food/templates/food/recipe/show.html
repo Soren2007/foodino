@@ -1,0 +1,198 @@
+{% extends 'main_template.html' %}
+{% load render_partial %}
+{% load i18n %}
+{% load static %}
+{% load translate %}
+{% block title %}{% trans 'دستور پخت غذای' %} {{recipe.recipe_name|translate}}{% endblock title %}
+{% block header %}{% endblock header %}
+{% block main %}
+{% if latest_recipes %}
+<aside class="aside-blog">
+    <ul>
+        <li>
+            <h4>{% trans 'جدیدترین دستورات غذایی' %}</h4>
+        </li>
+        {% for recipe_obj in latest_recipes %}
+        <li>
+            <a href="{% url 'food_app:show_recipe' recipe_obj.recipe_slug %}">
+            <div>
+                <img src="{{media}}{{recipe_obj.recipe_image}}" alt="">
+                <div class="article-summary-text-aside">
+                    <span>{{recipe_obj.recipe_name|translate}}<span>
+                    <p>{{recipe_obj.recipe_summary_text|translate}}</p>
+                </div>
+            </div>
+            </a>
+        </li>
+        {% endfor %}
+    </ul> 
+</aside>
+{% endif %}
+<section>
+<div class="container-m1">
+    <article>
+        <div class="title">
+            <h1>{% trans 'دستور پخت غذای' %} {{recipe.recipe_name|translate}}</h1>
+        </div>
+        <div>
+            <img src="{{media}}{{recipe.recipe_image}}" alt="{{recipe.recipes_name}}" class="food-image-header">
+        </div>
+        <div>
+            {% autoescape off %}
+            {{recipe.recipe|translate}}
+            {% endautoescape %}
+            {% if recipe.recipe_video %}
+            <div>
+                <div class="title">
+                    <h3>{% trans 'ویدئو آموزشی' %}</h3>
+                </div>
+                <div>
+                    <video class="video" controls autoplay poster="recipe.recipe_video_poster">
+                        <source src="{{media}}{{recipe.recipe_video}}">
+                    </video>
+                </div>
+            </div>
+        {% endif %}
+            <div class="article-information">
+                <div class="key-words-box">
+                    <div class="article-title"><h3>{% trans 'کلمات کلیدی' %}</h3></div>
+                    <div>
+                        {% for  keyword in recipe.recipe_key_words.all %}
+                        <div class="shadow"><span>{{keyword.word|translate}}</span></div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="base-box">
+                    <div class="short_link">
+                        <div class="article-title"><h3>{% trans 'لینک کوتاه این دستور غذا' %}</h3></div>
+                        <div class="shadow">
+                            <div><a href="{{recipe.recipe_short_url}}" class="link">{{recipe.recipe_short_url}}</a></div>
+                            <div onclick="copy_text('{{recipe.recipe_short_url}}')">{% trans 'کپی' %}</div>
+                        </div>
+                    </div>
+                    <div class="share-box shadow">
+                        <div class="footer-media container">
+                            <a href="3https://localhos" class="btn-media" id="id_media_btn_at" title="{% trans 'ایمیل' %}"><i class="fa fa-at"></i></a>
+                            <a href="https://localhos" class="btn-media" id="id_media_btn_instagram" title="{% trans 'اینستاگرام' %}"><i class="fa fa-instagram"></i></a>
+                            <a href="https://localhos" class="btn-media" id="id_media_btn_telegram" title="{% trans 'تلگرام' %}"><i class="fa fa-telegram"></i></a>
+                            <a href="https://localhos" class="btn-media" id="id_media_btn_whatsapp" title="{% trans 'واتساپ' %}"><i class="fa fa-whatsapp"></i></a>
+                            <a class="btn-media" id="id_media_btn_share" title="{% trans 'اشتراک گذاری' %}" onclick="navigator.share({title:`اشتراک گذاری دستور غذا {{recipe.recipe_title|translate}} تارنما فودینو`,text:'{{recipe.recipe_summery_text}}','url':'{% url 'food_app:show_recipe' recipe.recipe_slug %}')"><i class="fa fa-share-alt"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="share-box shadow q-a-box" id="{{recipe.id}}">
+                <div>
+                    <span>{% trans 'دستور غذا رو پسندیدی؟' %}</span>
+                </div>
+                <div>
+                    <div>
+                        <span id="recipe_likes">{{recipe.recipe_likes}}</span>
+                    </div>
+                    <div>
+                        <div id="add_like_for_recipe" title="{% trans 'پسندیدن' %}"><i class="fa fa-thumbs-up"></i></div> 
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <span id="recipe_dislikes" title="{% trans 'نپسندیدن' %}">{{recipe.recipe_dislikes}}</span>
+                    </div>
+                    <div>
+                        <div id="add_dislike_for_recipe"><i class="fa fa-thumbs-down"></i></div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</div>
+</section>
+<section>
+    <div class="title">
+        <h3>{% trans 'دیدگاه' %}</h3>
+    </div>
+    <div>
+        <div>
+            {% for comment in recipe.comments_recipes.all %}
+                {% if comment.is_active %}
+                    {% if comment.comment_parent == None %}
+                        <div class="comment-box">
+                            <div>
+                                <div>
+                                    <img src="{{media}}{{comment.commenting_user.profile}}" alt="" class="profile">
+                                </div>
+                                <div>
+                                    <div> 
+                                        {% if comment.commenting_user.is_support %}
+                                        <h3>{% trans 'پشتیبان سایت فودینو' %}</h3>
+                                        {% else %}
+                                        <h3>{{comment.commenting_user.name|translate}} {{comment.commenting_user.family|translate}}</h3>
+                                        {% endif %}   
+                                    </div>
+                                    <div>
+                                        <p>{{comment.comment_text|translate}}</p>
+                                    </div>
+                                    <div>
+                                        <span>{{comment.register_date}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                {% if user.is_authenticated %}
+                                <div>
+                                    <a class="btn" id="btn_reply_{{comment.id}}" onclick="show_comment_form({{recipe.id}},{{comment.id}},'{{recipe.recipe_slug}}','{{model}}')">پاسخ دادن</a>
+                                </div>
+                                <div id="comment_form_{{comment.id}}" class="comment-form">
+                                </div>
+                                {% else %}
+                                <span>
+                                    {% trans 'برای پاسخ دادن باید' %} <a href="{% url 'accounts_app:login' %}?next=/recipe/show-recipe/{{recipe.recipe_slug}}" class="link">{% trans 'وارد' %}</a> {% trans 'شوید.' %}
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% for item in comment.comments_child.all %}
+                        <div class="comment-box comment-box-child">
+                            <div>
+                                <div>
+                                    <img src="{{media}}{{comment.commenting_user.profile}}" alt="" class="profile">
+                                </div>
+                                <div>
+                                    <div>
+                                        {% if item.commenting_user.is_support %}
+                                        <h3>{% trans 'پشتیبان سایت فودینو' %}</h3>
+                                        {% else %}
+                                        <h3>{{item.commenting_user.name|translate}} {{item.commenting_user.family|translate}}</h3>
+                                        {% endif %}   
+                                    </div>
+                                    <div>
+                                        <p>{{item.comment_text|translate}}</p>
+                                    </div>
+                                    <div>
+                                        <span>{{item.register_date}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                        
+                {% endif %}
+                
+            {% endfor %}
+        </div>
+        <div class="send-comment">
+            {% if user.is_authenticated %}
+                {% render_partial 'comments_app:create_comment' slug=slug model=model %}
+            {% else %}
+            <h3>{% trans 'برای ارسال دیدگاه باید' %} <a href="{% url 'accounts_app:login' %}?next=/food/show-recipe/{{recipe.recipe_slug}}" class="link">{% trans 'ورود' %}</a> یا <a href="{% url 'accounts_app:register' %}?next=/food/show-recipe/{{recipe.recipe_slug}}" class="link">{% trans 'ثبت‌نام' %}</a> {% trans 'کنید.' %}</h3>
+            {% endif %} 
+        </div>
+    </div>
+</section>
+<section>
+{% include 'partials/social_media.html' %}
+</section>  
+{% endblock main %}
+{% block script %}
+<script src="{% static 'js/recipe_scripts.js' %}"></script>
+{% endblock script %}

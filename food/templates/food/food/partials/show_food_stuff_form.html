@@ -1,0 +1,26 @@
+{% load translate %}
+{% load i18n %}
+<div id="id_food_stuff_form">
+    <div class="title">
+        <h2>{% trans 'انتخاب مواد' %}</h2>
+    </div>
+    <div>
+        <div>
+            {% for food_stuff_type in food.food_stuff_types.all %}
+                <div class="title">
+                    <h3>{{food_stuff_type.type_name|translate}}</h3>
+                </div>
+                <div class="flex stuffs">
+                    {% for stuff in food_stuff_type.stuffs.all %}
+                    <input type="checkbox" id="{{stuff.id}}" name="stuff_id__type_{{food_stuff_type.id}}" value="{{stuff.id}}" class="set-stuff-food hidden">
+                    <label for="{{stuff.id}}" class="lbl-box-model-1"><img src="{{media}}{{stuff.stuff_image}}" alt=""><p>{{stuff.stuff_name|translate}}</p></label>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+        <div>
+            <a class="btn btn-show-more color-bl" onclick="add_my_recipes('{{food.id}}')">{% trans 'افزودن به دستورات غذایی من' %}</a>
+            <a href="{% url 'food_app:show_my_recipes' %}" class="btn btn-show-more color-bl">{% trans 'دستورات غذایی من' %}</a>
+        </div>
+    </div>
+</div>

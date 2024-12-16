@@ -1,0 +1,102 @@
+{% extends 'main_template.html' %}
+{% load translate %}
+{% load i18n %}
+{% block meta %}
+<meta name="author" content="{% trans 'سورن شاملو' %}">
+<meta name="keywords" content="{% trans 'فودینو ,سفارش غذا ,چی دست کنم, ارسال سریع, فودینو بهترین خدمات برای شما' %}">
+<meta name="description" content="{% trans 'سفارش آنلاین غذا' %}">
+<meta name="robots" content=" index , follow ">
+{% endblock meta %}
+{% block title %}{% trans 'تماس باما' %}{% endblock title %}
+{% block main %}
+<section>
+    <div class="title">
+        <h2>{% trans 'تماس باما' %}</h2>
+    </div>
+        <div class="contact-us-form-contaner">
+            <form action="" method="post" id="id_contact_us_form">
+                {% csrf_token %}
+                <div class="input-name-family-box">
+                    <input class="contact-us-input" name="name" id="cu_input_name" title="{% trans 'لطفا نام خود را وارد کنید.' %}" placeholder="{% trans 'نام' %}" required>
+                    <input class="contact-us-input" name="family" id="cu_input_family" title="{% trans 'لطفا نام خانوادگی خود را وارد کنید.' %}" placeholder="{% trans 'نام خانوادگی' %}" required>
+                </div>
+                <div>
+                    <input class="contact-us-input" name="email" placeholder="{% trans 'ایمیل' %}" title="{% trans 'لطفا ایمیل خود را وارد کنید.' %}" required>
+                </div>
+                <div>
+                    <input class="contact-us-input" name="mobile_number" placeholder="{% trans 'شماره تماس' %}" title="{% trans 'لطفا شماره تماس خود را وارد کنید.' %}" required>
+                </div>
+                <div>
+                    <input class="contact-us-input" name="subject" placeholder="{% trans 'موضوع' %}" title="{% trans 'لطفا موضوع پیام خود را وارد کنید.' %}" required>
+                </div>
+                <div>
+                    <textarea name="message" id="id_message_box" cols="30" rows="4" class="contact-us-input" placeholder="{% trans 'پیام' %}" title="{% trans 'لطفا پیام خود را وارد کنید.' %}" required></textarea>
+                </div>
+                <div>
+                    <input type="submit" value="{% trans 'ارسال' %}" style="margin-top: 15px;">
+                </div>
+            </form>
+        </div>
+    <div>
+        <div class="title">
+            <h2>{% trans 'راه‌های ارتباطی' %}</h2>
+        </div>
+        <div>
+            <div class="input-name-family-box">
+                <div class="info-box">
+                    <div class="info-box-icon" title="Phone">
+                        <i class="fa fa-phone"></i>
+                    </div>
+                    <div>
+                        <a href="tel:+9809932062665" class="info-box-link" target="_blank">+9809932062665</a>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-icon" title="Email">
+                        <i class="fa fa-at"></i>
+                    </div>
+                    <div>
+                        <a href="mailto:Info@sorenshamlou.ir" class="info-box-link" target="_blank">Info@sorenshamlou.ir</a>
+                    </div>
+                </div>
+            </div>
+            <div class="input-name-family-box">
+                <div class="info-box">
+                    <div class="info-box-icon" title="Instagram">
+                        <i class="fa fa-instagram"></i>
+                    </div>
+                    <div>
+                        <a href="https://instagram.com/sorenshamlou?igshid=YmMyMTA2M2Y" class="info-box-link" target="_blank">@sorenshamlou</a>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-icon" title="Telegram">
+                        <i class="fa fa-telegram"></i>
+                    </div>
+                    <div>
+                        <a href="" class="info-box-link">@sorenshamlou</a>
+                    </div>
+                </div>
+            </div>
+            <div class="input-name-family-box">
+                <div class="info-box">
+                    <div class="info-box-icon" title="Linkedin">
+                        <i class="fa fa-linkedin"></i>
+                    </div>
+                    <div>
+                        <a href="" class="info-box-link">@sorenshamlou</a>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-icon" title="Github">
+                        <i class="fa fa-github"></i>
+                    </div>
+                    <div>
+                        <a href="" class="info-box-link" target="_blank">@sorenshamlou</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock main %}

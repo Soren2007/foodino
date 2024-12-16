@@ -1,0 +1,82 @@
+{% extends 'main_template.html' %}
+{% load render_partial %}
+{% load i18n %}
+{% load translate %}
+{% block title %}{{food.food_name|translate}}{% endblock title %}
+{% block header %}
+    <div class="container">
+        <img src="{{media}}{{food.food_image}}" alt="{% trans 'فودینو' %} | {{food.food_name}}" class="food-image-header" title="{{food.food_slug}}">
+    </div>
+    <div class="container">
+        <p class="text-center font-size-s1 article-info" id="food_info">
+            <span class="food-info-part">{% trans 'نام محصول:' %}' {{food.food_name|translate}}</span>
+            <span class="price food-info-part">{% trans 'قیمت:' %} {{food.food_price}} {% trans 'تومان' %}</span>
+            <span class="food-info-part">{% trans 'امتیاز' %}: 4.4</span>
+            <span id="id_btns_food">
+                <span class="btn btn-model-1" title="{% trans 'افزودن به سبد خرید' %}" onclick="add_to_food_cart('{{food.id}}',1)"><i class="fa fa-cart-plus"></i></span>
+                    {% if user.is_authenticated %}
+                    {% if food.get_user_favorite %}
+                    <a class="btn btn-model-1" title="{% trans 'حذف از علاقه‌مندی‌ها' %}" onclick="delete_to_favorite('{{food.id}}')"><i class="fa fa-heart" style="color:black"></i></a>
+                    {% else %}
+                    <a class="btn btn-model-1" title="{% trans 'افزودن به علاقه‌مندی‌ها' %}" onclick="add_to_favorite('{{food.id}}')"><i class="fa fa-heart"></i></a>
+                    {% endif %}
+                    {% else %}
+                    <a class="btn btn-model-1" title="{% trans 'افزودن به علاقه‌مندی‌ها' %}" onclick="alert(`{% trans 'برای استفاده از این بخش باید وارد شوید.' %}`)"><i class="fa fa-heart"></i></a>
+                    {% endif %}
+                    <a class="btn btn-model-1" title="{% trans 'اشتراک گذاری' %}" onclick="navigator.share({title:`{% trans 'اشتراک گذاری غذای' %} {{food.food_name|translate}} {% trans 'تارنما فودینو' %}`,text:'{{food.food_description|translate}}','url':'{% url 'food_app:show_food' food.food_slug %}'})"><i class="fa fa-send"></i></a>
+            </span>
+            <!-- <span>امتیاز</span> <span>{{food.get_average_score}}</span> -->
+        </p>
+    </div>
+    {% comment %}
+    <div class="food-info-box"> <div> <span class="food-food-information">{{food.food_name}}</span> </div> <div> <span class="food-food-information">قیمت: <span class="price">{{food.food_price}}</span></span> </div> <div> <span><i class="fa fa-star"></i></span> <span>{{food.get_average_score}}</span></div>
+    {% endcomment %}
+    {% endblock header %}
+    {% block main %}
+    <section>
+    <div class="container" id="id_food_btns">
+        <div><a class="btn-model-2 btn-model-2-active" onclick="show_part('show_info_food','{{food.food_slug}}',0)" id="id_show_food_info_btn">{% trans 'توضیحات' %}</a></div>
+        {% if user.is_authenticated %}        
+        <div><a class="btn-model-2" onclick="show_part('show_food_stuff_form','{{food.food_slug}}',1)" id="id_show_food_stuff_form">{% trans 'انتخاب مواد' %}</a></div>
+        {% endif %}
+            
+        <div><a class="btn-model-2" onclick="show_part('show_food_comments','{{food.food_slug}}',2)" id="id_show_food_comments">{% trans 'دیدگاه‌ها' %}</a></div>
+    </div>
+    <div id="food_menu_slider">
+        <div id="id_food_info_box">
+            <div class="title">
+                <h2>{% trans 'توضیحات' %}</h2>
+            </div>
+            <div class="flex">
+                <div>
+                    <img src="{{media}}{{food.food_image}}" alt="{% trans 'فودینو' %} | {{food.food_name}}" class="profile" title="{{food.food_slug}}">
+                </div>
+                <div>
+                    <p>{{food.food_description|translate}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% comment %}
+<section>
+    <div class="title">{% trans 'موکبنگ' %}</div>
+    <div>
+        {% for mukbang in mukbangs %}
+        <a href="#">
+            <div class="box-model-2">
+                <div class="box-model-2-image">
+                    <img src="{{media}}{{mukbang.poster_image}}" alt="">
+                </div>
+            </div>
+        </a>           
+        {% endfor %}
+    </div>
+</section>
+{% endcomment %}
+{% render_partial 'food_app:show_similar_foods' %}
+<section>
+{% include 'partials/social_media.html' %}
+</section>
+{% endblock main %}

@@ -1,0 +1,92 @@
+{% extends 'main_template.html' %}
+{% load render_partial %}
+{% load i18n %}
+{% load translate %}
+{% block title %}{% trans 'دیدگاه های من' %}{% endblock title %}
+{% block main %}
+<section>
+    <div class="title"><h1>{% trans 'دیدگاه های من' %}</h1></div>
+    <div>
+        {% if page_obj %} 
+        {% for comment in page_obj %}
+        <div class="comment-box">
+            <div>
+                <div>
+                    {% if comment.food %}
+                    <img src="{{media}}{{comment.food.food_image}}" alt="{{comment.food.food_name}}" class="profile">
+                    {% elif comment.blog %}
+                    <img src="{{media}}{{comment.blog.article_main_image}}" alt="{{comment.blog.article_title}}" class="profile">
+                    {% else %}
+                    <img src="{{media}}{{comment.recipes.recipe_image}}" alt="{{comment.recipes.recipe_name}}" class="profile">
+                    {% endif %}
+                </div>
+                <div>
+                    <div> 
+                        {% if comment.food %}
+                        <h3>{{comment.food.food_name|translate}}    ({% trans 'غذا' %})</h3>
+                        {% elif comment.blog %}
+                        <h3>{{comment.blog.article_title|translate}}    ({% trans 'مقاله' %})</h3>
+                        {% else %}
+                        <h3>{{comment.recipes.recipe_name|translate}}    ({% trans 'دستور غذا' %})</h3>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <p>{{comment.comment_text|translate}}</p>
+                    </div>
+                    <div>
+                        <span>{{comment.register_date}}</span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                {% if comment.food %}
+                <a href="/food/show-food/{{comment.food.food_slug}}/#{{comment.id}}" class="link" onclick="show_part('show_food_comments','{{comment.food.food_slug}}','{{comment.food.id}}')">{% trans 'مشاهده‌ی پیام' %}</a>
+                {% elif comment.blog %}
+                <a href="" class="link">{% trans 'مشاهده‌ی پیام' %}</a>
+                {% else %}
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="title-model-1">
+            <h2>{% trans 'شما دیدگاهی نداشتید' %}</h2>
+        </div>
+        {% endif %}  
+    </div>
+</section>
+<section>
+    {% if obj_len > page_object_number %}
+    <div class="text-center">
+        <div>
+            <nav class="nav-pagination">
+                <ul>
+                    {% if page_obj.has_previous %}
+                    <li><a href="?page={{ page_obj.previous_page_number }}">{% trans 'قبلی' %}</a>
+                    </li>
+                    {% endif %}
+                    {% if page_obj.number|add:'-4' > 1 %}
+                    <li><a href="?page={{ page_obj.number|add:'-5' }}">&hellip;</a>
+                    </li>
+                    {% endif %}
+                    {% for i in page_obj.paginator.page_range %}
+                    {% if page_obj.number == i %}
+                    <li class="page-item active" aria-current="page"><span>{{ i }}<span class="sr-only">(current)</span></span></li>
+                    {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %} <li><a href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                    {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
+                    <li><a href="?page={{ page_obj.number|add:'5' }}">&hellip;</a></li>
+                    {% endif %}
+                    {% if page_obj.has_next %}
+                    <li><a href="?page={{ page_obj.next_page_number }}">{% trans 'بعدی' %}</a></li>
+                    {% else %}
+                    <li class="page-item-disabled"><a href="#" tabindex="-1" aria-disabled="True">{% trans 'بعدی' %}</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+    {% endif %}
+</section>
+{% endblock main %}

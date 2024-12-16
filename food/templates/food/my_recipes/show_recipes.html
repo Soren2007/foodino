@@ -1,0 +1,84 @@
+{% extends 'main_template.html' %}
+{% load translate %}
+{% load i18n %}
+{% block title %}{% trans 'دستورات غذایی من' %}{% endblock title %}
+{% block main %}
+<section>
+    <div class="title">
+        <h1>{% trans 'دستورات غذایی من' %}</h1>
+    </div>
+    <div>
+        {% if page_obj %} 
+        {% for recipe in page_obj %}
+        <div class="comment-box my-recipe-card">
+            <div>
+                <div>
+                    <img src="{{media}}{{recipe.recipes_food.food_image}}" alt="{{recipe.recipes_food.food_name|translate}}" class="profile">
+                </div>
+                <div>
+                    <div>
+                        <a href="{% url 'food_app:show_my_recipe' recipe.id %}" class="link">
+                        <h3>{{recipe.recipes_name|translate}}</h3>
+                        </a>
+                    </div>
+                    <div class="flex" id="id_stuffs_box_m_r">
+                        {% for stuff in recipe.recipes_stuffs.all %}
+                            <div class="stuff-box-m-r">{{stuff.stuff_name | translate}}</div>
+                        {% endfor %}
+                    </div>
+                    <div>
+                        <span>{{recipe.recipes_register_date}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="price-and-add-to-food-cart-div">
+                <div><span class="price">{{recipe.recipes_price}}</span> {% trans 'تومان' %}</div>
+                <div><a class="btn btn-show-more color-bl cart-show-more" onclick="add_to_my_recipe_cart('{{recipe.id}}',1)">{% trans 'افزودن به سبد خرید' %}</a></div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="title-model-1">
+            <h2>{% trans 'شما دستور غذایی نداشتید' %}</h2>
+        </div>
+        {% endif %}  
+    </div>
+</section>
+<section>
+    {% if obj_len > page_object_number %}
+    <div class="text-center">
+        <div>
+            <nav class="nav-pagination">
+                <ul>
+                    {% if page_obj.has_previous %}
+                    <li><a href="?page={{ page_obj.previous_page_number }}">{% trans 'قبلی' %}</a>
+                    </li>
+                    {% endif %}
+                    {% if page_obj.number|add:'-4' > 1 %}
+                    <li><a href="?page={{ page_obj.number|add:'-5' }}">&hellip;</a>
+                    </li>
+                    {% endif %}
+                    {% for i in page_obj.paginator.page_range %}
+                    {% if page_obj.number == i %}
+                    <li class="page-item active" aria-current="page"><span>{{ i }}<span class="sr-only">(current)</span></span></li>
+                    {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %} <li><a href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                    {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
+                    <li><a href="?page={{ page_obj.number|add:'5' }}">&hellip;</a></li>
+                    {% endif %}
+                    {% if page_obj.has_next %}
+                    <li><a href="?page={{ page_obj.next_page_number }}">{% trans 'بعدی' %}</a></li>
+                    {% else %}
+                    <li class="page-item-disabled"><a href="#" tabindex="-1" aria-disabled="True">{% trans 'بعدی' %}</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+    {% endif %}
+</section>
+<section>
+{% include 'partials/social_media.html' %}
+</section>  
+{% endblock main %}

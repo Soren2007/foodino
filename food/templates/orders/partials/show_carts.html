@@ -1,0 +1,173 @@
+{% load translate %}
+{% load i18n %}
+{% load static %}
+{% if food_carts.food_count > 0 or my_recipe_cart.my_recipes_count > 0 %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/cart_styles.css' %}">
+{% endblock stylesheet %}
+<aside class="aside-cart">
+    <ul>
+        <li>
+            <h2 class="text-center">{% trans 'مشخصات سبد' %}</h2>
+        </li>
+        <li>
+            <div>
+                <div class="cart-menu-content">
+                    <div><i class="fa fa-heart"></i></div>
+                    <div>
+                        <span>{{'جمع جزء:'|translate}}</span> <span class="price">{{total_price}}</span> <span>{{'تومان'|translate}}</span>
+                    </div>
+                <div>
+            </div>
+        </li>
+        <li>
+            <div>
+                <div class="cart-menu-content">
+                    <div><i class="fa fa-truck"></i></div>
+                    <div>
+                        <span>{{'حمل و نقل:'|translate}}</span> <span>
+                            {% if delivery == 0 %}
+                            {{'رایگان'|translate}}
+                            {% else %}
+                            <span class="price">{{delivery}}</span> <span>{{'تومان'|translate}}</span>
+                            {% endif %}
+                        </span>
+                    </div>
+                <div>
+            </div>
+        </li>
+        <li>
+            <div>
+                <div class="cart-menu-content">
+                    <div><i class="fa fa-heart"></i></div>
+                    <div>
+                        <span>{{'مالیات:'|translate}}</span> <span class="price">{{tax}}</span> <span>{{'تومان'|translate}}</span>
+                    </div>
+                <div>
+            </div>
+        </li>
+        <li>
+            <div>
+                <div class="cart-menu-content">
+                    <div><i class="fa fa-heart"></i></div>
+                    <div>
+                        <span><span>{{'جمع کل:'|translate}}</span> <span class="price">{{order_final_price}} {{'تومان'|translate}}</span></span>
+                    </div>
+                <div>
+            </div>
+        </li>
+        <li>
+            <div>
+                <div class="cart-menu-content">
+                    <div><i class="fa fa-heart"></i></div>
+                    <div>{% trans '' %}
+                        <h3><span class="show-info"><span>{% trans 'امتیاز شما از این خرید:' %}</span> <span>10</span></h3>
+                    </div>
+                <div>
+            </div>
+        </li>
+        <li>
+            <div>
+                <a href="{% url 'orders_app:create_food_order' %}" class="cart-menu-btn">
+                    <div><i class="fa fa-arrow-right"></i></div>
+                    <div>
+                        {% trans 'ادامه' %}
+                    </div>
+                </a>
+            </div>
+        </li>
+    </ul>
+</aside>
+{% endif %}
+{% if food_carts.food_count > 0 %}
+<section> 
+    <div class="container">
+        {% for item in food_carts %}
+        <div class="container box-model-3 food-cart" style="text-align:right;width: 300px;height: 553px;margin:15px">
+            <div class="text-center">
+                <div>
+                    <img src="{{media}}{{item.food.food_image}}" alt="">
+                </div>
+                <div><h3>{{item.food.food_name|translate}}</h3></div>
+                <div><span>{{'گارانتی اصالت و سلامت فیزیکی'|translate}}</span></div>
+                <div><span><i class="fa fa-clock-o"></i></span> <span>{{'زمان پخت:'|translate}}</span> <span>{{item.food.food_time}}</span> <span>{{'دقیقه'|translate}}</span></div>
+                <div>
+                {% if item.final_price < item.price %}
+                    <del class="price">{{item.price}}</del> <span>{{'تومان'|translate}}</span>
+                    <p  class="price">{{item.final_price}} <span>{{'تومان'|translate}}</span></p>
+                {% else %}
+                <p class="price">{{item.price}} <span>{{'تومان'|translate}}</span></p>
+                {% endif %}
+                </div>
+                <div>
+                    <div class="count-qty container">
+                        <div>
+                            <span class="plus plus-food-qty tus-none" onclick="add_to_food_cart('{{item.food.id}}',1,'{{item.qty}}')">+</span>
+                            <input type="text" class="input" id="qty-input-{{item.food.id}}" value="{{item.qty}}">
+                            <span class="negative negative-food-qty tus-none" onclick="add_to_food_cart('{{item.food.id}}',-1,'{{item.qty}}')">-</span>
+                        </div>
+                    </div>
+                    <a class="actions" onclick="update_from_food_cart('{{item.food.id}}','{{item.qty}}')">اعمال</a>
+                </div>
+                {% if item.final_price < item.price %}                    
+                <div><a href="{% url 'food_app:show_food' item.food.food_slug %}" class="btn text-center" style="width: 97%;height: 35px;line-height: 35px;position: relative;top:14px;border-radius: 0 0 10px 10px;">{{'مشاهده محصول'|translate}}</a></div>
+                {% else %}
+                <div><a href="{% url 'food_app:show_food' item.food.food_slug %}" class="btn text-center" style="width: 97%;height: 35px;line-height: 35px;position: relative;top:25px;border-radius: 0 0 10px 10px;">{{'مشاهده محصول'|translate}}</a></div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center">
+        <img src="{{media}}images/food_carts/empty-cart.svg" alt="">
+        <h2>{{'سبد خرید شما خالی می باشد!'|translate}}</h2>
+    </div>
+    {% endif %}
+</section>
+<section>
+    <div>
+        {% if my_recipe_cart %} 
+        {% for item in my_recipe_cart %}
+        <div class="comment-box">
+            <div>
+                <div>
+                    <img src="{{media}}{{item.my_recipe.recipes_food.food_image}}" alt="{{item.my_recipe.recipes_food.food_name|translate}}" class="profile">
+                </div>
+                <div>
+                    <div>
+                        <h3>{{item.my_recipe.recipes_name|translate}}</h3>
+                    </div>
+                    <div class="flex" id="id_stuffs_box_m_r">
+                        {% for stuff in item.my_recipe.recipes_stuffs.all %}
+                            <div class="stuff-box-m-r">{{stuff|translate}}</div>
+                        {% endfor %}
+                    </div>
+                    <div>
+                        <span>{{item.my_recipe.recipes_register_date}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="cq">
+                <div class="count-qty container">
+                    <div>
+                        <span class="plus plus-food-qty tus-none" onclick="add_to_my_recipe_cart('{{item.my_recipe.id}}',1,'{{item.qty}}')">+</span>
+                        <input type="text" class="input" id="qty-input-{{item.my_recipe.id}}" value="{{item.qty}}">
+                        <span class="negative negative-food-qty tus-none" onclick="add_to_my_recipe_cart('{{item.my_recipe.id}}',-1,'{{item.qty}}')">-</span>
+                    </div>
+                </div>
+                <a class="actions" onclick="update_from_my_recipe_cart('{{item.my_recipe.id}}','{{item.qty}}')">اعمال</a>
+            </div>
+            <div class="price-and-add-to-food-cart-div">
+                <div><span class="price">{{item.my_recipe.recipes_price}}</span> {{'تومان'|translate}}</div>
+                <div><a  href="{% url 'food_app:show_my_recipe' item.my_recipe.id %}" class="btn btn-show-more color-bl cart-show-more">{{'جزئیات بیشتر'|translate}}</a></div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="title-model-1">
+            <h2>{{'شما دستور غذایی نداشتید'|translate}}</h2>
+        </div>
+        {% endif %}  
+    </div>
+</section>

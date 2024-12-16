@@ -1,0 +1,119 @@
+{% extends 'main_template.html' %}
+{% load static %}
+{% load translate %}
+{% load i18n %}
+{% block meta %}
+<meta name="robots" content=" noindex , nofollow ">
+{% endblock meta %}
+{% block title %}مدیریت داده{% endblock title %}
+{% block header %}
+<div class="header-background-image" style="--header_image_address: url('/media/images/design_images/data_manager.webp');"></div>
+<!-- data_manager.webp -->
+{% endblock header %}
+{% block main %}
+<section>
+    <div class="title">
+        <h1>{% trans 'مدیریت داده' %}</h1>
+    </div>
+    <div class="container">
+        <div class="container">
+            <a class="btn btn-show-all margin10" href="{% url 'data_manager_app:create_or_update_stuffs_and_foods_price' %}">{% trans 'بروز رسانی قیمت‌ها' %}</a>
+            <a class="btn btn-show-all margin10" href="{% url 'data_manager_app:create_or_update_country' %}">{% trans 'دریافت کد کشورها' %}</a>
+            <a class="btn btn-show-all margin10" href="{% url 'data_manager_app:create_or_update_cities' %}">{% trans 'دریافت شهرهای هر کشور' %}</a>
+            <a class="btn btn-show-all margin10" href="{% url 'data_manager_app:create_or_update_languages' %}">{% trans 'دریافت زبان‌ها و ذخیره آن در دیتابیس' %}</a>
+            <a class="btn btn-show-all margin10" href="{% url 'data_manager_app:send_sms_message_for_event' %}">{% trans 'ارسال پیامک به تمامی کاربران برای ریدادها' %}</a>
+            <a class="btn btn-show-all margin10" href="{% url 'data_manager_app:create_or_update_currency' %}">{% trans 'دریافت واحدهای پول' %}</a>
+            <a class="btn btn-show-all margin10" href="{% url 'data_manager_app:send_email_message_for_event' %}">{% trans 'ارسال ایمیل به تمامی کاربران برای ریدادها' %}</a>
+            <a class="btn btn-show-all margin10" href="{% url 'data_manager_app:language_with_lang_codes' %}">{% trans 'ترجمه و آماداسازی  زبان‌ها' %}</a>
+            <a class="btn btn-show-all margin10" href="{% url 'data_manager_app:create_or_update_css_fonts' %}">{% trans 'آماده سازی فایل های فونت' %}</a>
+        </div>
+    </div>
+    <div class="container" id="id_get_language_with_country">
+        <div class="title-model-1">
+            <h3>{% trans 'شما می توانید کشور را انتخاب کنید. وسایت زبان را آماده کند.' %}</h3>
+        </div>
+        <div>
+            <select  class="select input date-time-select" id="id_language" dir="ltr" onchange="language_with_lang_code()">
+                <option value="none">{% trans 'لطفا زبان مورد نظر خود را وارد کنید.' %}</option>
+                {% for language in languages %}
+                <option value="{{language.language_code}}">{{language}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div>
+        <div class="title">
+            <h2>{% trans 'آمار' %}</h2>
+        </div>
+        <div class="title"><h4>{% trans 'عنوان نمودار' %}</h4></div>
+        <div class="chart-form">
+            <div>
+                <div>
+                    <label for="chart_title">{% trans 'موضوع نمودار:' %}</label>
+                    <select id="chart_title" class="select input date-time-select" onchange="show_years_with_chart_title()">
+                        <option value="none">{% trans 'نوع نمودار را انتخاب کنید.' %}</option>
+                        {% for chart_title in chart_titles %}
+                        <option value="{{chart_title.0}}">{{chart_title.1}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="title"><h4>{% trans 'تاریخ' %}</h4></div>
+        <div class="chart-form">
+            <div class="container">
+                <div id="div_year">
+                    <label for="year">{% trans 'سال:' %}</label>
+                    <select id="year" class="select input date-time-select" onchange="show_months_with_year()">
+                        <option value="none">{% trans 'سال مورد نظر خود را انتخاب کنید.' %}</option>
+                        {% for year in years %}
+                        <option value="{{year}}">{{year}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div id="div_month">
+                    <label for="month">{% trans 'ماه:' %}</label>
+                    <select id="month" class="select input date-time-select">
+                        <option value="none">{% trans 'ماه مورد نظر خود را انتخاب کنید.' %}</option>
+                    </select>
+                </div>
+                <div id="div_day">
+                    <label for="day">{% trans 'روز:' %}</label>
+                    <select id="day" class="select input date-time-select">
+                        <option value="none">{% trans 'روز مورد نظر خود را انتخاب کنید.' %}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="title"><h4>{% trans 'تنظیمات نمودار' %}</h4></div>
+        <div class="chart-form">
+            <div class="container">
+                <div>
+                    <label for="chart_model">{% trans 'نوع نمودار:' %}</label>
+                    <select id="chart_model" class="select input date-time-select" onchange="show_chart()">
+                        <option value="none">{% trans 'نوع نمودار را انتخاب کنید.' %}</option>
+                        <option value="bar">{% trans 'نمودار ستونی' %}</option>
+                        <option value="plot">{% trans 'نمودار خطی' %}</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="color">{% trans 'رنگ نمودار:' %}</label>
+                    <input type="color" id="color" class="input" value="#ff4405" onchange="show_chart()">
+                </div>
+                <div>
+                    <label for="color_dot">{% trans 'رنگ نقاط نمودار:' %}</label>
+                    <input type="color" id="color_dot" class="input" value="#ff4405" onchange="show_chart()">
+                </div>
+            </div>
+        </div>
+        <div  class="container" id="div_plote">
+            <div class="container">
+                <a class="btn btn-show-all margin10" onclick="show_chart()">{% trans 'نمایش نمودار' %}</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock main %}
+{% block script %}
+    <script src="{% static 'js/data_manager_index_script.js' %}"></script>
+{% endblock script %}

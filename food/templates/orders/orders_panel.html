@@ -1,0 +1,43 @@
+{% extends 'main_template.html' %}
+{% load translate %}
+{% load i18n %}
+{% block title %}{% trans 'پنل مدیریت سفارشات' %}{% endblock title %}
+{% block main %}
+<section>
+    <div class="title">
+        <h1>{% trans 'پنل مدیریت سفارشات' %}</h1>
+    </div>
+    <div class="container">
+        {% for order in orders %}
+        <div class="container box-model-3 food-cart" style="text-align:right;width: 300px;height: 580px;margin:15px">
+            <div class="text-center">
+                <div>
+                    <img src="{{media}}{{order.customer.user.profile}}" alt="">
+                </div>
+                <div><h3>{{order}}</h3></div>
+                <div><span>{% trans 'آدرس' %}: </span><span>{{order.customer.address|translate}}</span></div>
+                <div><span>{% trans 'موبایل' %}: </span><span>{{order.customer.phone_number}}</span></div>
+                <div><span>{% trans 'توضیحات' %}: </span><span>{{order.description|translate}}</span></div>
+                <div><span>{% trans 'تخفیف' %}: </span><span>%{{order.discount}}</span></div>
+                <div><span>{% trans 'نوع پرداخت' %}: </span><span>{{order.payment.payment_title|translate}}</span></div>
+                <div><span>{% trans 'نهایی شده' %}: </span><span>
+                    {% if order.is_finally %}
+                    <i class="fa fa-check-circle"></i>
+                    {% else %}
+                    <i class="fa fa-times-circle"></i>
+                    {% endif %}
+                </span></div>
+                <div>
+                    <select class="select o-p-select-input" id="status_{{order.id}}" onchange="change_status_order('{{order.id}}')">
+                        {% for status in statuses %}
+                        <option value="{{status.0}}">{{status.1}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div><a href="{% url 'orders_app:order_details_panel' order.id %}" class="btn text-center o-p-show-more">{% trans 'جزئیات سفارش' %}</a></div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock main %}

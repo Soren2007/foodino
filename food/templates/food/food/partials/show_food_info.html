@@ -1,0 +1,15 @@
+{% load translate %}
+{% load i18n %}
+<div id="id_food_info_box">
+    <div class="title">
+        <h2>{% trans 'اتوضیحات' %}</h2>
+    </div>
+    <div class="flex">
+        <div>
+            <img src="{{media}}{{food.food_image}}" alt="{% trans 'افودینو' %} | {{food.food_name|translate}}" class="profile" title="{{food.food_slug}}">
+        </div>
+        <div>
+            <p>{{food.food_description|translate}}</p>
+        </div>
+    </div>
+</div>

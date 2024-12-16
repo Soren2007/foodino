@@ -1,0 +1,18 @@
+{% if recipes_o %}
+{% load translate %}
+{% load i18n %}
+{% for recipe in recipes_o %}
+<a href="{% url 'food_app:show_recipe' recipe.recipe_slug %}">
+    <div class="box-model-2">
+        <div class="box-model-2-image">
+            <img src="{{media}}{{recipe.recipe_image}}" alt="">
+        </div>
+        <div class="box-model-2-title">
+            <h3>{{recipe.recipe_name|translate}}</h3>
+        </div>
+    </div>
+</a>
+{% endfor %}
+{% else %}
+<span>{% trans 'دستور پختی وجود ندارد.' %}</span>
+{% endif %}

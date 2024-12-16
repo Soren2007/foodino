@@ -1,0 +1,100 @@
+{% extends 'main_template.html' %}
+{% load i18n %}
+{% load translate %}
+{% block title %}{% trans 'جست‌جو' %}{% endblock title %}
+{% block main %}
+<div>
+    <div class="title">
+        <h1>{% trans 'جست و جو' %} "{{query}}"</h1>
+    </div>
+    <div class="title">
+        <h2>{% trans 'جست و جو در غذاها' %}</h2>
+    </div>
+    <div class="container">
+        {% if foods_obj %}
+        {% for food in foods_obj %}
+        <div class="box-model-1">
+            <div>
+                <div class="box-model-1-price">
+                    <span>{{food.food_price}}</span> <span>{% trans 'تومان' %}</span>
+                </div>
+                <div class="box-model-1-image">
+                    <img src="{{media}}{{food.food_image}}" type="image/jpg" alt="" class="food-image">
+                </div>
+            </div>
+            <div class="box-model-1-title">
+                <div><h3>{{food.food_name|translate}}</h3></div>
+            </div>
+            <div class="box-model-1-buttons">
+                <div>
+                    <span class="btn btn-model-1" onclick="add_to_food_cart('{{food.id}}',1)"><i class="fa fa-shopping-basket"></i></span>
+                    <a href="{{food.id}}" class="btn btn-model-1"><i class="fa fa-heart"></i></a>
+                    <a href="{{food.id}}" class="btn btn-model-1"><i class="fa fa-send"></i></a>
+                </div>
+                <div>
+                    <a href="{% url 'food_app:show_food' food.food_slug %}" class="btn btn-show-more">{% trans 'جزئیات بیشتر' %}</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <span>{% trans 'غذایی پیدا نشد.' %}</span>
+        {% endif %}
+    </div>
+    <div class="title">
+        <h2>{% trans 'جست و جو در مقالات' %}</h2>
+    </div>
+    <div class="container">
+        {% if blogs_obj %}
+        {% for blog in blogs_obj %}
+        <div class="box-model-1">
+            <div>
+                <div class="box-model-1-price">
+                    <span>{{blog.article_register_date}}</span>
+                </div>
+                <div class="box-model-1-image">
+                    <img src="{{media}}{{blog.article_main_image}}" type="image/jpg" alt="" class="food-image">
+                </div>
+            </div>
+            <div class="box-model-1-title">
+                <div><h3>{{blog.article_title|translate}}</h3></div>
+            </div>
+            <div class="box-model-1-buttons">
+                <div>
+                    <a href="{{blog.id}}" class="btn btn-model-1"><i class="fa fa-save"></i></a>
+                    <a href="{{blog.id}}" class="btn btn-model-1"><i class="fa fa-heart"></i></a>
+                    <a href="{{blog.id}}" class="btn btn-model-1"><i class="fa fa-send"></i></a>
+                </div>
+                <div>
+                    <a href="{% url 'blog_app:show_blog' blog.article_slug %}" class="btn btn-show-more">{% trans 'ادامه مطلب' %}</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <span>{% trans 'مقاله‌ای پیدا نشد.' %}</span>
+        {% endif %}
+    </div>
+    <div class="title">
+        <h2>{% trans 'جست و جو در نویسندگان' %}</h2>
+    </div>
+    <div class="container">
+        {% if authors_obj %}
+        {% for author in authors_obj %}
+        <a href="{% url 'blog_app:show_author' author.author_slug %}">
+            <div class="box-model-2">
+                <div class="box-model-2-image">
+                    <img src="{{media}}{{author.author_avatar}}" alt="">
+                </div>
+                <div class="box-model-2-title">
+                    <h3>{{author.author_name|translate}} {{author.author_family|translate}}</h3>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+        {% else %}
+        <span>{% trans 'نویسنده‌ای پیدا نشد.' %}</span>
+        {% endif %}
+    </div>
+</div>
+{% endblock main %}

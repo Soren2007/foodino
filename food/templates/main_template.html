@@ -1,0 +1,59 @@
+{% load static %}
+{% load i18n %}
+{% load translate %}
+{% load render_partial %}
+<!DOCTYPE html>
+<html lang="{{'fa'|set_lang}}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="theme-color" content="#ff5000"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="#ff5000"/>
+    <meta property="og:type" content="WebSite">
+    <meta property="og:image" content="{{media}}images/logo/logo.png"/>
+    <meta property="og:locale" content="{{'fa'|set_lang}}"/>
+    {% block meta %}{% endblock meta %}
+    <title>{% trans 'فودینو' %} | {% block title %}{% endblock title %}</title>
+    <script src="{% static 'js/loading_script.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/style_ltr.css'|set_stylesheet %}">
+    <!-- <link rel="stylesheet" href="{% static 'css/fonts/fa.css'|set_stylesheet_font %}"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="{{media}}images/logo/logo.png">
+    {% block stylesheet %}{% endblock stylesheet %}
+    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"  type="text/javascript"></script>
+</head>
+    <body dir="{{'rtl'|set_dir}}">
+        <header>
+            {% include 'partials/loading.html' %}
+            {% include 'partials/indicator.html' %}
+            <div>
+                {% include 'partials/top_menu.html' %}
+            </div>
+            <nav class="navbar">{% include 'partials/navbar.html' %}</nav>
+            <div id="id_message_div">
+                {% include 'partials/messages.html' %}
+            </div>
+            {% block header %}{% endblock header %}
+        </header>
+        <main>
+            {% block main %}{% endblock main %}
+            <section id="on_page_section"></section>
+            {% render_partial 'event_app:show_random_event' %}
+            {% block data %}{% endblock data %}
+        </main>
+        <footer>
+            {% include 'partials/footer.html' %}
+            {% render_partial 'event_app:show_footer_event' %}
+        </footer>
+        {% block csrf %}{% csrf_token %}{% endblock csrf %}
+        {% block script %}{% endblock script %}
+        <script src="{% static 'js/indicator_scripts.js' %}"></script>
+        <script src="{% static 'js/shake.js' %}"></script>
+        <script src="{% static 'js/script.js' %}"></script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+        <!-- <script src="sweetalert2.all.min.js"></script>
+        <script src="sweetalert2.min.js"></script> -->
+        <!-- <link rel="stylesheet" href="sweetalert2.min.css"> -->
+    </body>
+</html>

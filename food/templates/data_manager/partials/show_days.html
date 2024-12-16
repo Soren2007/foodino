@@ -1,0 +1,7 @@
+<label for="day">روز:</label>
+<select id="day" class="select input date-time-select" onchange="show_chart()">
+    <option value="none">روز مورد نظر خود را انتخاب کنید.</option>
+    {% for day in days %}
+    <option value="{{day}}">{{day}}</option>
+    {% endfor %}
+</select>

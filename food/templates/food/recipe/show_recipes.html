@@ -1,0 +1,66 @@
+{% extends 'main_template.html' %}
+{% load translate %}
+{% load i18n %}
+{% block title %}{% trans 'دستورات غذایی' %}{% endblock title %}
+{% block header %}
+
+{% endblock header %}
+{% block main %}
+<section>
+    <div class="title">
+        <h1>{% trans 'دستورات غذایی' %}</h1>
+    </div> 
+    <div class="container">
+        {% if page_obj %}
+        {% for recipe in page_obj %}
+        <a href="{% url 'food_app:show_recipe' recipe.recipe_slug %}">
+            <div class="box-model-2">
+                <div class="box-model-2-image">
+                    <img src="{{media}}{{recipe.recipe_image}}" alt="">
+                </div>
+                <div class="box-model-2-title">
+                    <h3>{{recipe.recipe_name|translate}}</h3>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+        {% else %}
+        <span>{% trans 'دستور پختی وجود ندارد' %}</span>
+        {% endif %}
+    </div>
+</section>
+<section>
+    {% if obj_len > 8 %}
+    <div class="text-center">
+        <div>
+            <nav class="nav-pagination">
+                <ul>
+                    {% if page_obj.has_previous %}
+                    <li><a href="?page={{ page_obj.previous_page_number }}">{% trans 'قبلی' %}</a>
+                    </li>
+                    {% endif %}
+                    {% if page_obj.number|add:'-4' > 1 %}
+                    <li><a href="?page={{ page_obj.number|add:'-5' }}">&hellip;</a>
+                    </li>
+                    {% endif %}
+                    {% for i in page_obj.paginator.page_range %}
+                    {% if page_obj.number == i %}
+                    <li class="page-item active" aria-current="page"><span>{{ i }}<span class="sr-only">(current)</span></span></li>
+                    {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %} <li><a href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                    {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
+                    <li><a href="?page={{ page_obj.number|add:'5' }}">&hellip;</a></li>
+                    {% endif %}
+                    {% if page_obj.has_next %}
+                    <li><a href="?page={{ page_obj.next_page_number }}">{% trans 'بعدی' %}</a></li>
+                    {% else %}
+                    <li class="page-item-disabled"><a href="#" tabindex="-1" aria-disabled="True">{% trans 'بعدی' %}</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+    {% endif %}
+</section>
+{% endblock main %}

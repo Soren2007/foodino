@@ -1,0 +1,12 @@
+{% load translate %}
+{% load i18n %}
+<div id="id_event_box" class="event-box show_event_box">
+    <div id="id_event_times" onclick="replace_event_show_to_hidden('id_event_box','event_box')">
+        <i class="fa fa-times"></i>
+    </div>
+    <div><img src="{{media}}{{event.event_image}}" alt="{{event.event_title}}"></div>
+    <div><span>{{event.event_title|translate}} <span class="action-text">{{event.event_action_text|translate}}</span></span></div>
+    <div>
+        <a href="{{event.event_url}}" class="btn btn-show-all">{% trans 'جزئیات بیشتر' %}</a>
+    </div>
+</div>

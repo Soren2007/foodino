@@ -1,0 +1,7 @@
+{% load translate %}
+<div id="id_footer_event_box" class="footer-event-box show_footer_event_box">
+    <div id="id_footer_event_times" onclick="replace_event_show_to_hidden('id_footer_event_box','footer_event_box')">
+        <i class="fa fa-times"></i>
+    </div>
+    <div><span>{{footer_event.event_title|translate}} <span class="action-text">{{footer_event.event_action_text|translate}}</span></span></div>
+</div>

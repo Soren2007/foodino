@@ -1,0 +1,70 @@
+{% extends 'main_template.html' %}
+{% load static %}
+{% load translate %}
+{% load i18n %}
+{% block title %}{% trans 'ثبت‌نام' %}{% endblock title %}
+{% block header %}
+{% endblock header %}
+{% block main %}
+<div class="container">
+    <form action="" method="post">
+        <div class="form-box">
+            <div>
+                <h1>{% trans 'ثبت‌نام' %}</h1>
+            </div>
+            {% csrf_token %}
+            <div>
+                <div>
+                    <label for="id_mobile_number">{% trans 'شماره موبایل:' %}</label>
+                </div>
+                <div>
+                    <div class="input-flex-display" error_address="id_mobile_number">
+                        {{form.mobile_number}}
+                        <div class="input-icon"><i class="fa fa-phone" id="icon_eye_id_password"></i><div></div></div>
+                    </div>
+                    <ul>
+                        <li class="error-message hidden"></li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <label for="id_password">{% trans 'رمزعبور:' %}</label>
+                </div>
+                <div>
+                    <div class="password-flex" error_address="id_password">
+                        {{form.password}}
+                        <div class="eye-btn" onclick="show_password('id_password')"><i class="fa fa-eye" id="icon_eye_id_password"></i><div></div></div>
+                    </div>
+                    <ul>
+                        <li class="error-message hidden"></li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <label for="id_re_password">{% trans 'تکرار رمز عبور:' %}</label>
+                </div>
+                <div>
+                    <div class="password-flex" error_address="id_re_password">
+                        {{form.re_password}}
+                        <div class="eye-btn" onclick="show_password('id_re_password')"><i class="fa fa-eye" id="icon_eye_id_re_password"></i><div></div></div>
+                    </div>
+                    <ul>
+                        <li class="error-message hidden"></li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <span>{% trans 'حساب کاربری دارید؟' %}</span> <a href="{% url 'accounts_app:login' %}" class="link">{% trans 'وارد شوید.' %}</a>
+            </div>
+            <div>
+                <input type="submit" value="{% trans 'ثبت‌نام' %}" id="login-and-retgister-input">
+            </div> 
+        </div>
+    </form>
+</div>
+{% endblock main  %}
+{% block script %}
+    <script src="{% static 'js/rigister_validator_script.js' %}"></script>
+{% endblock script %}

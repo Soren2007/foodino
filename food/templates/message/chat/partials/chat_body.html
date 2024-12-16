@@ -1,0 +1,127 @@
+{% load translate %}
+{% load i18n %}
+{% if is_manage_chat == 'true' %}
+<!-- manager chat_box -->
+<div class="chat-box-header">
+    <div style="display: inline">
+        <img src="{{media}}{{user_object.avatar}}" alt="" class="profile">
+        <span>{{user_object.full_name}}</span>
+    </div>
+    <!-- <div>
+        <ul>
+            <li><span>حذف کامل پیام‌ها</span><i class="fa"></i></li>
+            <li><span>حذف کاربر</span><i class="fa"></i></li>
+            <li><span>بلاک کردن کاربر</span><i class="fa"></i></li>
+        </ul>
+    </div> -->
+</div>
+<div id="id_chat_box_body_manager" class="chat-box-body">
+        <div class="chat-box-user-message" id="id_message_defalt_m">
+            <div>
+                <img src="/media/images/avatar/avatar_1.png" alt="">
+            </div>
+            <div>
+                <p>
+                    <p>{% trans 'سلام، پشتیبان سایت فودینو هستم، لطفا مشکلتان را بیان کنید.' %} <br><span style="color:black">{% trans 'کاربر گرامی توجه کنید: <br> بعد از بستن چت پیام‌ها پاک می‌شود.' %}</span></p>
+                </p>
+                <p class="date-time">{% trans 'همین الان...' %}</p>
+            </div>
+        </div>
+        {% for message in user_object.message_user.all %}
+        <div class="chat-box-helper-message" id="id_chat_room_message_{{message.id}}">
+            <div>
+                <div>
+                    <a onclick="reply_message('{{message.id}}')" class="reply-btn"><i class="fa fa-reply"></i></a>
+                </div>
+                <div>
+                    <p>{{message.message_text|translate}}</p>
+                    <p class="date-time">{{message.register_date}}</p>
+                </div>
+            </div>
+            <div>
+                <img src="{{media}}{{user_object.avatar}}" alt="{{user_object.full_name}}">
+            </div>
+        </div>
+        {% for item in message.message_child.all %}
+        <div class="chat-box-user-message">
+            <div>
+                <img src="/media/images/avatar/avatar_1.png" alt="">
+            </div>
+            <div>
+                <p>{{item.message_text|translate}}</p>
+                <p class="date-time">{{item.register_date}}</p>
+            </div>
+        </div>
+        {% endfor %}
+        {% endfor %}
+</div>
+<!-- <div class="repliy-message-p-view">
+</div> -->
+<div class="chat-box-footer">
+    <div>
+        <input type="hidden" value="" name="parent_id" id="id_parent_id">
+        <input type="text" name="message" id="id_chat_message_manager"class="chat-box-input-message" placeholder="{% trans 'پیام خود را وارد کنید.' %}" title="{% trans 'لطفا پیام خود را وارد کنید.' %}" onkeydown="send_message_with_enter(event,'{{user_object.phone_number}}')">
+    </div>
+    <div class="send-message-btn">
+        <a onclick="send_message_manager('{{user_object.phone_number}}')"><i class="fa fa-send"></i></a>
+    </div>
+    <div class="send-message-btn">
+        <a onclick="send_message_manager('{{user_object.phone_number}}')"><i class="fa fa-microphone"></i></a>
+    </div>
+</div>
+<!-- manager chat_box -->
+{% else %}
+<div class="chat-box-helper-message" id="id_message_defalt_m">
+    <div>
+        <div class="radio_message_box">
+            <div>
+                <input type="radio" class="hidden" name="q_by" id="q_by_chat_gpt" checked>
+                <label for="q_by_chat_gpt">{% trans 'پرسیدن از هوش مصنوعی' %}</label>
+            </div>
+            <div>
+                <input type="radio" class="hidden" name="q_by" id="q_by_sopport">
+                <label for="q_by_sopport">{% trans 'پرسیدن از پشتیبان' %}</label>
+            </div>
+        </div>
+    </div>
+    <div>
+        <img src="/media/images/avatar/avatar_1.png" alt="">
+    </div>
+</div>
+<div class="chat-box-helper-message" id="id_message_defalt_m">
+    <div>
+        <p>
+            <p>{% trans 'سلام، پشتیبان سایت فودینو هستم، لطفا مشکلتان را بیان کنید. ' %}<br><span style="color:red">{% trans 'کاربر گرامی توجه کنید: <br> بعد از بستن چت پیام‌ها پاک می‌شود.' %}</span></p>
+        </p>
+        <p class="date-time">{% trans 'همین الان...' %}</p>
+    </div>
+    <div>
+        <img src="/media/images/avatar/avatar_1.png" alt="">
+    </div>
+</div>
+<div id="messages_user_and_suport_refresh">
+    <input type="hidden" value="{{user_object.avatar}}" name="user_avatar" id="id_user_avatar">
+    {% for message in user_object.message_user.all %}
+    <div class="chat-box-user-message" id="id_chat_room_message_{{message.id}}">
+        <div>
+            <img src="{{media}}{{user_object.avatar}}" alt="{{user_object.full_name}}">
+        </div>
+        <div>
+            <p>{{message.message_text|translate}}</p>
+            <p class="date-time">{{message.register_date}}</p>
+        </div>
+    </div>
+    {% for item in message.message_child.all %}
+    <div class="chat-box-helper-message">
+        <div>
+            <p>{{item.message_text|translate}}</p>
+            <p class="date-time">{{item.register_date}}</p>
+        </div>
+        <div>
+            <img src="/media/images/avatar/avatar_1.png" alt="">
+        </div>
+    </div>
+    {% endfor %}
+    {% endfor %}
+</div>
+{% endif %}

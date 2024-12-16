@@ -1,0 +1,43 @@
+{% extends 'main_template.html' %}
+{% load translate %}
+{% load i18n %}
+{% load static %}
+{% block title %}{% trans 'قرعه‌کشی ها' %}{% endblock title %}
+{% block header %}
+<div>
+<!-- <img src="{{media}}images/gift/lottery/header_image.jpg" alt="{% trans 'فرعه کشی' %}" class="food-image-header" id="lottery_header_image">
+</div> -->
+<div class="header-background-image" style="--header_image_address: url('/media/images/gift/lottery/header_image.jpg');"></div>
+{% endblock header %}
+{% block main %}
+<section>
+    <div class="title">
+        <h1>{% trans 'قرعه‌کشی ها' %}</h1>
+    </div>
+    <div class="lotteries">
+        {% for lottery in lotteries %}
+        
+        <div class="event-box show_event_box lottery_box">
+            <div><img src="{{media}}{{lottery.image}}" alt="{{lottery.title|translate}}"></div>
+            <div><span>{{lottery.title|translate}}</span></div>
+            <div>
+                {% if lottery.is_start and user.is_admin %}
+                <a class="btn btn-show-all" onclick="win_lottery('{{lottery.id}}',{{lottery.user_number}})">{% trans 'شروع قرعه‌کشی' %}</a>
+                {% else %}
+                <a class="btn btn-show-all">{% trans 'جزئیات بیشتر' %}</a>
+                {% endif %}
+            </div>
+            <div>{{lottery.start_of_the_lottery}}</div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+<section id="id_wins_lottery">
+</section>
+<section>
+{% include 'partials/social_media.html' %}
+</section>
+{% endblock main %}
+{% block script %}
+<script src="{% static 'js/lottery.js' %}"></script>
+{% endblock script %}

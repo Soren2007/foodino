@@ -1,0 +1,105 @@
+{% extends 'main_template.html' %}
+{% load translate %}
+{% load i18n %}
+{% block title %}{% trans 'فرم اطلاعات' %}{% endblock title %}
+{% block header %}
+{% endblock header %}
+{% block main %}
+    <form action="" method="post" enctype="multipart/form-data">
+        <div class="form-box" style="width: 41%;">
+            <div>
+                <h1>{% trans 'مشخصات' %}</h1>
+            </div>
+            {% csrf_token %}
+            <form action="" method="post">
+                <div>
+                    <label for="id_profile"><img src="{{media}}{{user.profile}}" alt="{{user.name}}" class="profile"></label>
+                    <input type="file" id="id_profile" name="profile">
+                </div>
+                <div class="group-felids">
+                    <div>
+                        <div>
+                            <label for="">{% trans 'نام:' %}</label>
+                        </div>
+                        <div>
+                             <input class="input no-valid" type="text" name="name" placeholder="{% trans 'نام خود را وارد کنید.' %}" title="{% trans 'لطفا نام خود را وارد کنید.' %}" value="{{user.name}}">
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <label for="">{% trans 'نام خانوادگی:' %}</label>
+                        </div>
+                        <div>
+                             <input class="input" type="text" name="family" placeholder="{% trans 'نام خانوادگی خود را وارد کنید.' %}" title="{% trans 'لطفا نام خانوادگی خود را وارد کنید.' %}" value="{{user.family}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="group-felids">
+                    <div>
+                        <div>
+                            <div>
+                                <label for="">{% trans 'ایمیل:' %}</label>
+                            </div>
+                            <div>
+                                 <input class="input" type="email" name="email" placeholder="{% trans 'ایمیل خود را وارد کنید.' %}" title="{% trans 'لطفا ایمیل خود را وارد کنید.' %}" value="{{user.email}}">
+                            </div>
+                            <div>
+                                <div>
+                                    <label for="">{% trans 'تاریخ تولد:' %}</label>
+                                </div>
+                                <div>
+                                     <input class="input" type="date" id="id_birth_date" name="birth_date" title="{% trans 'لطفا تاریخ تولد خود را وارد کنید.' %}" value="{{user.birth_date}}">
+                                </div>
+                            </div>
+                            <div>
+                                <div>
+                                    <label for="">{% trans 'کدملی:' %}</label>
+                                </div>
+                                <div>
+                                     <input class="input" type="text" name="national_code" placeholder="{% trans 'کدملی خود را وارد کنید.' %}" title="{% trans 'لطفا کدملی خود را وارد کنید.' %}" value="{{user.national_code}}" maxlength="11">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <label for="">{% trans 'آدرس:' %}</label>
+                        </div>
+                        <div>
+                            <textarea class="input textarea-input" name="address" id="id_address" cols="30" rows="10" placeholder="{% trans 'آدرس محل سوکونت خود را وارد کنید.' %}">{{user.address}}</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="group-felids">
+                    <div>
+                        <div>
+                            <label for="">{% trans 'کدپستی:' %}</label>
+                        </div>
+                        <div>
+                             <input class="input" type="text" name="postal_code" placeholder="{% trans 'کدپستی خود را وارد کنید.' %}" title="{% trans 'لطفا کدپستی خود را وارد کنید.' %}" value="{{user.postal_code}}" maxlength="10">
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <label for="">{% trans 'جنسیت:' %}</label>
+                        </div>
+                        <div>
+                            <select name="gender" id="id_gender" class="input select-input">
+                                {% if user.gender == 'True' %}
+                                <option value="True" selected>{% trans 'مرد' %}</option>
+                                <option value="False">{% trans 'زن' %}</option>
+                                {% else %}
+                                <option value="True">{% trans 'مرد' %}</option>
+                                <option value="False" selected>{% trans 'زن' %}</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div>
+                <input type="submit" value="{% trans 'ثبت اطلاعات' %}">
+            </div> 
+        </div>
+    </form>
+{% endblock main  %}

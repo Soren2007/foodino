@@ -1,0 +1,41 @@
+{% load i18n %}
+{% load translate %}
+<div class="chat-box-user-message" id="id_message_defalt_m">
+    <div>
+        <img src="http://127.0.0.1:8000/media/images/avatar/avatar_1.png" alt="">
+    </div>
+    <div>
+        <p>
+            <p>{% trans 'سلام، پشتیبان سایت فودینو هستم، لطفا مشکلتان را بیان کنید.' %} <br><span style="color:black">{% trans 'کاربر گرامی توجه کنید: <br> بعد از بستن چت پیام‌ها پاک می‌شود.' %}</span></p>
+        </p>
+        <p class="date-time">{% trans 'همین الان...' %}</p>
+    </div>
+</div>
+{% for message in user_object.message_user.all %}
+<div class="chat-box-helper-message" id="id_chat_room_message_{{message.id}}">
+    <div>
+        <div>
+            <a onclick="reply_message('{{message.id}}')" class="reply-btn"><i class="fa fa-reply"></i></a>
+        </div>
+        <div>
+            <p>{{message.message_text|translate}}</p>
+            <p class="date-time">{{message.register_date}}</p>
+        </div>
+    </div>
+    <div>
+        <img src="{{media}}{{user_object.avatar}}" alt="{{user_object.full_name}}">
+    </div>
+</div>
+{% for item in message.message_child.all %}
+<div class="chat-box-user-message">
+    <div>
+        <img src="http://127.0.0.1:8000/media/images/avatar/avatar_1.png" alt="">
+    </div>
+    <div>
+        <p>{{item.message_text|translate}}</p>
+        <p class="date-time">{{item.register_date}}</p>
+    </div>
+</div>
+{% endfor %}
+{% endfor %}
+<input type="hidden" value="{{user_object.phone_number}}" name="user_phone_number_input_hidden" id="id_user_phone_number_input_hidden">

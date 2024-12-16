@@ -1,0 +1,12 @@
+{% extends 'main_template.html' %}
+{% block main %}
+<section>
+    <div>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" id="image_input" name="image">
+            <input type="submit">
+        </form>
+    </div>
+</section>
+{% endblock main %}

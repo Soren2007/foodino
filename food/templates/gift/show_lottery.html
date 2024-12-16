@@ -1,0 +1,36 @@
+{% extends 'main_template.html' %}
+{% load translate %}
+{% load i18n %}
+{% block title %}{% trans 'قرعه‌کشی' %}{% endblock title %}
+{% block header %}
+<div>
+<img src="{{media}}images/gift/lottery/header_image.jpg" alt="{% trans 'فرعه کشی' %}" class="food-image-header" id="lottery_header_image">
+</div>
+{% endblock header %}
+{% block main %}
+<section>
+    <div class="title">
+        <h1>{% trans 'قرعه‌کشی' %}</h1>
+    </div>
+    <div>
+        {% for lottery in lotteries %}
+            {% if lottery.is_done == False %}
+                <div>
+                    <div>
+                        <img src="{{media}}images/{{lottery.image}}" alt="{{lottery.title}}">
+                    </div>
+                    <div><span>{{lottery.title}}</span></div>
+                    <div>
+                        <a href="" class="btn btn-show-all">جزئیات بیشتر</a>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</section>
+<section>
+    <div class="wins-lotter-box">
+
+    </div>
+</section>
+{% endblock main %}

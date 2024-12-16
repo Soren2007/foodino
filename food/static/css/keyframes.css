@@ -1,0 +1,82 @@
+/* keyframes */
+@keyframes shape {0%,100%{border-radius: 40% 60% 70% 30% / 40% 40% 60% 50%;}33%{border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%;}66%{border-radius: 100% 60% 60% 100% / 100% 100% 60% 60%;}}
+@keyframes fade-show {from{opacity: 0;}to{opacity: 1;}}
+@keyframes fade-hidden {from{opacity: 1;}to{opacity: 0;}}
+@keyframes fa_phone {
+    0%{transform: rotate(9deg);}
+    25%{transform: rotate(-9deg);}
+    50%{transform: rotate(9deg);}
+    75%{transform: rotate(-9deg);}
+    100%{transform: rotate(9deg);}   
+}
+@keyframes show_event_box {from{right: -1000px;}to{right: 20px;}}
+@keyframes hidden_event_box {from{right: 20px;}to{right: -1000px;}}
+@keyframes show_footer_event {from{bottom: -50px;}to{bottom: 0px;}}
+@keyframes hidden_footer_event_box {from{bottom: 0px;}to{bottom: -50px;}}
+@keyframes text_color {
+    0% {color: #ff0000;text-shadow: 0 0 2px #ff0000;}
+    10% {color: #ff5100;text-shadow: 0 0 2px #ff5100;}
+    20% {color: #ffaa00;text-shadow: 0 0 2px #ffaa00;}
+    30% {color: #ffee00;text-shadow: 0 0 2px #ffee00;}
+    40% {color: #15ff00;text-shadow: 0 0 2px #15ff00;}
+    50% {color: #00ff91;text-shadow: 0 0 2px #00ff91;}
+    60% {color: #00fbff;text-shadow: 0 0 2px #00fbff;}
+    70% {color: #0080ff;text-shadow: 0 0 2px #0080ff;}
+    80% {color: #3300ff;text-shadow: 0 0 2px #3300ff;}
+    90% {color: #a200ff;text-shadow: 0 0 2px #a200ff;}
+    100% {color: #ff00c3;text-shadow: 0 0 2px #ff00c3;}
+}
+@keyframes like_animation {
+    0%{transform: rotate(0deg);}
+    25%{transform: rotate(20deg);}
+    50%{transform: rotate(-20deg);}
+    75%{transform: rotate(20deg);}
+    100%{transform: rotate(360deg);}
+}
+@keyframes show_like {
+    from{left: -200px}
+    to{left: -20px}
+}
+@keyframes loader_animation {
+    0%{transform: rotate(0deg);}
+    100%{transform: rotate(360deg);}
+}
+@keyframes wins_lottery_circle {
+    from{rotate: 0deg;}
+    to{rotate: 360deg;}
+}
+@keyframes angle_up {
+    0%{bottom:0px}
+    100%{bottom: 5px;}
+}
+@keyframes angle_down {
+    0%{top:0px}
+    100%{top: 5px;}
+}
+@keyframes no-valid-animation {
+    0%{left: 0px}
+    25%{left: 2px}
+    50%{left: 0px}
+    75%{right: 2px}
+    100%{right: 0px}
+}
+@keyframes title {
+    from{border-radius: 31% 5px 31% 5px;box-shadow: none;}
+    to{border-radius: 5px 30% 5px 30%;box-shadow: 2px 2px 4px #222;text-shadow: 1px 1px 2px #222;}
+}
+
+@keyframes show_cart {
+    from{top: -100px;}
+    to{top: 0px;}
+}
+
+@keyframes show_frequently_response {
+    from{top: -100px}
+    to{top: 0px}
+}
+
+@keyframes rotate_360 {
+    from{transform: rotate(0deg);}
+    to{transform: rotate(360deg);}
+}
+/* keyframes */

@@ -1,0 +1,17 @@
+{% extends 'main_template.html' %}
+{% load translate %}
+{% load i18n %}
+{% block title %}{% trans 'تکمیل مشخصات' %}{% endblock title %}
+{% block header %} 
+{% endblock header %}
+{% block main %}
+<section>
+    <div class="title">
+        <h2>{% trans 'تکمیل مشخصات' %}</h2>
+    </div>
+    <div>
+        {{form.as_p}}
+    </div>
+</section>
+{% endblock main %}
+    

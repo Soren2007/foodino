@@ -1,0 +1,7 @@
+<label for="month">ماه:</label>
+<select id="month" class="select input date-time-select" onchange="show_days_with_month();show_chart()">
+    <option value="none">ماه مورد نظر خود را انتخاب کنید.</option>
+    {% for month in months %}
+    <option value="{{month}}">{{month}}</option>
+    {% endfor %}
+</select>

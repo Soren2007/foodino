@@ -1,0 +1,229 @@
+{% extends 'main_template.html' %}
+{% load render_partial %}
+{% load translate %}
+{% load i18n %}
+{% load static %}
+{% block meta %}
+{% for author in article.article_author.all %}
+<meta name="author" content="{{author.author_name}}">
+{% endfor %}
+<meta name="keywords" content="
+{% for  keyword in article.article_key_words.all %}
+    {{keyword.word}},    
+{% endfor %}">
+<meta name="description" content={{article.article_summary_text}}>
+<meta name="robots" content="index , follow">
+{% endblock meta %}
+{% block title %}{% trans 'بلاگ' %} | {{article.article_title|translate}}{% endblock title %}
+{% block header %}
+    <div class="container">
+        <img src="{{media}}{{article.article_main_image}}" alt="{{article.article_title}}" class="food-image-header">
+    </div>
+    <div class="container">
+        <p class="text-center font-size-s1 article-info">
+            <span><i class="fa fa-calendar"></i>{% trans 'تاریخ بروزرسانی' %}</span> <span>{{article.article_update_date}} | </span>
+            <span><i class="fa fa-eye"></i> {% trans 'تعداد بازدید' %}</span> <span>{{article.article_visits}} | </span>
+            <span><i class="fa fa-clock-o"></i>{% trans 'مدت زمان خواندن مقاله' %}</span> <span>{{article.article_read_time}} {% trans 'دقیقه' %}</span>
+        </p>
+    </div>
+{% endblock header %}
+{% block main %}
+<aside class="aside-blog">
+    <ul>
+        <li>
+            <h4>{% trans 'جدیدترین مقالات' %}</h4>
+        </li>
+        {% for blog in latest_articles %} 
+        <li>
+            <a href="{% url 'blog_app:show_blog' blog.article_slug %}">
+            <div>
+                <img src="{{media}}{{blog.article_main_image}}" alt="">
+                <div class="article-summary-text-aside">
+                    <span>{{blog.article_title|translate}}</span>
+                    <p>{{blog.article_summary_text|translate}}</p>
+                </div>
+            </div>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</aside>
+<section class="container" style="align-items: flex-start;">
+    <article>
+        <div class="title">
+            <h1>{{article.article_title|translate}}</h1>
+        </div>
+        {% autoescape off %}
+        {{article.article_main_text|translate}}
+        {% endautoescape %}
+        <div class="article-information">
+            <div class="key-words-box">
+                <div class="article-title"><h3>{% trans 'کلمات کلیدی' %}</h3></div>
+                <div>
+                    {% for  keyword in article.article_key_words.all %}
+                    <div class="shadow"><span>{{keyword.word|translate}}</span></div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="base-box">
+                <div class="short_link">
+                    <div class="article-title"><h3>{% trans 'لینک کوتاه این مقاله' %}</h3></div>
+                    <div class="shadow">
+                        <div><a href="{{article.article_short_url}}" class="link">{{article.article_short_url}}</a></div>
+                        <div onclick="copy_text('{{article.article_short_url}}')">{% trans 'کپی' %}</div>
+                    </div>
+                </div>
+                <div class="share-box shadow">
+                    <div class="footer-media container">
+                        <a href="3https://localhos" class="btn-media" id="id_media_btn_at" title="{% trans 'ایمیل' %}"><i class="fa fa-at"></i></a>
+                        <a href="https://localhos" class="btn-media" id="id_media_btn_instagram" title="{% trans 'اینستاگرام' %}"><i class="fa fa-instagram"></i></a>
+                        <a href="https://localhos" class="btn-media" id="id_media_btn_telegram" title="{% trans 'تلگرام' %}"><i class="fa fa-telegram"></i></a>
+                        <a href="https://localhos" class="btn-media" id="id_media_btn_whatsapp" title="{% trans 'واتساپ' %}"><i class="fa fa-whatsapp"></i></a>
+                        <a class="btn-media" id="id_media_btn_share" title="{% trans 'اشتراک گذاری' %}" onclick="navigator.share({title:`اشتراک گذاری غذای {{article.article_title|translate}} تارنما فودینو`,text:'{{article.article_summery_text}}','url':'{% url 'blog_app:show_blog' article.article_slug %}'})"><i class="fa fa-share-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="share-box shadow q-a-box" id="{{article.id}}">
+            <div>
+                <span>{% trans 'مقاله رو پسندیدی؟' %}</span>
+            </div>
+            <div>
+                <div>
+                    <span id="blog_likes">{{article.article_likes}}</span>
+                </div>
+                <div>
+                    <div id="add_like_for_blog" title="{% trans 'پسندیدن' %}"><i class="fa fa-thumbs-up"></i></div> 
+                </div>
+            </div>
+            <div>
+                <div>
+                    <span id="blog_dislikes" title="{% trans 'نپسندیدن' %}">{{article.article_dislikes}}</span>
+                </div>
+                <div>
+                    <div id="add_dislike_for_blog"><i class="fa fa-thumbs-down"></i></div> 
+                </div>
+            </div>
+        </div>
+        <div class="title"><h3>
+            {% if article.article_author.all|length > 1 %}
+            {% trans 'نویسندگان' %}
+            {% else %}
+            {% trans 'نویسنده' %}
+            {% endif %}
+        </h3></div>
+        {% for author in article.article_author.all %}
+        <div class="author-info-box">
+            <div class="article-title">
+                <h3>{{author.author_fullname|translate}}</h3>
+            </div>
+            <div class="text-center">
+                <img src="{{media}}{{author.author_avatar}}" alt="{{author.author_name}}" class="profile">
+            </div>
+            <div>
+                <span style="font-size: 1.4rem !important;">{{author.author_fullname|translate}}</span>
+                <br>
+                <span>{{author.author_info|translate}}</span>
+            </div>
+            <div>
+                <a href="{% url 'blog_app:show_article_with_author' author.author_slug %}" class="link">{% trans 'نمایش تمامی مقالات' %} {{author.author_fullname|translate}}</a>
+            </div>
+        </div>
+        {% endfor %}
+    </article>
+</section>
+<section class="container">
+</section>
+<section >
+    <div class="title">
+        <h3>{% trans 'دیدگاه ها' %}</h3>
+    </div>
+    <div>
+        <div>
+            {% for comment in article.comments_blog.all %}
+                {% if comment.is_active %}
+                    {% if comment.comment_parent == None %}
+                        <div class="comment-box">
+                            <div>
+                                <div>
+                                    <img src="{{media}}{{comment.commenting_user.profile}}" alt="" class="profile">
+                                </div>
+                                <div>
+                                    <div> 
+                                        {% if comment.commenting_user.is_support %}
+                                        <h3>{% trans 'پشتیبان سایت فودینو' %}</h3>
+                                        {% elif comment.commenting_user.name != "" %}
+                                        <h3>{{comment.commenting_user.name|translate}} {{comment.commenting_user.family|translate}}</h3>
+                                        {% else %}
+                                        <h3>{% trans 'کاربر' %}{{user.id}}</h3>
+                                        {% endif %}  
+                                    </div>
+                                    <div>
+                                        <p>{{comment.comment_text|translate}}</p>
+                                    </div>
+                                    <div>
+                                        <span>{{comment.register_date}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                {% if user.is_authenticated %} 
+                                <div>
+                                    <a class="btn" id="btn_reply_{{comment.id}}" onclick="show_comment_form('{{article.id}}','{{comment.id}}','{{article.article_slug}}','blog')">{% trans 'پاسخ دادن' %}</a>
+                                </div>
+                                <div id="comment_form_{{comment.id}}" class="comment-form">
+                                </div>
+                                {% else %}
+                                <span>
+                                    {% trans 'برای پاسخ دادن باید' %} <a href="{% url 'accounts_app:login' %}?next=/blog/show-blog/{{blog.blog_slug}}" class="link">{% trans 'وارد' %}</a> شوید.
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% for item in comment.comments_child.all %}
+                        <div class="comment-box comment-box-child">
+                            <div>
+                                <div>
+                                    <img src="{{media}}{{comment.commenting_user.profile}}" alt="" class="profile">
+                                </div>
+                                <div>
+                                    <div>
+                                        {% if item.commenting_user.is_support %}
+                                        <h3>{% trans 'پشتیبان سایت فودینو' %}</h3>
+                                        {% else %}
+                                        <h3>{{item.commenting_user.name|translate}} {{item.commenting_user.family|translate}}</h3>
+                                        {% endif %}   
+                                    </div>
+                                    <div>
+                                        <p>{{item.comment_text|translate}}</p>
+                                    </div>
+                                    <div>
+                                        <span>{{item.register_date}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                        
+                {% endif %}
+                
+            {% endfor %}
+        </div>
+        <div class="send-comment">
+            {% if user.is_authenticated %}
+            {% render_partial 'comments_app:create_comment' slug=slug  model=model %}
+            {% else %}
+            <h3 class="Log-in-first-box">{% trans 'برای ارسال دیدگاه باید' %} <a href="{% url 'accounts_app:login' %}?next=/blo/show-blog/{{article.article_slug}}" class="link">{% trans 'ورود' %}</a> {% trans 'یا' %} <a href="{% url 'accounts_app:register' %}?next=/blog/show-blog/{{article.article_slug}}" class="link">{% trans 'ثبت‌نام' %}</a> {% trans 'کنید.' %}</h3>
+            {% endif %} 
+        </div>
+    </div>
+</section>
+<section>
+{% include 'partials/social_media.html' %}
+</section>
+{% endblock main %}
+{% block script %}
+<script src="{% static 'js/blog_scripts.js' %}"></script>
+<script src="{% static 'js/ads_scripts.js' %}"></script>
+{% endblock script %}

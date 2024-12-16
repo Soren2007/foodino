@@ -1,0 +1,71 @@
+{% extends 'main_template.html' %}
+{% load static %}
+{% load translate %}
+{% load i18n %}
+{% load socialaccount %}
+{% block title %}{% trans 'ورود' %}{% endblock title %}
+{% block header %}
+    
+{% endblock header %}
+{% block main %}
+<div class="container">
+    <form method="post">
+        <div class="form-box">
+            <div>
+                <h1>{% trans 'ورود' %}</h1>
+            </div>
+            {% csrf_token %}
+            <div>
+                <div>
+                    <label for="id_mobile_number">{% trans 'شماره موبایل:' %}</label>
+                </div>
+                <div>
+                    <div class="input-flex-display" error_address="id_mobile_number">
+                        {{form.mobile_number}}
+                        <div class="input-icon"><i class="fa fa-phone" id="icon_eye_id_password"></i><div></div></div>
+                    </div>
+                    <ul>
+                        <li class="error-message hidden"></li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <label for="id_password">{% trans 'رمزعبور:' %}</label>
+                </div>
+                <div>
+                    <div class="password-flex" error_address="id_password">
+                        {{form.password}}
+                        <div class="eye-btn" onclick="show_password('id_password')"><i class="fa fa-eye" id="icon_eye_id_password"></i><div></div></div>
+                    </div>
+                    <ul>
+                        <li class="error-message hidden"></li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <span>{% trans 'رمز ورود خود را فراموش کردید؟' %}</span> <a href="{% url 'accounts_app:remember_password' %}" class="link">{% trans 'فراموشی رمز عبوری' %}</a>
+            </div>
+            
+            {% comment %}
+            <div>
+                <a href="{% provider_login_url 'google' %}?next=/">گوگل</a>
+            </div>    
+            {% endcomment %}
+                
+            <div>
+                <span>{% trans 'حساب کاربری ندارید؟' %}</span> <a href="{% url 'accounts_app:register' %}" class="link">{% trans 'ثبت‌نام کنید.' %}</a>
+            </div>
+            <div>
+                <input type="submit" value="{% trans 'ورود' %}" id="login-and-retgister-input">
+            </div>
+            <div>
+                <span id="font_size">{% trans 'ورود شما به معنای پذیرش ' %}<a href="" class="link">{% trans 'شرایط فودینو' %}</a> و <a href="{% url 'main_app:rules' %}" class="link">{% trans 'قوانین حریم‌خصوصی' %}</a> {% trans 'است.' %}</span> 
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock main  %}
+{% block script %}
+    <script src="{% static 'js/login_validator_script.js' %}"></script>
+{% endblock script %}

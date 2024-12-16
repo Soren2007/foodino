@@ -1,0 +1,27 @@
+{% extends 'main_template.html' %}
+{% load translate %}
+{% load i18n %}
+{% block title %}{% trans 'اشتراک' %}{% endblock title %}
+{% block main %}
+<section>
+    <div class="title">
+        <h1>{% trans 'خرید اشتراک' %}</h1>
+    </div>
+    {% for subscription in subscriptions %}
+    <div>
+        <div class="subscription-box">
+            {% if subscription.is_special_for_new_users %}
+            <div class="subscription-new-users">{% trans 'ویژه کاربران جدید!' %}</div>
+            {% endif %}
+            <div class="subscription-image"><img src="{{media}}images/icons/salami-pizza.png" alt=""></div>
+            <div class="subscription-span"><span>{{subscription.subscription_title|translate}}</span></div>
+            <div class="subscription-discount"><span><del><span>{{subscription.subscription_price}}</span> {% trans 'تومان' %}</del></span></div>
+            <div class="subscription-btn"><a href=""><span>{{subscription.subscription_discount}}</span> {% trans 'تومان' %}</a></div>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+<section>
+{% include 'partials/social_media.html' %}
+</section>  
+{% endblock main %}

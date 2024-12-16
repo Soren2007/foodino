@@ -1,0 +1,87 @@
+{% load render_partial %}
+{% load translate %}
+{% load i18n %}
+<div><a class="back-to-top" id="id_goto_up_btn"><i class="fa fa-angle-up"></i></a></div>
+<!-- <div><a class="back-to-top" id="id_goto_up_btn"><img src="{{media}}/images/icons/up-arrow.gif" alt=""></a></div> -->
+{% if not user.is_support %}
+<div><a id="id_show_chat_box_btn" class="show-chat-box-btn"><i class="fa fa-envelope"></i></a></div>
+{% endif %}
+<div>
+    {% render_partial 'message_app:show_box' %}
+    <!-- <script>document.getElementsByClassName('chat-box')[0].classList.add('hidden')</script> -->
+</div>
+<div>
+    <div class="footer-media container">
+        <a href="3https://localhos" class="btn-media" id="id_media_btn_at" title="ایمیل"><i class="fa fa-at"></i></a>
+        <a href="https://localhos" class="btn-media" id="id_media_btn_instagram" title="اینستاگرام"><i class="fa fa-instagram"></i></a>
+        <a href="https://localhos" class="btn-media" id="id_media_btn_telegram" title="تلگرام"><i class="fa fa-telegram"></i></a>
+        <a href="https://localhos" class="btn-media" id="id_media_btn_whatsapp" title="واتساپ"><i class="fa fa-whatsapp"></i></a>
+        <a href="https://localhos" class="btn-media" id="id_media_btn_linkedin" title="لینکدین"><i class="fa fa-linkedin"></i></a>
+        <a href="https://localhos" class="btn-media" id="id_media_btn_gitlab" title="گیت لب"><i class="fa fa-gitlab"></i></a>
+        <a href="https://localhos" class="btn-media" id="id_media_btn_github" title="گیت هاب"><i class="fa fa-github"></i></a>
+        <a href="https://localhos" class="btn-media" id="id_media_btn_pinterest" title="پینترست"><i class="fa fa-pinterest"></i></a>
+    </div>
+    <div class="footer-body">
+        {% if latest_recipes %}
+        <div>
+            <h3>{% trans 'جدیدترین دستورات غذایی' %}<i class="fa fa-angle-down hidden"></i></h3>
+            <ul>
+                {% for recipes_obj in latest_recipes %}
+                    <li><a href="{% url 'food_app:show_recipe' recipes_obj.recipe_slug %}">{{recipes_obj.recipe_name|translate}}</a></li>                    
+                {% endfor %}
+            </ul>
+        </div>   
+        {% endif %}
+        {% if latest_articles %}
+        <div>
+            <h3>{% trans 'جدیدترین مقالات' %}<i class="fa fa-angle-down hidden"></i></h3>
+            <ul>
+                {% for blog in latest_articles %}
+                <li><a href="{% url 'blog_app:show_blog' blog.article_slug %}">{{blog.article_title|translate}}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        {% if latest_food_sales_number %}
+        <div>
+            <h3>{% trans 'پرفروش ترین‌ها' %}<i class="fa fa-angle-down hidden"></i></h3>
+            <ul>
+                {% for food in latest_food_sales_number %}
+                    <li><a href="{% url 'food_app:show_food' food.food_slug %}">{{food.food_name|translate}}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        <div>
+            <h3>{% trans 'دسترسی آسان' %}<i class="fa fa-angle-down hidden"></i></h3>
+            <ul>
+                <li><a href="{% url 'orders_app:carts' %}">{% trans 'سبدخرید' %}</a></li>
+                <li><a href="">{% trans 'گردانه شانس' %}</a></li>
+                <li><a href="{% url 'accounts_app:user_panel' %}">{% trans 'پنل کاربری' %}</a></li>
+                <li><a href="">{% trans 'سفارشات من' %}</a></li>
+                <li><a href="">{% trans 'مورد علاقه‌ی من' %}</a></li>
+                <li><a href="{% url 'food_app:show_my_recipes' %}">{% trans 'دستورات غذایی من' %}</a></li>
+                <li><a href="{% url 'main_app:rules' %}">{% trans 'قوانین و مقررات' %}</a></li>
+            </ul>
+        </div>
+        <div>
+            <h3>{% trans 'راه های ارتباطی' %}<i class="fa fa-angle-down hidden"></i></h3>
+            <ul>
+                <li><a href="tel:09932062665">09932062665</a></li>
+                <li><a href="maleto:info@fodino.com">info@fodino.com</a></li>
+                <li><a href="{% url 'message_app:contact_us' %}">{% trans 'تماس باما' %}</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+        <div><img src="{{media}}images/footer/etemad.png" alt="نماد اعتماد الکترونیکی" title="نماد اعتماد الکترونیکی"></div>
+        <div><img src="{{media}}images/footer/logonama.png" alt="اتحادیه کشوری کسب و کارهای مجازی" title="اتحادیه کشوری کسب و کارهای مجازی"></div>
+        <div><img src="{{media}}images/footer/samandehi.png" alt="نشان ملی ثبت (رسانه‌های دیجیتالی)" title="نشان ملی ثبت (رسانه‌های دیجیتالی)"></div>
+        <div id="zarinpal">
+            <script src="https://www.zarinpal.com/webservice/TrustCode" type="text/javascript"></script>
+        </div>
+    </div>
+    <div>
+        <div id="id_copy_right_box"><span>&#169;</span><span id="id_copy_right_date"></span> <span>{% trans 'کلیه حقوق محفوظ است.' %}</span> <span>{% trans 'ساخته شده با' %}</span> <span><i class="fa fa-heart" id="id_fa_heart"></i></span></div>
+    </div>
+</div>

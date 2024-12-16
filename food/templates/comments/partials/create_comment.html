@@ -1,0 +1,12 @@
+{% load translate %}
+{% load i18n %}
+<form action="{% url 'comments_app:create_comment' slug=slug  model=model %}" class="create-comment-form" method="post">
+    {% csrf_token %}
+    <div>
+        <label for="" style="font-size: 1.5rem !important;">{% trans 'دیدگاه شما:' %}</label>
+        {{form}}
+    </div>
+    <div>
+        <input type="submit" value="{% trans 'ارسال نظر' %}">
+    </div>
+</form>

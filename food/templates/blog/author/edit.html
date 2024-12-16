@@ -1,0 +1,19 @@
+{% extends 'main_template.html' %}
+{% block title %}مقالات | اضافه کردن نویسنده{% endblock title %}
+{% block main %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <div>
+            <label for=""><img src="{{media}images/avatar/none.png" alt="avatar"></label>
+            <input type="file" id="id_author_avatar" name="author_avatar">
+        </div>
+        <div><input type="text" name="author_name" id="id_author_name" placeholder="نام نویسنده" title="لطفا نام نویسنده را وارد کنید." maxlength="60"></div>
+        <div><input type="text" name="author_family" id="id_author_family" placeholder="نام خانوادگی نویسنده" title="لطفا نام خانوادگی نویسنده را وارد کنید." maxlength="60"></div>
+        <div><input type="email" name="author_email" id="id_author_email" placeholder="ایمیل نویسنده" title="لطفا ایمیل نویسنده را وارد کنید." maxlength="250"></div>
+        <div><input type="tel" name="author_phone" id="id_author_phone" placeholder="شماره تماس نویسنده" title="لطفا شماره تماس نویسنده را وارد کنید." maxlength="14"></div>
+        <div><textarea name="author_info" id="id_author_info" placeholder="درباره نویسنده" cols="30" rows="10"></textarea></div>
+        <div><input type="checkbox" name="author_is_active" id="id_author_is_active" title="وضعیت نویسنده"></div>
+        <div><input type="text" name="author_slug" id="id_author_slug" placeholder="سلاگ نویسنده" title="لطفا سلاگ نویسنده را وارد کنید." maxlength="65"></div>
+        <div><input type="submit" value="ثبت نویسنده"></div>
+    </form>
+{% endblock main %}

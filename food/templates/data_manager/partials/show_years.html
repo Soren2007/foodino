@@ -1,0 +1,7 @@
+<label for="year">سال:</label>
+<select id="year" class="select input date-time-select" onchange="show_months_with_year()">
+    <option value="none">سال مورد نظر خود را انتخاب کنید.</option>
+    {% for year in years %}
+    <option value="{{year}}">{{year}}</option>
+    {% endfor %}
+</select>

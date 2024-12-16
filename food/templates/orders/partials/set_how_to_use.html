@@ -1,0 +1,29 @@
+{% load translate %}
+{% load static %}
+{% load i18n %}
+<div class="on-page">
+    <div class="form-box bg-white">
+        <div id="close_window_on_page"><i class="fa fa-times"></i></div>
+        <div>
+            <h1>{% trans 'انتخاب چگونگی مصرف' %}</h1>
+        </div>
+        <div>
+            <label for="id_how_to_use">{% trans 'چگونگی مصرف' %}:</label>
+        </div>
+        <div>
+            <select id="id_how_to_use" class="input select">
+                {% for how_to_use in how_to_uses %}
+                <option value="{{how_to_use.0}}">{{how_to_use.1}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <input type="submit" value="{% trans 'اضافه کردن' %}" id="add_to_cart">
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById("close_window_on_page").addEventListener("click",function(){
+        document.getElementsByClassName("on-page")[0].remove()
+    })
+</script>

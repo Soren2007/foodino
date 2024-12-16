@@ -1,0 +1,29 @@
+{% extends 'main_template.html' %}
+{% load translate %}
+{% load i18n %}
+{% block title %}{% trans 'موکبنگ' %}{% endblock title %}
+{% block main %}
+<section>
+    <div class="title">
+        <h1>{% trans 'موکبنگ' %}</h1>
+    </div>
+    <div>
+        {% if mukbangs %}
+        {% for mukbang in mukbangs %}
+        <a href="">
+            <div class="box-model-2">
+                <div class="box-model-2-image">
+                    <img src="{{media}}{{mukbang.poster_image}}" alt="">
+                </div>
+                <div class="box-model-2-title">
+                    <span>{{mukbang|translate}}</span>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+        {% else %}
+        <span>{% trans 'دستور پختی وجود ندارد.' %}</span>
+        {% endif %}
+    </div>
+</section>
+{% endblock main %}

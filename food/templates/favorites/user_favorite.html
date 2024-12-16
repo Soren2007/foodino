@@ -1,0 +1,98 @@
+{% extends 'main_template.html' %}
+{% load render_partial %}
+{% load translate %}
+{% load i18n %}
+{% block meta %}{% endblock meta %}
+{% block title %}{% trans 'لیست علاقه مندی‌ها' %}{% endblock title %}
+{% block header %}{% endblock header %}
+{% block main %}
+<section>
+    <div class="title">
+        <h1>{% trans 'لیست علاقه مندی‌ها' %}</h1>
+    </div>
+    <div>
+        {% if favorite_food_user %}
+        <div class="title"><h2>{% trans 'غذاهای مورد علاقه' %}</h2></div>
+        {% endif %}
+        <div class="container">
+        {% if favorite_food_user or favorite_blog_user %}
+        {% for item in favorite_food_user %}
+        <div class="container box-model-3 food-cart" style="text-align:right;width: 300px;height: 507px;margin:15px">
+            <div class="text-center">
+                <div>
+                    <img src="{{media}}{{item.food.food_image}}" alt="">
+                </div>
+                <div><h3>{{item.food.food_name|translate}}</h3></div>
+                <div><span>{% trans 'گارانتی اصالت و سلامت فیزیکی' %}</span></div>
+                <div><span><i class="fa fa-clock-o"></i></span> <span>{% trans 'زمان پخت:' %}</span> <span>{{item.food.food_time}}</span> <span>{% trans 'دقیقه' %}</span></div>
+                <div>
+                {% if item.final_price < item.price %}
+                    <del>{{item.price}}</del> <span>{% trans 'تومان' %}</span>
+                    <p class="price">{{item.final_price}} <span>{% trans 'تومان' %}</span></p>
+                {% else %}
+                <p class="price">{{item.food.food_price}} <span>{% trans 'تومان' %}</span></p>
+                {% endif %}
+                </div>
+                <div>
+                    <div class="count-qty container">
+                        <span class="btn btn-model-1 hover-m1" onclick="add_to_food_cart('{{item.food.id}}',1)"><i class="fa fa-cart-plus"></i></span>
+                        {% if user.is_authenticated %}
+                        {% if item.food.get_user_favorite %}
+                        <a class="btn btn-model-1 hover-m1" onclick="delete_to_favorite('{{item.food.id}}')"><i class="fa fa-heart" style="color:black"></i></a>
+                        {% else %}
+                        <a class="btn btn-model-1 hover-m1" onclick="add_to_favorite('{{item.food.id}}')"><i class="fa fa-heart"></i></a>
+                        {% endif %}
+                        {% endif %}
+                        <a class="btn btn-model-1 hover-m1" onclick="navigator.share({title:`{% trans 'اشتراک گذاری غذای' %} {{food.food_name|translate}} {% trans 'سایت فودینو' %}`,text:'{{food.food_description|translate}}','url':`{% url 'food_app:show_food' item.food.food_slug %}`})"><i class="fa fa-send"></i></a>
+                    </div>
+                </div>
+                <div><a href="{% url 'food_app:show_food' item.food.food_slug %}" class="btn text-center" style="width: 97%;height: 35px;line-height: 35px;position: relative;top:18px;border-radius: 0 0 10px 10px;">{% trans 'مشاهده محصول' %}</a></div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% if favorite_blog_user %}   
+    <div class="title"><h2>{% trans 'مقاله‌ی مورد علاقه' %}</h2></div>
+    {% endif %}
+        <div class="container">
+            {% for item in favorite_blog_user %}
+            <div class="box-model-1">
+                <div>
+                    <div class="box-model-1-price">
+                        <span>{{item.blog.article_register_date}}</span>
+                    </div>
+                    <div class="box-model-1-image">
+                        <img src="{{media}}{{item.blog.article_main_image}}" type="image/jpg" alt="" class="food-image">
+                    </div>
+                </div>
+                <div class="box-model-1-title">
+                    <div><h3>{{item.blog.article_title|translate}}</h3></div>
+                </div>
+                <div class="box-model-1-buttons">
+                    <div>
+                        <a href="{{item.blog.id}}" class="btn btn-model-1"><i class="fa fa-save"></i></a>
+                        {% if user.is_authenticated %}
+                        {% if item.blog.get_user_favorite_blog %}
+                        <a class="btn btn-model-1" title="حذف از علاقه‌مندی‌ها" onclick="delete_to_favorite_blog('{{item.blog.id}}')"><i class="fa fa-heart" style="color:black"></i></a>
+                        {% else %}
+                        <a class="btn btn-model-1" title="{% trans 'افزودن به علاقه‌مندی‌ها' %}" onclick="add_to_favorite_blog('{{item.blog.id}}')"><i class="fa fa-heart"></i></a>
+                        {% endif %}
+                        {% endif %}
+                        <a class="btn btn-model-1" onclick="navigator.share({title:`{% trans 'اشتراک گذاری مقاله' %} {{blog.article_title|translate}} {% trans 'تارنما فودینو' %}`,text:'{{item.blog.article_summary_text|translate}}','url':`{% url 'blog_app:show_blog' item.blog.article_slug %}`})"><i class="fa fa-send"></i></a>
+                    </div>
+                    <div>
+                        <a href="{% url 'blog_app:show_blog' item.blog.article_slug %}" class="btn btn-show-more">{% trans 'ادامه مطلب' %}</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <h2>
+            {% trans 'محصولی را در این قسمت وارد نکردید.' %}
+        </h2>
+        {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock main %}

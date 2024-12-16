@@ -1,0 +1,113 @@
+{% extends 'main_template.html' %}
+{% load render_partial %}
+{% load translate %}
+{% load i18n %}
+{% load static %}
+{% load order %}
+{% block title %}{% trans 'جزئیات سفارش کاربر' %}{% endblock title %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/frequently_asked_questions.css' %}">
+{% endblock stylesheet %}
+{% block main %}
+<section>
+    <div>
+        {% if order_details %}
+        <div class="title">
+        {% if order_details|length > 1 %}
+        <h1>{{'جزئیات سفارش'|translate}}</h1>
+        {% else %}
+        <h1>{{'جزء سفارش'|translate}}</h1>
+        {% endif %}
+        </div>
+        {% for order_detail in order_details %}
+        <div class="frequently-asked-question">
+            <div>
+                <div><i class="fa fa-angle-left"></i></div>
+                <div class="is-finally"><h2>{{order_detail.order}}</h2></div>
+                <div>
+                    <span class="price-class">
+                        {% if order_detail.order.is_finally %}
+                        <i class="fa fa-check-circle"></i>
+                        {% else %}
+                        <i class="fa fa-times-circle"></i>
+                        {% endif %}
+                        <span class="price">{{order_detail.price}}</span>
+                        <span>{% trans 'تومان' %}</span>
+                    </span>
+                </div>
+            </div>
+            <div class="frequently-asked-question-response-hidden">
+                <div>
+                    {% autoescape off %}
+                    {{payment.description|translate}}
+                    {% endautoescape %}
+                </div>
+                <div>
+                </div>
+                <div>
+                    <span>{{payment}}</span>
+                </div>
+                <div class="payment-content">
+                    <div>
+                        <div class="text-box-model-1">
+                            <span>{% trans 'تاریخ' %}:</span> <span class="order_final_price_text">{{order_detail.order.register_date}}</span>
+                        </div>
+                        <div class="text-box-model-1">
+                            <span>{% trans 'شماره تماس کاربر' %}:</span> <span class="order_final_price_text">{{order_detail.order.customer.phone_number}}</span>
+                        </div>
+                        <div class="text-box-model-1">
+                            <span>{% trans 'چگونگی مصرف' %}:</span> <span class="order_final_price_text">{{order_detail.how_to_use|show_how_to_use}}</span>
+                        </div>
+                        <div class="text-box-model-1">
+                            <span>{% trans 'نوع پرداخت' %}:</span> <span class="order_final_price_text">{{order_detail.order.payment}}</span>
+                        </div>
+                        {% if payment.order.discount > 0 %}
+                        <div class="text-box-model-1">
+                            <span>{% trans 'تخفیف' %}:</span> <span class="order_final_price_text">{{order_detail.order.discount}}%</span>
+                        </div> 
+                        {% endif %}
+                    </div>
+                    <div>
+                        <img src="{{media}}{{order_detail.order.qr_code_image}}" alt="" class="qr-image">
+                    </div>
+                </div>
+                <div class="payment-content">
+                    <div>
+                        <div class="text-box-model-1" style="height: auto !important;">
+                            <span>{% trans 'توضیحات' %}:</span> <span class="order_final_price_text">{{order_detail.order.description}}</span>
+                        </div>
+                        <div class="text-box-model-1">
+                            <span>{% trans 'نام غذا' %}:</span> <span class="order_final_price_text">{{order_detail.food.food_name}}</span>
+                        </div>
+                        <div class="text-box-model-1">
+                            <span>{% trans 'تعداد' %}:</span> <span class="order_final_price_text">{{order_detail.qty}}</span>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="{{media}}{{order_detail.food.food_image}}" alt="" class="qr-image">
+                    </div>
+                </div>
+                <div>
+                    {% if order_detail.my_recipes %}
+                    <a href="{% url 'food_app:show_my_recipe' order_detail.my_recipes.id %}" class="btn btn-show-more frequently-btn">{% trans 'نمایش محصول' %}</a>
+                    {% else %}
+                    <a href="{% url 'food_app:show_food' order_detail.food.food_slug %}" class="btn btn-show-more frequently-btn">{% trans 'نمایش محصول' %}</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="title-model-1">
+            <p>{{'جزء وجود ندارد.'|translate}}</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+<section>
+{% include 'partials/social_media.html' %}
+</section>
+{% endblock main %}
+{% block script %}
+<script src="{% static 'js/frequently_asked_questions_scripts.js' %}" type="text/javascript"></script>
+{% endblock script %}

@@ -1,0 +1,42 @@
+{% extends 'main_template.html' %}
+{% load render_partial %}
+{% load translate %}
+{% load i18n %}
+{% block meta %}
+<meta name="author" content="{% trans 'سورن شاملو' %}">
+<meta name="keywords" content="{% trans 'فودینو ,سفارش غذا ,چی دست کنم, ارسال سریع, فودینو بهترین خدمات برای شما' %}">
+<meta name="description" content="{% trans 'سفارش آنلاین غذا' %}">
+<meta name="robots" content=" index , follow ">
+{% endblock meta %}
+{% block title %}{% trans 'چی بپزم' %}{% endblock title %}
+{% block header %}{% endblock header %}
+{% block main %}
+<section>
+    <div class="title">
+        <h1>{% trans 'چی بپزم؟' %}</h1>
+    </div>
+    <div>
+        <div class="title-model-1">
+            <h3>{% trans 'لطفا موادی که دارید را وارد کنید.' %}</h3>
+        </div>
+        <div>
+            <div>
+                <div class="stuffs-box">
+
+                </div>
+            </div>
+            <div class="container" id="stuff_input_id">
+                <input type="text" class="input" title="{% trans 'لطفا نام ماده را وارد کنید.' %}" id="stuff_input" maxlength="200" placeholder="{% trans 'نام ماده را وارد کنید.' %}">
+                <a id="add_stuff" onclick="add_stuff()">{% trans 'اضافه کردن' %}</a>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="title">
+        <h2>{% trans 'دستورپخت پیشنهادی برای شما' %}</h2>
+    </div>
+    {% csrf_token %}
+    <div class="container" id="id_r_f_a"></div>
+</section>
+{% endblock main %}

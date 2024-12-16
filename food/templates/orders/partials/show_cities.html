@@ -1,0 +1,7 @@
+{% load translate %}
+<select id="id_city" name="city" class="input select">
+    <option>{{'شهر خود را انتخاب کنید.'|translate}}</option>
+    {% for city in cities %}
+    <option value="{{city.id}}">{{city.name|translate}}</option>
+    {% endfor %}
+</select>

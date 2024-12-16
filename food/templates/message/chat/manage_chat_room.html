@@ -1,0 +1,40 @@
+{% extends 'main_template.html' %}
+{% load translate %}
+{% load i18n %}
+{% block title %}{% trans 'مدریت پیام‌ها' %}{% endblock title %}
+{% block main %}
+<section>
+    <div class="title"><h1>{% trans 'مدریت پیام‌ها' %}</h1></div>
+    <div class="box-model-3" id="id_chat_box_manage-profiles">
+        <div>
+            <div>
+                <span>{% trans 'کاربران سایت فودینو' %}</span>
+            </div>
+            <div>
+                {% for user_chat_room in user_chat_rooms %}
+                
+                {% if not user_chat_room.is_support %}
+                <div class="flex" onclick="show_message('{{user_chat_room.phone_number}}',true)">
+                    <div>
+                        <img src="{{media}}{{user_chat_room.avatar}}" alt="" class="profile">
+                    </div>
+                    <div>
+                        <div>
+                            <p>{{user_chat_room}}</p>
+                        </div>
+                        <div>
+                            <p>{{user_chat_room.message_user.all.last}}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div id="id_chat_box_manages">
+            
+        </div>
+    </div>
+</section>
+{% endblock main %}
+    

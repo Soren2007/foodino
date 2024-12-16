@@ -1,0 +1,5 @@
+<img src="{{image_address}}" alt="plot" class="chart">
+<div class="container">
+    <a class="btn btn-show-all margin10" onclick="show_chart()">نمایش نمودار</a>
+    <a class="btn btn-show-all margin10" href="{% url 'main_app:download' 'image' image_address %}">ذخیره نمودار</a>
+</div>

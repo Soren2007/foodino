@@ -1,0 +1,22 @@
+{% extends 'main_template.html' %}
+{% load translate %}
+{% load i18n %}
+{% block meta %}
+    
+{% endblock meta %}
+{% block title %}{% trans 'پیام پس از درگاه' %}{% endblock title %}
+{% block header %}
+<div>
+    <img src="{{media}}images/pyments/header.png" alt="">
+</div>
+{% endblock header %}
+{% block main %}
+<section>
+    <div>
+        <div class="title">{% trans 'وضعیت پرداخت' %}</div>
+    </div>
+    <div>
+        <h2>{{message|translate}}</h2>
+    </div>
+</section>
+{% endblock main %}

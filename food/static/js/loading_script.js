@@ -1,0 +1,1 @@
+window.addEventListener("load",()=>{document.querySelector(".loading-page").classList.add("loaded-page");})

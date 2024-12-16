@@ -1,0 +1,55 @@
+{% extends 'main_template.html' %}
+{% load translate %}
+{% load i18n %}
+{% load render_partial %}
+{% block title %}{% trans 'سفارشات من' %}{% endblock title %}
+{% block main %}
+<section>
+    <div class="title"><h1>{% trans 'سفارشات من' %}</h1></div>
+    <div>
+        {% if page_obj %} 
+        {% for recipe in page_obj %}
+        
+        {% endfor %}
+        {% else %}
+        <div class="title-model-1">
+            <h2>{% trans 'شما دستور غذایی نداشتید' %}</h2>
+        </div>
+        {% endif %}  
+    </div>
+</section>
+<section>
+    {% if obj_len > page_object_number %}
+    <div class="text-center">
+        <div>
+            <nav class="nav-pagination">
+                <ul>
+                    {% if page_obj.has_previous %}
+                    <li><a href="?page={{ page_obj.previous_page_number }}">{% trans 'قبلی' %}</a>
+                    </li>
+                    {% endif %}
+                    {% if page_obj.number|add:'-4' > 1 %}
+                    <li><a href="?page={{ page_obj.number|add:'-5' }}">&hellip;</a>
+                    </li>
+                    {% endif %}
+                    {% for i in page_obj.paginator.page_range %}
+                    {% if page_obj.number == i %}
+                    <li class="page-item active" aria-current="page"><span>{{ i }}<span class="sr-only">(current)</span></span></li>
+                    {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %} <li><a href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                    {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
+                    <li><a href="?page={{ page_obj.number|add:'5' }}">&hellip;</a></li>
+                    {% endif %}
+                    {% if page_obj.has_next %}
+                    <li><a href="?page={{ page_obj.next_page_number }}">{% trans 'بعدی' %}</a></li>
+                    {% else %}
+                    <li class="page-item-disabled"><a href="#" tabindex="-1" aria-disabled="True">{% trans 'بعدی' %}</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+    {% endif %}
+</section>
+{% endblock main %}

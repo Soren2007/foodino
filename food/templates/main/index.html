@@ -1,0 +1,296 @@
+{% extends 'main_template.html' %}
+{% load static %}
+{% load translate %}
+{% load i18n %}
+{% load render_partial %}
+{% block meta %}
+<meta name="author" content="{% trans 'سورن شاملو' %}">
+<meta name="keywords" content="{% trans 'فودینو ,سفارش غذا ,چی دست کنم, ارسال سریع, فودینو بهترین خدمات برای شما' %}">
+<meta name="description" content="{% trans 'سفارش آنلاین غذا' %}">
+<meta name="robots" content=" index , follow ">
+<meta name="apple-mobile-web-app-status-bar-style" content="#ff4405">
+<meta property="og:site_name" content="{% trans 'فودینو' %}"/>
+<meta property="og:url" content="{{url}}"/>
+<meta property="og:description" content="{% trans 'سفارش آنلاین غذا' %}"/>
+{% endblock meta %}
+{% block title %}{% trans 'صفحه اصلی' %}{% endblock title %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/video_controls.css' %}">
+    <link rel="stylesheet" href="{% static 'css/slider.css' %}">
+{% endblock stylesheet %}
+{% if slides %}
+{% block header %}
+{% for slid in slides %}
+<a href="{{slid.slid_url}}" target="_blank">
+    {% if slid.slid_type == '1' %}
+    <div class="header-box hidden-slid" style="background-image: url(../../media/{{slid.slid_video}});" id="{{slid.id}}">
+        <div class="slier-title">
+            <p style="color: {{ slid.slid_color }}">{{slid.slid_title|translate}}</p>
+        </div>
+    </div>
+    {% comment %}
+    <!-- <img src="{{media}}{{slid.slid_video}}" class="header-box header-box-img hidden-slid" alt=""> -->
+    {% endcomment %}
+    {% else %}
+    <div class="header-box hidden-slid" style="background-image: url(../../media/{{slid.slid_image}});" id="{{slid.id}}">
+        <div class="slier-title">
+            <div><p class="slier-title" style="color: {{ slid.slid_color }}">{{slid.slid_title|translate}}</p></div>
+            <div class="show_more_slider">{{'جزئیات بیشتر'|translate}}</div>
+        </div>
+    </div>
+    {% endif %}
+</a>
+{% endfor %}            
+<div class="dots">
+    {% for slid in slides %}
+    <div class="dot" id="dot_{{slid.id}}" onclick="change_slid({{ forloop.counter }})"><div class="slid-time"></div></div>
+    {% endfor %}
+</div>
+{% endblock header %}
+{% endif %}
+{% block main %}
+<section>
+    <!-- <div class="design">
+        <img src="{{media}}images/design_images/image_1.webp" alt="">
+    </div> -->
+    <div id="design_backgroud_image_1">
+        <div class="title">
+            <h2>{% trans 'پرفروش ترین‌ها' %}</h2>
+        </div>
+        <div class="container">
+            {% if latest_food_sales_number %}
+            {% for food in latest_food_sales_number %}
+            <div class="box-model-1">
+                <div>
+                    <div class="box-model-1-price">
+                        <span class="price">{{food.food_price}}</span> <span>{% trans 'تومان' %}</span>
+                    </div>
+                    <div class="box-model-1-image">
+                        <img src="{{media}}{{food.food_image}}" type="image/jpg" alt="" class="food-image">
+                    </div>
+                </div>
+                <div class="box-model-1-title">
+                    <div><span style="    width: 170px;
+                        display: block;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        text-align: center;
+                        margin: 2px auto;">{{food.food_name|translate}}</span></div>
+                </div>
+                <div class="box-model-1-buttons">
+                    <div>
+                        <span class="btn btn-model-1" title="{% trans 'افزودن به سبد خرید' %}" onclick="add_to_food_cart('{{food.id}}',1)"><i class="fa fa-cart-plus"></i></span>
+                        {% if user.is_authenticated %}
+                        {% if food.get_user_favorite %}
+                        <a class="btn btn-model-1" title="{% trans 'حذف از علاقه‌مندی‌ها' %}" onclick="delete_to_favorite('{{food.id}}')"><i class="fa fa-heart" style="color:black"></i></a>
+                        {% else %}
+                        <a class="btn btn-model-1" title="{% trans 'افزودن به علاقه‌مندی‌ها' %}" onclick="add_to_favorite('{{food.id}}')"><i class="fa fa-heart"></i></a>
+                        {% endif %}
+                        {% else %} 
+                        <a class="btn btn-model-1" title="{% trans 'افزودن به علاقه‌مندی‌ها'|translate}" onclick="show_alert_error(`{% trans 'برای استفاده از این بخش باید وارد شوید.'|translate}`)"><i class="fa fa-heart"></i></a>
+                        {% endif %}
+                        <a class="btn btn-model-1" title="{% trans 'اشتراک گذاری' %}" onclick="navigator.share({title:`{% trans 'اشتراک گذاری غذای' %} {{food.food_name|translate}} {% trans 'تارنما فودینو' %}`,text:'{{food.food_description|translate}}','url':'{% url 'food_app:show_food' food.food_slug %}'})"><i class="fa fa-send"></i></a>
+                    </div>
+                    <div>
+                        <a href="{% url 'food_app:show_food' food.food_slug %}" class="btn btn-show-more">{% trans 'جزئیات بیشتر' %}</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <span>{% trans 'غذایی وجود ندارد.' %}</span>
+            {% endif %}
+        </div>
+        <div>
+            {% if latest_food_sales_number %}
+            <a href="{% url 'food_app:show_foods' %}" class="btn btn-show-all">{% trans 'نمایش همه' %}</a>
+            {% else %}
+            <a class="btn btn-show-all disable">{% trans 'نمایش همه' %}</a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% render_partial 'food_app:show_similar_foods' %}
+<section>
+    <div id="">
+        <div class="title">
+            <h2>{% trans 'جدیدترین دستورات پخت غذا' %}</h2>
+        </div>
+        <div class="container">
+            {% if latest_recipes %}
+            {% for recipes_obj in latest_recipes %}
+            <a href="{% url 'food_app:show_recipe' recipes_obj.recipe_slug %}">
+                <div class="box-model-2">
+                    <div class="box-model-2-image">
+                        <img src="{{media}}{{recipes_obj.recipe_image}}" alt="">
+                    </div>
+                    <div class="box-model-2-title">
+                        <span style="width: 135px;display: block;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;text-align: center;margin: 2px auto;">{{recipes_obj.recipe_name|translate}}</span>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+            {% else %}
+            <span>{% trans 'دستور پختی وجود ندارد.' %}</span>
+            {% endif %}
+        </div>
+        <div>
+            {% if latest_recipes %}
+            <a href="{% url 'food_app:show_recipes' %}" class="btn btn-show-all">{% trans 'نمایش همه' %}</a>
+            {% else %}
+            <a class="btn btn-show-all disable">{% trans 'نمایش همه' %}</a>
+            {% endif %}   
+        </div>
+    </div>
+</section>
+<section>
+    <div class="title">
+        <h2>{% trans 'جدیدترین مقالات' %}</h2>
+    </div>
+    <div class="container">
+        {% if latest_articles %}
+        {% for blog in latest_articles %}
+        <div class="box-model-1">
+            <div>
+                <div class="box-model-1-price">
+                    <span>{{blog.article_register_date}}</span>
+                </div>
+                <div class="box-model-1-image">
+                    <img src="{{media}}{{blog.article_main_image}}" type="image/jpg" alt="" class="food-image">
+                </div>
+            </div>
+            <div class="box-model-1-title">
+                <div><span>{{blog.article_title|translate}}</span></div>
+            </div>
+            <div class="box-model-1-buttons">
+                <div>
+                    <a onclick="download_blog()" class="btn btn-model-1"><i class="fa fa-save"></i></a>
+                    {% if user.is_authenticated %}
+                    {% if blog.get_user_favorite_blog %}
+                    <a class="btn btn-model-1" title="{% trans 'حذف از علاقه‌مندی‌ها' %}" onclick="delete_to_favorite_blog('{{blog.id}}')"><i class="fa fa-heart" style="color:black"></i></a>
+                    {% else %}
+                    <a class="btn btn-model-1" title="{% trans 'افزودن به علاقه‌مندی‌ها' %}" onclick="add_to_favorite_blog('{{blog.id}}')"><i class="fa fa-heart"></i></a>
+                    {% endif %}
+                    {% endif %}
+                    <a class="btn btn-model-1" onclick="navigator.share({title:`{% trans 'اشتراک گذاری مقاله' %} {{blog.article_title|translate}} {% trans 'تارنما فودینو' %}`,text:'{{blog.article_summary_text|translate}}','url':'{% url 'blog_app:show_blog' blog.article_slug %}'})"><i class="fa fa-send"></i></a>
+                </div>
+                <div>
+                    <a href="{% url 'blog_app:show_blog' blog.article_slug %}" class="btn btn-show-more">{% trans 'ادامه مطلب' %}</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <span>{% trans 'مقاله‌ای وجود ندارد.' %}</span>
+        {% endif %}
+    </div>
+    <div>
+        {% if latest_articles %}
+        <a href="{% url 'blog_app:show_blogs' %}" class="btn btn-show-all">{% trans 'نمایش همه' %}</a>
+        {% else %}
+        <a class="btn btn-show-all disable">{% trans 'نمایش همه' %}</a>
+        {% endif %}
+    </div>
+</section>
+
+{% comment %}
+<section class="mukbang-box">
+    <div class="title">
+        <h2>{% trans 'موکبنگ' %}</h2>
+    </div>
+    <div class="index-page-mukbang">
+        <div class="mukbang-video-box">
+            <div class="angle-right" onclick="plus_video_index()">
+                <i class="fa fa-angle-right"></i>
+            </div>
+            <div class="play-pause-video-btn">
+                <img src="{{media}}/images/icons/playpng.png" alt="" id="play-icon">
+            </div>
+            <div class="container" id="id-videos-mukbang">
+                <div class="video-player-wrapper">
+                    <video id="my-custom-video-play" src="https://caspian10.asset.aparat.com/aparat-video/4e5fb871c6c46c148c3bf94cd4e8619651990686-240p.mp4?wmsAuthSign=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImI5MGJiMzkxYWI5MjNlNjRhYzk5OTcwYjZjMjUwOTljIiwiZXhwIjoxNjkwNDgzMzI5LCJpc3MiOiJTYWJhIElkZWEgR1NJRyJ9.bwIJM7qV5Q1bP27O7jWCws8yW_Ovu_Qs0OwCp7FqJD4" width="200" height="200"></video>
+                    <div class="video-controls">
+                        <span class="icon-player play-pause"></span>
+                        <div data-preview="true" id="timer" class="seekbar timer">
+                            <div data-preview="true" id="loaded"></div>
+                            <div data-preview="true" id="progress"><div data-preview="true" id="handler"></div></div>
+                            <span id="remain">-00:00</span>
+                        </div>
+                        <span class="icon-player sound-mute"></span>
+                        <div class="seekbar sound">
+                            <div id="loaded"></div>
+                            <div id="progress"><div id="handler"></div></div>
+                        </div>
+                        <span class="icon-player full-screen"></span>
+                    </div>
+                
+                {% for mukbang in mukbangs %}
+                <video class="mukbang-video" id="{{mukbang.id}}">
+                    <source src="{{media}}{{mukbang.video}}" type="video/mp4">
+                </video>
+                {% endfor %}
+                    
+            </div>
+            <div class="angle-left" onclick="positive_video_index()">
+                <i class="fa fa-angle-left"></i>
+            </div>
+        </div>
+        <div class="mukbang-controls">
+            <div>
+                <div><i class="fa fa-thumbs-up"></i></div>
+                <div><span>2345</span></div>
+            </div>
+            <div>
+                <div><i class="fa fa-thumbs-down"></i></div>
+                <div><span>2345</span></div>
+            </div>
+            <div>
+                <div><i class="fa fa-share"></i></div>
+                <div><span>2345</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endcomment %}
+    
+<section>
+    <div class="container info-box-model-2">
+        <div id="id_info_div">
+            <h2>{% trans 'چرا فودینو؟!' %}</h2>
+            <p>
+            {% trans 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.' %}
+            </p>
+       </div>
+       <div>
+            <img src="{{media}}images/logo/logo.png" alt="" class="logo">
+       </div>
+    </div>
+</section>
+<section>
+<div class="download-app-main-box">
+    <div>
+        <h2>{% trans 'دانلود اپلیکیشن فودینو' %}</h2>
+    </div>
+    <div style="max-height: 500px;">
+        <div class="flex" style="justify-content: center;flex-wrap: wrap;">
+            <a href="https://sibapp.com/" target="_blank"><img src="{{media}}images/stors/sib-app.svg" alt=""></a>
+            <a href="https://sibirani.com/" target="_blank"><img src="{{media}}images/stors/sibirani.svg" alt=""></a>
+            <a href="https://sibche.com/" target="_blank"><img src="{{media}}images/stors/sibche.svg" alt=""></a>
+            <a href="" target="_blank"><img src="{{media}}images/stors/pwa.svg" alt=""></a>
+        </div>
+        <div class="flex" style="justify-content: center;flex-wrap: wrap;">
+            <a href="https://myket.ir/" target="_blank"><img class="image-download-app" src="{{media}}images/stors/myket.svg" alt=""></a>
+            <a href="https://play.google.com/" target="_blank"><img src="{{media}}images/stors/google-play.svg" alt=""></a>
+            <a href="https://cafebazaar.ir/" target="_blank"><img src="{{media}}images/stors/coffe-bazzar.svg" alt=""></a>
+            <a href="https://appgallery.huawei.com/" target="_blank"><img src="{{media}}images/stors/appgallery.svg" alt=""></a>
+        </div>
+    </div>
+</div>
+</section>
+{% endblock main %}
+{% block script %}
+<script src="{% static 'js/mukbang_videos.js' %}"></script>
+<script src="{% static 'js/slider_script.js' %}"></script>
+<!-- <script src="{% static 'js/video_controls.js' %}"></script> -->
+{% endblock script %}

@@ -1,0 +1,80 @@
+{% extends 'main_template.html' %}
+{% load translate %}
+{% load i18n %}
+{% block title %}{% trans 'محصولات غذایی' %}{% endblock title %}
+{% block main %}
+<div class="title">
+    <h1>{% trans 'محصولات غذایی' %}</h1>
+</div>
+<div>
+    <div class="container">
+        {% if page_obj %}
+        {% for food in page_obj %}
+        <div class="box-model-1" title="{{food.food_name}}">
+            <div>
+                <div class="box-model-1-price">
+                    <span class="price">{{food.food_price}}</span> <span>{% trans 'تومان' %}</span>
+                </div>
+                <div class="box-model-1-image">
+                    <img src="{{media}}{{food.food_image}}" type="image/jpg" alt="" class="food-image">
+                </div>
+            </div>
+            <div class="box-model-1-title">
+                <div><h3>{{food.food_name|translate}}</h3></div>
+            </div>
+            <div class="box-model-1-buttons">
+                <div>
+                    <span class="btn btn-model-1" title="{% trans 'افزودن به سبد خرید' %}" onclick="add_to_food_cart('{{food.id}}',1)"><i class="fa fa-cart-plus"></i></span>
+                    {% if user.is_authenticated %}
+                    {% if food.get_user_favorite %}
+                    <a class="btn btn-model-1" title="{% trans 'حذف از علاقه‌مندی‌ها' %}" onclick="delete_to_favorite('{{food.id}}')"><i class="fa fa-heart" style="color:black"></i></a>
+                    {% else %}
+                    <a class="btn btn-model-1" title="{% trans 'افزودن به علاقه‌مندی‌ها' %}" onclick="add_to_favorite('{{food.id}}')"><i class="fa fa-heart"></i></a>
+                    {% endif %}
+                    {% endif %}
+                    <a class="btn btn-model-1" title="اشتراک گذاری" onclick="navigator.share({title:`{% trans 'اشتراک گذاری غذای' %} {{food.food_name}} {% trans 'سایت فودینو' %}`,text:'{{food.food_description}}','url':'{% url 'food_app:show_food' food.food_slug %}'})"><i class="fa fa-send"></i></a>
+                </div>
+                <div>
+                    <a href="{% url 'food_app:show_food' food.food_slug %}" class="btn btn-show-more">{% trans 'جزئیات بیشتر' %}</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <span>{% trans 'غذایی وجود ندارد' %}</span>
+        {% endif %}
+    </div>
+    {% if obj_len > page_object_number %}
+    <div class="text-center">
+        <div>
+            <nav class="nav-pagination">
+                <ul>
+                    {% if page_obj.has_previous %}
+                    <li><a href="?page={{ page_obj.previous_page_number }}">{% trans 'قبلی' %}</a>
+                    </li>
+                    {% endif %}
+                    {% if page_obj.number|add:'-4' > 1 %}
+                    <li><a href="?page={{ page_obj.number|add:'-5' }}">&hellip;</a>
+                    </li>
+                    {% endif %}
+                    {% for i in page_obj.paginator.page_range %}
+                    {% if page_obj.number == i %}
+                    <li class="page-item active" aria-current="page"><span>{{ i }}<span class="sr-only">(current)</span></span></li>
+                    {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %} <li><a href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                    {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
+                    <li><a href="?page={{ page_obj.number|add:'5' }}">&hellip;</a></li>
+                    {% endif %}
+                    {% if page_obj.has_next %}
+                    <li><a href="?page={{ page_obj.next_page_number }}">{% trans 'بعدی' %}</a></li>
+                    {% else %}
+                    <li class="page-item-disabled"><a href="#" tabindex="-1" aria-disabled="True">{% trans 'بعدی' %}</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock main %}

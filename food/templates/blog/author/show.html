@@ -1,0 +1,56 @@
+{% extends 'main_template.html' %}
+{% load translate %}
+{% load i18n %}
+{% block title %}{{author.author_name|translate}} {{author.author_family|translate}}{% endblock title %}
+{% block main %}
+<section>
+    <div class="title">
+        <h1>{% trans 'درباره نویسنده' %}</h1>
+    </div>
+    <div class="box-model-3 text-center" style="height: 50%;">
+        <div class="title">
+            <h2>{{author.author_name|translate}} {{author.author_family|translate}}</h2>
+        </div>
+        <div>
+            <img src="{{media}}{{author.author_avatar}}" alt="{{author.author_name|translate}}" class="img-avatar-m">
+        </div>
+        <div>
+            <p>{{author.author_info|translate}}</p>
+        </div>
+        <div>
+            <div>
+                <span>{% trans 'ایمیل: ' %}</span>
+                <a href="maleto:{{author.author_email}}">{{author.author_email}}</a>
+            </div>
+        </div>
+        <div>
+            <div>
+                <span>{% trans 'شماره تماس:' %}</span>
+                <a href="tel:{{author.author_phone}}">{{author.author_phone}}</a>
+            </div>
+        </div>
+        <div>
+            {% if user.is_admin %}
+            <div>
+                <span>{% trans 'سلاگ:' %}</span>
+                <span>{{author.author_slug}}</span>
+            </div>
+            <div>
+                <span>{% trans 'وضعیت فعال بودن نویسنده:' %}</span>
+                {% if author.author_is_active == True %}
+                <i class="fa fa-check"></i>
+                {% else %}
+                <i class="fa fa-times"></i>
+                {% endif %}
+            </div>
+            {% endif %} 
+        </div>
+        <div>
+            <a href="" class="link">{% trans 'دانلود رزومه' %}</a>
+        </div>
+        <div>
+            <a href="#" class="btn btn-show-all">{% trans 'نمایش همه مقالات من' %}</a>
+        </div>
+    </div>
+</section>
+{% endblock main %}

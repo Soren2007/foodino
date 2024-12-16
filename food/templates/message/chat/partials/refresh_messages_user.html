@@ -1,0 +1,24 @@
+{% load i18n %}
+{% load translate %}
+{% for message in user_object.message_user.all %}
+    <div class="chat-box-user-message" id="id_chat_room_message_{{message.id}}">
+        <div>
+            <img src="{{media}}{{user_object.avatar}}" alt="{{user_object.full_name}}">
+        </div>
+        <div>
+            <p>{{message.message_text|translate}}</p>
+            <p class="date-time">{{message.register_date}}</p>
+        </div>
+    </div>
+    {% for item in message.message_child.all %}
+    <div class="chat-box-helper-message">
+        <div>
+            <p>{{item.message_text|translate}}</p>
+            <p class="date-time">{{item.register_date}}</p>
+        </div>
+        <div>
+            <img src="http://127.0.0.1:8000/media/images/avatar/avatar_1.png" alt="">
+        </div>
+</div>
+{% endfor %}
+{% endfor %}

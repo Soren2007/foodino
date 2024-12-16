@@ -1,0 +1,139 @@
+{% load translate %}
+{% load i18n %}
+<ul id="id_navbar_number_2">
+    <li>
+        <span id="id_menu_bar_icon"><i class="fa fa-bars"></i></span>
+        <ul>
+            <li><a href="{% url 'main_app:index' %}"><i class="fa fa-home"></i> <span>{% trans 'خانه<' %}/span></a></li>
+            <li>
+                <span>{% trans 'دسته‌بندی‌ها' %}<i class="fa fa-angle-down"></i></span>
+                <ul>
+                    <li><a href="{% url 'food_app:show_food_groups' %}">{% trans 'دسته‌بندی غذاها' %}</a></li>
+                </ul>
+            </li>
+            <li><a href="{% url 'what_cook_app:index' %}">{% trans 'چی بپزم' %}</a></li>
+            <li><a href="{% url 'my_environment_app:my_environment_index' %}">{% trans 'محیط زیست من' %}</a></li>
+            <li><a href="{% url 'blog_app:show_blogs' %}">{% trans 'بلاگ' %}</a></li>
+            <li><a href="{% url 'subscription_app:index' %}">{% trans 'خرید اشتراک' %}</a></li>
+            <li id="id_garune"><span>{% trans 'هدایا' %}<i class="fa fa-angle-down"></i></span>
+                <ul>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'gift_app:show_wheel_of_luck' %}">{% trans 'گردانه‌ شانس' %}</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'gift_app:show_lotteries' %}">{% trans 'قرعه‌کشی' %}</a></li>
+                </ul> 
+            </li>
+            {% if user.is_authenticated %}
+            <li><span>{% trans 'حساب کاربری' %}<i class="fa fa-angle-down"></i></span>
+                <ul>
+                    {% if user.is_admin %}
+                    <li><a href="{% url 'admin:index' %}">{% trans 'پنل مدیریت سایت' %}</a></li>
+                    <li><a href="{% url 'data_manager_app:index' %}">{% trans 'پنل مدیریت داده' %}</a></li>
+                    <li><a href="http://127.0.0.1:8000/rosetta">{% trans 'پنل مدیریت زبان سایت' %}</a></li>
+                    {% endif %}
+                    {% if user.is_serviceman %}
+                    <li><a href="{% url 'orders_app:orders_panel' %}">{% trans 'پنل مدیریت سفارشات' %}</a></li>
+                    {% endif %}
+                    {% if user.is_support %}
+                    <li><a href="http://127.0.0.1:8000/manage-chat-room">{% trans 'پنل مدیریت پیام‌ها' %}</a></li>
+                    {% endif %}
+                    {% if user.is_delivery %}
+                    <li><a href="{% url 'delivery_app:delivery_panel' %}">{% trans 'پنل مدیریت پیک' %}</a></li>
+                    {% endif %}
+                    {% if user_info.is_user_compile %}
+                    <li><a href="{% url 'accounts_app:compile_information' %}">{% trans 'تکمیل مشخصات' %}</a></li>
+                    {% else %}
+                    <li><a href="{% url 'accounts_app:compile_information' %}">{% trans 'تغییر مشخصات' %}</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'accounts_app:user_panel' %}">{% trans 'پنل کاربری' %}</a></li>
+                    <li><a href="{% url 'orders_app:carts' %}">{% trans 'سبد خرید' %}</a></li>
+                    <li><span>{% trans 'امتیاز شما:' %}</span><span>{{user.score}}</span></li>
+                    <li><a href="{% url 'accounts_app:logout' %}">{% trans 'خروج ' %}<i class="fa fa-sign-out"></i></a></li>
+                </ul>
+            </li>
+            {% else %}
+            <li><span>{% trans 'حساب کاربری' %}<i class="fa fa-angle-down"></i></span>
+                <ul>
+                    <li><a href="{% url 'accounts_app:register' %}">{% trans 'ثبت‌نام' %}</a></li>
+                    <li><a href="{% url 'accounts_app:login' %}">{% trans 'ورود' %}</a></li>
+                </ul>
+            </li>
+            {% endif %}
+        </ul>
+    </li>
+    <li>
+        <form class="form-search" action="{% url 'search_app:search_results' %}">
+            <input class="form-search-input input" type="text" name="q" placeholder="{% trans 'جستجو از میان حصول' %} {{foods_length}} {% trans 'محصول' %}" value="{{query}}">
+            <button class="search-btn"><i class="fa fa-search"></i></button>
+        </form>
+    </li>
+    <!-- <li>
+        <span id="id_menu_bar_icon"><i class="fa fa-search"></i>></span>
+        <ul>
+            <li></li>
+        </ul>
+    </li> -->
+</ul>
+<ul id="id_navbar_number_1">
+    <li><a href="{% url 'main_app:index' %}"><img src="{{media}}images/logo/logo.png" alt="{% trans 'فودینو' %}" class="logo"></a></li>
+    <li><a href="{% url 'main_app:index' %}"><i class="fa fa-home"></i> <span>{% trans 'خانه' %}</span></a></li>
+    <li>
+        <span>{% trans 'دسته‌بندی‌ها' %}<i class="fa fa-angle-down"></i></span>
+        <ul>
+            <li><a href="{% url 'food_app:show_food_groups' %}">{% trans 'دسته‌بندی غذاها' %}</a></li>
+        </ul>
+    </li>
+    <li><a href="{% url 'what_cook_app:index' %}">{% trans 'چی بپزم' %}</a></li>
+    <li id="my_environment"><a href="{% url 'my_environment_app:my_environment_index' %}">{% trans 'محیط زیست من' %}</a></li>
+    <li><a href="{% url 'blog_app:show_blogs' %}">{% trans 'بلاگ' %}</a></li>
+    {% if user.is_authenticated %}
+    <li><a href="{% url 'subscription_app:index' %}">{% trans 'خرید اشتراک' %}</a></li>
+    {% endif %}
+    <li id="id_garune"><span>{% trans 'هدایا' %}<i class="fa fa-angle-down"></i></span>
+        <ul>
+            <li><a href="{% url 'gift_app:show_wheel_of_luck' %}">{% trans 'گردانه‌ شانس' %}</a></li>
+            <li><a href="{% url 'gift_app:show_lotteries' %}">{% trans 'قرعه‌کشی' %}</a></li>
+        </ul>
+    </li>
+    {% if user.is_authenticated %}
+    <li><span>{% trans 'حساب کاربری' %}<i class="fa fa-angle-down"></i></span>
+        <ul>
+            {% if user.is_admin %}
+            <li><a href="{% url 'admin:index' %}">{% trans 'پنل مدیریت سایت' %}</a></li>
+            <li><a href="https://soheil.irandns.com:2083/cpsess8736874517/frontend/jupiter/index.html?login=1&post_login=93746244839147" target="_blank">{% trans 'سی پنل' %}</a></li>
+            <li><a href="{% url 'data_manager_app:index' %}">{% trans 'پنل مدیریت داده' %}</a></li>
+            <li><a href="http://127.0.0.1:8000/rosetta">{% trans 'پنل مدیریت زبان سایت' %}</a></li>
+            {% endif %}
+            {% if user.is_serviceman %}
+                <li><a href="{% url 'orders_app:orders_panel' %}">{% trans 'پنل مدیریت سفارشات' %}</a></li>
+            {% endif %}
+            {% if user.is_support %}
+            <li><a href="http://127.0.0.1:8000/manage-chat-room">{% trans 'پنل مدیریت پیام‌ها' %}</a></li>
+            {% endif %}
+            {% if user.is_delivery %}
+            <li><a href="{% url 'delivery_app:delivery_panel' %}">{% trans 'پنل مدیریت پیک' %}</a></li>
+            {% endif %}
+            {% if user_info.is_user_compile %}
+            <li><a href="{% url 'accounts_app:compile_information' %}">{% trans 'تکمیل مشخصات' %}</a></li>
+            {% else %}
+            <li><a href="{% url 'accounts_app:compile_information' %}">{% trans 'تغییر مشخصات' %}</a></li>
+            {% endif %}
+            <li><a href="{% url 'accounts_app:user_panel' %}">{% trans 'پنل کاربری' %}</a></li>
+            <li><a href="{% url 'orders_app:carts' %}">{% trans 'سبد خرید' %}</a></li>
+            <li><span>{% trans 'امتیاز شما:' %}</span><span>{{user.score}}</span></li>
+            <li><a href="{% url 'accounts_app:logout' %}">{% trans 'خروج' %}</a></li>
+        </ul>
+    </li>
+    {% else %}
+    <li><span>حساب کاربری<i class="fa fa-angle-down"></i></span>
+        <ul>
+            <li><a href="{% url 'accounts_app:register' %}">{% trans 'ثبت‌نام' %}</a></li>
+            <li><a href="{% url 'accounts_app:login' %}">{% trans 'ورود' %}</a></li>
+        </ul>
+    </li>
+    {% endif %}
+</ul>
+<ul>
+    <li id="id_favorites_icon"><a href="{% url 'favorites_app:user_favorite' %}"><span class="indicator-value" id="id_favorites_value"></span> <img src="{{media}}images/heart.png" alt="{% trans 'فودینو' %}" id="id_heart_image"></a></li>
+    <li><a href="{% url 'orders_app:carts' %}"><span class="indicator-value" id="id_indicator-value"></span> <img src="{{media}}images/shop_cart/shopping-cart.png" alt="{% trans 'فودینو' %}" id="id_shopping_cart_image"></a></li>
+</ul>

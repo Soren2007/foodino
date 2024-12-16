@@ -1,0 +1,82 @@
+{% extends 'main_template.html' %}
+{% load translate %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% if user_gifts|length > 1 %}{{'تراکنش‌ها'|translate}}{% else %}{{'تراکنش‌'|translate}}{% endif %}{% endblock title %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/frequently_asked_questions.css' %}">
+{% endblock stylesheet %}
+{% block main %}
+<section>
+    <div>
+        {% if payments %}
+        <div class="title">
+        {% if payments|length > 1 %}
+        <h1>{{'تراکنش‌ها'|translate}}</h1>
+        {% else %}
+        <h1>{{'تراکنش‌'|translate}}</h1>
+        {% endif %}
+        </div>
+        {% for payment in payments %}
+        <div class="frequently-asked-question">
+            <div>
+                <div><i class="fa fa-angle-left"></i></div>
+                <div class="is-finally"><h2>{{payment.register_date}}</h2></div>
+                <div>
+                    <span class="price-class">
+                        {% if payment.is_finally %}
+                        <i class="fa fa-check-circle"></i>
+                        {% else %}
+                        <i class="fa fa-times-circle"></i>
+                        {% endif %}
+                        <span class="price">{{payment.amount}}</span>
+                        <span>{% trans 'تومان' %}</span>
+                    </span>
+                </div>
+            </div>
+            <div class="frequently-asked-question-response-hidden">
+                <div>
+                    {% autoescape off %}
+                    {{payment.description|translate}}
+                    {% endautoescape %}
+                </div>
+                <div>
+                </div>
+                <div>
+                    <span>{{payment}}</span>
+                </div>
+                <div class="payment-content">
+                    <div>
+                        <div class="text-box-model-1">
+                            <span>{% trans 'کدپیگیری' %}:</span> <span class="order_final_price_text"></span>{{payment.ref_id}}
+                        </div>
+                        {% if payment.order.discount > 0 %}
+                        <div class="text-box-model-1">
+                            <span>{% trans 'تخفیف' %}:</span> <span class="order_final_price_text"></span>{{payment.order.discount}}%
+                        </div> 
+                        {% endif %}
+                    </div>
+                    <div>
+                        <img src="{{media}}{{payment.order.qr_code_image}}" alt="" class="qr-image">
+                    </div>
+                </div>
+                <div>
+                    <a href="" class="btn btn-show-more frequently-btn">فعال سازی</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="title-model-1">
+            <p>{{'تراکنشی وجود ندارد.'|translate}}</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+<section>
+{% include 'partials/social_media.html' %}
+</section>
+{% endblock main %}
+{% block script %}
+<script src="{% static 'js/frequently_asked_questions_scripts.js' %}" type="text/javascript"></script>
+{% endblock script %}

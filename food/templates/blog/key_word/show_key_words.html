@@ -1,0 +1,76 @@
+{% extends 'main_template.html' %}
+{% block title %}{% endblock title %}
+{% block header %}{% endblock header %}
+{% block main %}
+<section>
+    <table>
+        <thead>
+            <tr>
+                <th>کلمه کیلیدی</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key_word in key_words %}
+                <tr>
+                    <td>{{key_word.word}}</td>
+                    <td>
+                        <a href=""><i class="fa fa-trash-o"></i></a>                
+                        <a href=""><i class="fa fa-edit"></i></a>
+                        <a href="" class="fa fa"></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>                
+                <td colspan="2"><a href=""><i class="fa fa-plus"></i></a></td>
+            </tr>
+        </tfoot>
+    </table>
+</section>
+<section>
+    <div style="text-align:center;">
+        <div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">قبلی</a>
+                    </li>
+                    {% endif %}
+                    {% if page_obj.number|add:'-4' > 1 %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'-5' }}">&hellip;</a>
+                    </li>
+                    {% endif %}
+                    {% for i in page_obj.paginator.page_range %}
+                    {% if page_obj.number == i %}
+                    <li class="page-item active" aria-current="page">
+                        <span class="page-link">
+                            {{ i }}
+                            <span class="sr-only">(current)</span>
+                        </span>
+                    </li>
+                    {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %} <li class="page-item"><a
+                            class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                        {% endfor %}
+                        {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
+                        <li class="page-item"><a class="page-link"
+                                href="?page={{ page_obj.number|add:'5' }}">&hellip;</a></li>
+                        {% endif %}
+                        <!end Hellip -->
+                            {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}">بعدی</a>
+                            </li>
+                            {% else %}
+                            <li class="page-item-disabled"><a class="page-link" href="#" tabindex="-1"
+                                    aria-disabled="True">بعدی</a></li>
+                            {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+{% endblock main %}

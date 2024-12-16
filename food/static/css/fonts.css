@@ -1,0 +1,601 @@
+/* fonts  */
+@font-face {font-family: IRANSANS;src:url('../fonts/IRANSansWeb_Medium.eot?iefix') format('embeddad-opentype'),url('../fonts/IRANSansWeb_Medium.ttf') format('truetype'),url('../fonts/IRANSansWeb_Medium.woff') format('woff'),url('../fonts/IRANSansWeb_Medium.woff2') format('woff2')}
+*{font-family: "IRANSANS"}
+/* fonts  */
+
+
+@media screen and (max-width:1700px) {
+    /* top menu 2 responsive */
+    .search-form-div{width: 750px !important;}
+    /* top menu 2 responsive */
+    /* header image responsive */
+    .food-image-header{
+        width: 100%;
+    }
+    /* header image responsive */
+
+    
+    .article-information{
+        width: 100%;
+    }
+
+
+}
+@media screen and (max-width:1650px) {
+    article {
+        width: 85%;
+    }
+    .aside-blog {
+        display: none;
+    }
+    #id_food_btns {
+        width: 40%;
+    }
+    
+}
+@media screen and (max-width:1500px) {
+    /* top menu 2 responsive */
+    .search-form-div{width: 700px !important;}   
+    /* top menu 2 responsive */
+    article {
+        width: 80%;
+    }
+}
+@media screen and (max-width:1450px) {
+    /* top menu 2 responsive */
+    .search-form-div{width: 650px !important;}
+    /* top menu 2 responsive */
+    .article-information{
+        width: 100%;
+    }
+    .subscription-box{
+        width: 70%;
+    }
+}
+@media screen and (max-width:1200px) {
+    /* top menu 2 responsive */
+    .search-form-div{width: 600px !important;}
+    /* top menu 2 responsive */
+    /* comment box responsive */
+    .comment-box{
+        flex-direction: column;
+    }
+    .comment-box>div:nth-child(2){
+        margin: 10px auto;
+    }
+    .create-comment-form{
+        width: 370px;
+        margin: 30px 0 30px 0;
+    }
+    /* comment box responsive */
+    article {
+        width: 85%;
+    }
+    .event_top_menu{
+        flex-direction: column;
+        overflow: hidden;
+        padding: 10px;
+    }
+    .event_top_menu_title span{
+        margin-right: 7px;
+    }
+    
+}
+@media screen and (max-width:1194px) {
+    #id_food_btns {
+        width: 50%;
+    }
+}
+@media screen and (max-width:1170px) {
+    /* top menu 2 responsive */
+    .search-form-div{width: 480px !important;}
+    /* top menu 2 responsive */
+    .info-box-model-2{flex-direction: column;}
+    /* navbar responsive */
+    #my_environment{display: none;}
+    /* navbar responsive */
+    article {
+        width: 90%;
+    }
+}
+@media screen and (max-width:1130px) {
+    /* top menu 2 responsive */
+    .search-form-div{width: 550px !important;}
+    /* top menu 2 responsive */
+}
+@media screen and (max-width:1000px) {
+    /* top menu 2 responsive */
+    .search-form-div{width: 390px !important;}
+    /* top menu 2 responsive */
+    /* navbar responsive */
+    .navbar{width: 100%;margin: 0 !important;border-radius: 0;}
+    /* navbar responsive */
+    /* alerts */
+    .alert{width: 82%;}
+    /* alerts */
+    .header-box h1 {margin-top: 0px;}
+    /* header image responsive */
+    .food-image-header{
+        height: 360px;
+    }
+    /* header image responsive */
+    .container{
+        width: 90%;
+    }
+    /* comment box responsive */
+    .send-comment{
+        display: flex;
+        width: auto;
+        justify-content: center;
+        align-items: center;
+    }
+    .comment-box{
+        width: 80%;
+    }
+    /* comment box responsive */
+    article {
+    /* article */
+    width: 95%;
+    }
+    #id_food_btns {
+        width: 57%;
+    }
+    /* article */
+    .event_top_menu_title{
+        text-align: center;
+    }
+    
+}
+@media screen and (max-width:915px) {
+    .subscription-box{
+        width: 85%;
+    }
+}
+@media screen and (max-width:885px) {
+    /* top menu 2 responsive */
+    .search-form-div{width: 330px !important;}
+    /* top menu 2 responsive */
+    /* navbar responsive */
+    #id_garune{display: none !important;}
+    /* navbar responsive */
+    /* footer */
+    .footer-body {justify-content: space-evenly;flex-direction: column;align-items: center;}
+    .footer-body div{margin-top: 20px;}
+    /* footer */
+    /* alerts */
+    .alert{
+        width: 100%;
+        margin:0;
+        border-radius: 0;
+    }
+    /* alerts */
+    article {
+        width: 100%;
+    }
+    .article-information{
+        flex-direction: column;
+        align-items: center;
+        width: 96%;
+    }
+    .base-box{
+        width: 70%;
+    }
+    @media screen and (max-width:800px) {
+        /* top menu 2 responsive */
+    .form-search-input{width: 90% !important;}
+    .search-form-div{width: 220px !important;}
+    /* top menu 2 responsive */}
+    /* header image main_app index page */
+    .header-box{height: 400px;background-size: (100% 400px);}
+    /* header image main_app index page */
+    .my-recipe-card{
+        flex-direction: column;
+    }
+    .my-recipe-card div:last-child{
+        flex-direction: column;
+    }
+    .food-image-header{
+        margin: 0;
+        border-radius: 0;
+    }
+    .article-info{
+        bottom: 20px;
+        width: 100%;
+        padding: 12px !important;
+        overflow: hidden;
+        font-size: 0.2rem !important;
+    }
+    .article-info>span:nth-child(1){
+        display: none;
+    }
+    .container{
+        width: 93%;
+    }
+    .event-box {bottom: 0px;}
+    .event-box-footer{display: block;}
+    #id_food_btns {
+        width: 61%;
+    }
+    #food_info{
+        bottom: 15px;
+        overflow: hidden;
+    }
+    
+}
+@media screen and (max-width:780px) {
+    #id_food_btns {
+        width: 69%;
+    }
+    .subscription-box{
+        width: 93%;
+    }
+}
+@media screen and (max-width:700px) {
+    .article-info span:nth-child(2){
+        display: none;
+    }
+    #id_food_btns {
+        width: 80%;
+    }
+}
+@media screen and (max-width:660px) {
+    .comment-box-child{width: 75%;}
+}
+@media screen and (max-width:650px) {
+    #id_favorites_icon{display: none !important;}
+    .download-app-main-box{height: 662px;}
+    .top-menu-1,.top-menu-2{display: none;}
+    .info-box-model-2{text-align: center;}
+    #id_navbar_number_1{display: none;}
+    #id_navbar_number_2{display: block;}
+    .fa-bars{font-size: 1.5rem !important}
+    .form-search{margin-top: -51px !important;margin-right: 28px !important;text-align: center;}
+    .form-search-input{width: 459px !important;height: 28px !important;font-size: 1rem !important;margin-right: 20px;}
+    .comment-box-child{width: 72%;right: 25px;}
+    
+    }
+@media screen and (max-width:620px) {
+    .form-search-input {
+        width: 410px !important;}
+        #id_header_index{
+        font-size: 2.5rem;
+    }
+    /* header image main_app index page */
+    .header-box{height: 350px;background-size: (100% 350px);}
+    /* header image main_app index page */
+    .base-box{
+        width: 90%;
+    }
+    .key-words-box{
+        width: 61%;
+    }
+    .author-info-box{
+        width: 60%;
+    }
+    /* .comment-box-child{width: 70%;right: 18px;} */
+    /* .top_menu_event_link{
+        display: none;
+    } */
+    .comment-box>div:nth-child(1) {
+        flex-direction: column;
+        text-align: center;
+        margin: 0 auto;
+    }
+    #id_food_btns {
+        width: 86%;
+    }
+    .comment-box-child{width: 74%;right: 14px;}
+}
+@media screen and (max-width:560px) {
+    .form-search-input {width: 320px !important;}
+    /* header image main_app index page */
+    .header-box{height: 350px;background-size: (100% 320px);}
+    /* header image main_app index page */
+    /* comment box responsive */
+    .comment-form textarea{
+        width: 300px;
+        height: 150px;
+        display: block;
+    }
+    .comment-form input{
+        width: 324px;
+        margin-top: 5px;
+    }
+    .comment-box>div:nth-child(2) {
+        margin: 5px auto;
+        width: 324px;
+        /* height: 300px; */
+    }
+    .comment-box{
+        width: 90%;
+    }
+    .base-box{
+        width: 94%;
+    }
+    .key-words-box{
+        width: 64%;
+    }
+    /* comment box responsive */
+    .comment-box-child{width: 73%;right: 37px;}
+    #id_food_btns {
+        width: 95%;
+    }
+    .subscription-span{
+        width: 18%;
+    }
+}
+@media screen and (max-width:500px) {
+    .form-search-input {width: 300px !important;}
+    .back-to-top, .show-chat-box-btn{width: 60px;height: 60px;line-height: 60px;}
+    /* contact-us file  */
+    .input-name-family-box{display: flex;justify-content:center;flex-direction: column;}
+    #cu_input_family,#cu_input_name{width: 390px;margin: 0;}
+    /* contact-us file  */
+    .my-recipe-card>div:first-child{
+        flex-direction: column;
+        text-align: center;
+        width: 100%;
+    }
+    .my-recipe-card div:first-child div:nth-child(2){
+        justify-content: center;
+    }
+    .comment-box-child{width: 70%;right: 35px;}
+    .article-info span{
+        font-size: .9rem !important;
+    }
+    #stuff_input_id{
+        flex-direction: column;
+    }
+    #stuff_input_id>a{
+        width: 355px;
+        display: block;
+        margin: 0 auto;
+        position: relative;
+        right: 0px;
+        bottom: 3px;
+        z-index: 9;
+        border-radius: 0 0 10px 10px;
+    }
+    #stuff_input_id>a:hover{
+        scale: 1;
+    }
+    #stuff_input_id>input{
+        border-radius: 10px 10px 0 0;
+    }
+    
+    #id_food_btns{
+        flex-direction: column;
+    }
+    #id_food_stuff_form{
+        width: 70%;
+    }
+    .subscription-box span{
+        font-size: .9rem !important;
+    }
+}
+@media screen and (max-width:480px) {
+    .fa-gitlab,.fa-github{display: none;}
+    .form-search-input {
+        width: 245px !important;}
+    #id_header_index{font-size: 2rem;}
+    /* header image main_app index page */
+    .header-box{height: 270px;background-size: (100% 270px);}
+    /* header image main_app index page */
+    .back-to-top, .show-chat-box-btn{width: 53px;height: 53px;line-height: 53px;}
+    /* online chat responsive */
+    #cu_input_family,#cu_input_name{width: 330px;margin: 0;}
+    .chat-box{right: 0;bottom: 0;width:100%;height: 100%;border-radius: 0;}
+    .chat-box-body{max-height: 90%;height: 90%;}
+    .chat-box-footer{position: fixed;bottom: 0;border-radius: 0;width: 100%;}
+    /* online chat responsive */
+    /* alerts */
+    .s-times{display: none;}
+    /* alerts */
+    /* food card responsive */
+    .box-model-1{
+        margin: 10px 0;
+    }
+    .box-model-1,.box-model-1 img{ width: 300px;}
+    .box-model-1-title div::before {right: 165px;}
+    /* food card responsive */
+    /* comment box responsive */
+    .comment-form textarea{
+        width: 280px;
+        height: 150px;
+        display: block;
+    }
+    .comment-form input{
+        width: 324px;
+        margin-top: 5px;
+    }
+    .comment-box>div:nth-child(2) {
+        margin: 5px auto;
+        width: 324px;
+    }
+    /* comment box responsive */
+    .base-box{
+        width: 100%;
+    }
+    .key-words-box{
+        width: 72%;
+    }
+    .short_link{
+        width: 72%;
+    }
+    .author-info-box,.share-box,.key-words-box{
+        width: 80%;
+    }
+    .short_link {
+        width: 82%;
+    }
+    .short_link a{
+        font-size: .8rem !important;
+    }
+    .comment-box{
+        width: 300px;
+        overflow: hidden;
+    }
+    .comment-box>div:nth-child(2)>div:first-child{
+        width: 300px;
+
+    }
+    .comment-box-child{
+        right: 0;
+    }
+    .event-box {bottom: 56px;right: 17px;}
+    .hidden_event_box {bottom: 56px;right: 1000px;}
+    .comment-form textarea {
+        width: 262px;
+        height: 150px;
+        display: block;
+    }
+    .comment-form input {
+        width: 269px;
+        margin-top: 5px;
+    }
+    .subscription-discount{
+        display: none;
+    }
+}
+@media screen and (max-width:434px) {
+    .form-search {display: none;}
+        #id_header_index{
+            font-size: 1.8rem;
+        }
+}
+
+@media screen and (max-width:423px) {
+    .form-box {width: 350px;}
+    .input {width: 325px;}
+    #stuff_input_id>a{width: 330px;}
+}
+.no-valid::placeholder{color: #ff0000 !important;transition: all 0.3s}
+.error-label,.correct-label{
+    color: #ff0000;
+    transition: all .3s;
+}
+.correct-label{
+    color: #55ff44;
+}
+.error-message{
+    color: #ff1100;
+    margin-right: 10px;
+    font-size: .8rem !important;
+}
+#login-and-retgister-input{
+    width: 100% !important;
+}
+.o-p-select-input{
+    width: 250px;
+}
+.o-p-show-more{
+    width: 300px !important;
+    height: 35px;
+    line-height: 35px;
+    position: relative;
+    top:13px;
+    border-radius: 0 0 10px 10px;
+}
+@media screen and (max-width:415px) {
+    .article-information{
+        width: 95%;
+    }
+    .send-comment{
+        width: 300px;
+    }
+}
+@media screen and (max-width:406px) {
+    /* food card responsive */
+    .box-model-1,.box-model-1 img{ width: 290px;}
+    .box-model-1-title div::before {right: 165px;}
+    /* food card responsive */
+}
+@media screen and (max-width:394px) {
+    .form-search,#id_media_btn_pinterest{display: none;}
+        #id_header_index{
+            font-size: 1.8rem;
+        }
+        .header-box{
+            height: 270px;
+            background-size: (100% 270px);
+        }
+        #cu_input_family,#cu_input_name{width: 300px;margin: 0;}
+        .form-box {width: 325px;}
+        .input {width: 300px;}
+        #stuff_input_id>a{width: 304px;}
+        .swal-modal{
+            width: 350px;
+            height: 350px;
+        }
+    }
+@media screen and (max-width:364px) {
+    /* food card responsive */
+    .box-model-1,.box-model-1 img{ width: 260px;}
+    .box-model-1-title div::before {right: 144px;}
+    /* food card responsive */
+    .form-box {width: 300px;}
+    .input {width: 275px;}
+    .article-information{
+        width: 93%;
+    }
+    .send-comment textarea {
+        width: 295px;
+    }
+    #stuff_input_id>a{width: 281px;}
+    .swal-modal{
+            width: 330px;
+            height: 330px;
+        }
+    #id_food_stuff_form{
+        width: 75%;
+    }
+}
+@media screen and (max-width:340px) {
+    #id_media_btn_github{display: none;}
+    .back-to-top, .show-chat-box-btn {
+        width: 45px;
+        height: 45px;
+        line-height: 45px;
+    }
+    .event_top_menu_time>div>div:nth-child(1),.event_top_menu_time>div>div:nth-child(2){
+        width: 55px;
+    }
+    .swal-modal{
+        width: 320px;
+        height: 320px;
+    }
+    .swal-footer{
+        margin: 0;
+    }
+}
+@media screen and (max-width:334px) {
+    .form-search {
+        display: none;
+    }
+    .form-box {width: 275px;}
+    .input {width: 250px;}
+    #stuff_input_id>a{width: 254px;}    
+}
+@media screen and (max-width:325px) {
+    .swal-modal{
+        width: 310px;
+        height: 310px;
+    }
+    .author-info-box, .share-box, .key-words-box {width: 100%}
+    .short_link {width: 100%;}
+    .send-comment textarea {
+        width: 264px;
+    }
+}
+@media screen and (max-width:290px) {#id_media_btn_gitlab{display: none;}}
+@media screen and (min-height:400px) {.chat-box-body{max-height: 78%;height: 78%;}}
+@media screen and (min-height:440px) {.chat-box-body{max-height: 80%;height: 80%;}}
+@media screen and (min-height:480px) {.chat-box-body{max-height: 82%;height: 82%;}}
+@media screen and (min-height:530px) {.chat-box-body{max-height: 84%;height: 84%;}}
+@media screen and (min-height:570px) {.chat-box-body{max-height: 86%;height: 86%;}}
+@media screen and (min-height:610px) {.chat-box-body{max-height: 86.3%;height: 86.3%;}}
+@media screen and (min-height:680px) {.chat-box-body{max-height: 87%;height: 87%;}}
+@media screen and (min-height:730px) {.chat-box-body{max-height: 87.5%;height: 87.5%;}}
+@media screen and (min-height:780px) {.chat-box-body{max-height: 88.4%;height: 88.4%;}}
+@media screen and (min-height:830px) {.chat-box-body{max-height: 89%;height: 89%;}}
+@media screen and (min-height:870px) {.chat-box-body{max-height: 90%;height: 90%;}}

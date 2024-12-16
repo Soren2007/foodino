@@ -1,0 +1,50 @@
+{% load translate %}
+{% load i18n %}
+{% if similar_foods %}
+<section>
+    <div class="title">
+        <h2>{% trans 'غذاهای پیشنهادی' %}</h2>
+    </div>
+    <div class="container">
+        {% for similar_food in similar_foods %}
+        <div class="box-model-1">
+            <div>
+                <div class="box-model-1-price">
+                    <span class="price">{{similar_food.food_price}}</span> <span>{% trans 'تومان' %}</span>
+                </div>
+                <div class="box-model-1-image">
+                    <img src="{{media}}{{similar_food.food_image}}" type="image/jpg" alt="" class="food-image">
+                </div>
+            </div>
+            <div class="box-model-1-title">
+                <div><span style="    width: 170px;
+                    display: block;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    text-align: center;
+                    margin: 2px auto;">{{similar_food.food_name|translate}}</span></div>
+            </div>
+            <div class="box-model-1-buttons">
+                <div>
+                    <span class="btn btn-model-1" title="{% trans 'افزودن به سبد خرید' %}" onclick="add_to_food_cart('{{similar_food.id}}',1)"><i class="fa fa-cart-plus"></i></span>
+                    {% if user.is_authenticated %}
+                    {% if similar_food.get_user_favorite %}
+                    <a class="btn btn-model-1" title="{% trans 'حذف از علاقه‌مندی‌ها' %}" onclick="delete_to_favorite('{{similar_food.id}}')"><i class="fa fa-heart" style="color:black"></i></a>
+                    {% else %}
+                    <a class="btn btn-model-1" title="{% trans 'افزودن به علاقه‌مندی‌ها' %}" onclick="add_to_favorite('{{similar_food.id}}')"><i class="fa fa-heart"></i></a>
+                    {% endif %}
+                    {% else %}
+                    <a class="btn btn-model-1" title="{% trans 'افزودن به علاقه‌مندی‌ها'|translate}" onclick="show_alert_error(`{% trans 'برای استفاده از این بخش باید وارد شوید.'|translate}`)"><i class="fa fa-heart"></i></a>
+                    {% endif %}
+                    <a class="btn btn-model-1" title="{% trans 'اشتراک گذاری' %}" onclick="navigator.share({title:`{% trans 'اشتراک گذاری غذای' %} {{similar_food.food_name|translate}} {% trans 'تارنما فودینو' %}`,text:'{{similar_food.food_description}}','url':`{% url 'food_app:show_food' similar_food.food_slug %}`})"><i class="fa fa-send"></i></a>
+                </div>
+                <div>
+                    <a href="{% url 'food_app:show_food' similar_food.food_slug %}" class="btn btn-show-more">{% trans 'جزئیات بیشتر' %}</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}

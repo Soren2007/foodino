@@ -1,0 +1,51 @@
+{% extends 'main_template.html' %}
+{% load render_partial %}
+{% load translate %}
+{% load i18n %}
+{% load static %}
+{% load order %}
+{% block title %}{% trans 'پنل مدیریت پیک' %}{% endblock title %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/frequently_asked_questions.css' %}">
+{% endblock stylesheet %}
+{% block main %}
+<section>
+    <div>
+        {% if orders %}
+        <div class="title">
+        {% if orders|length > 1 %}
+        <h1>{% trans 'سفارشاتی که باید به دست مشتری برسد' %}</h1>
+        {% else %}
+        <h1>{% trans 'سفارشی که باید به دست مشتری برسد' %}</h1>
+        {% endif %}
+        </div>
+        {% for order in orders %}
+        <div class="frequently-asked-question">
+            <div>
+                <div><i class="fa fa-angle-left"></i></div>
+                <div><h2>{{order.customer.user.name|translate}} {{order.customer.user.family|translate}}</h2></div>
+            </div>
+            <div class="frequently-asked-question-response-hidden">
+                <div>
+                    <span>{% trans 'آدرس' %}:</span> <span>{{order.customer.address|translate}}</span>
+                </div>
+                <div>
+                    <a href="https://www.google.com/maps/search/{{order.customer.user.latitude_location}},{{order.customer.user.longitude_location}}?entry=tts&shorturl=1" class="btn btn-show-more frequently-btn" target="_blank" style="width: 156px;">{% trans 'باز کردن در گوگل مپ' %}</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="title-model-1">
+            <p>{% trans 'سفارشی برای ارسال وجود ندارد.' %}</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+<section>
+{% include 'partials/social_media.html' %}
+</section>
+{% endblock main %}
+{% block script %}
+<script src="{% static 'js/frequently_asked_questions_scripts.js' %}" type="text/javascript"></script>
+{% endblock script %}

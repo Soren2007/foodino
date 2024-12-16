@@ -1,0 +1,24 @@
+{% load translate %}
+{% load i18n %}
+<div class="chat-box-helper-message">
+    <div>
+        <p>{% trans 'سلام من سورن شاملو هستم چگونه می‌توانم به شما کمک کنم؟' %}</p>
+    </div>
+    <div>
+        <img src="media/images/avatar/avatar_1.png" alt="">
+    </div>
+</div>
+{% for object in messages %}
+<div class="chat-box-user-message">
+    <div>
+        <img src="media/images/avatar/avatar_2.png" alt="">
+    </div>
+    <div>
+        <p>{{object.message|translate}}</p>
+    </div>
+</div>
+{% if object.user.is_support %}
+
+{% endif %}
+{% endfor %
+}

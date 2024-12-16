@@ -1,0 +1,106 @@
+/* word-spacing: 2px; */
+#about_me_section p{
+    text-align: right;
+}
+#about_me_div_1,#about_me_div_2,#about_me_div_3,#about_me_div_4,#about_me_div_5,#about_me_div_6,#about_me_div_7{
+    width: 80%;
+    margin: 0px auto;
+    margin-top: 10px;
+    height: 780px;
+    background-image: url('/media/images/main/about_me/what_is_happening_image.jpg');
+    background-size: 100% 780px;
+    background-repeat: no-repeat;
+    position: relative;
+}
+.content-about {
+    width: 40%;
+    position: absolute;
+    left: 23%;
+    top: 38%;
+    text-align: justify;
+    font-size: 18px;
+}
+.content-about h1 {
+    font-size: 2rem;
+    word-spacing: 4px;
+}
+.content-about p {
+    word-spacing: 4px;
+    text-align: right;
+}
+
+#about_me_div_2{
+    margin-top: 0;
+    background-image: url('/media/images/main/about_me/about_programmer.jpg');
+}
+.content-programmer {
+    width: 40%;
+    position: absolute;
+    right: 38%;
+    top: 38%;
+    font-size: 18px;
+}
+
+#about_me_div_3{
+    margin-top: 0;
+    background-image: url('/media/images/main/about_me/activity_in_th_future.jpg');
+}
+.content-future {
+    width: 38%;
+    position: absolute;
+    top: 50%;
+    right: 21%;
+    font-size: 18px;
+}
+
+#about_me_div_4{
+    margin-top: 0;
+    background-image: url('/media/images/main/about_me/Income.jpg');
+}
+.content-Earn-foodino{
+    width: 36%;
+    position: absolute;
+    right: 10%;
+    top: 31%;
+    font-size: 18px;
+}
+#about_me_div_5{
+    margin-top: 0;
+    background-image: url('/media/images/main/about_me/questions.jpg');
+}
+.content-questions{
+    width: 37%;
+    position: absolute;
+    right: 38%;
+    top: 20%;
+    font-size: 18px;
+}
+
+#about_me_div_6{
+    margin-top: 0;
+    background-image: url('/media/images/main/about_me/social_media.jpg');
+}
+.content-social-media{
+    width: 42%;
+    position: absolute;
+    top: 37%;
+    right: 11%;
+    font-size: 16px;
+}
+.social-box-1 {
+    position: relative;
+    top: 50%;
+    right: 14%;
+    width: 44%;
+}
+#about_me_div_7{
+    margin-top: 0;
+    background-image: url('/media/images/main/about_me/why_foodino.jpg');
+}
+.content-why-foodino{
+    width: 44%;
+    position: absolute;
+    right: 30%;
+    top: 18%;
+    font-size: 18px;
+}

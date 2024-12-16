@@ -1,0 +1,35 @@
+{% extends 'main_template.html' %}
+{% load i18n %}
+{% load translate %}
+{% block title %}{% trans 'دسته‌بندی غذاها' %}{% endblock title %}
+{% block header %}
+<div>
+    <!-- <img src="{{media}}images/food/recipes/top_image/img.jpg" alt="" class="top-image"> -->
+    <div class="header-background-image" style="--header_image_address: url('/media/images/design_images/image_3.jpg');"></div>
+</div>
+<div class="title">
+    <h1>{% trans 'نمایش دسته‌های غذا' %}</h1>
+</div>
+{% endblock header %}
+{% block main %}
+<section>
+<div class="container">
+    {% if food_groups %}
+    {% for food_group in food_groups %}
+    <a href="{% url 'food_app:show_foods_width_group' food_group.id %}">
+        <div class="box-model-2">
+            <div class="box-model-2-image">
+                <img src="{{media}}{{food_group.group_image}}" alt="{{food_group.group_name|translate}}">
+            </div>
+            <div class="box-model-2-title">
+                <h3>{{food_group.group_name|translate}}</h3>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+    {% else %}
+    <span>{% trans 'دسته‌ای وجود ندارد' %}</span>
+    {% endif %}
+</div>
+</section>
+{% endblock main %}

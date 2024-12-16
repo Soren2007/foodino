@@ -1,0 +1,22 @@
+{% extends 'main_template.html' %}
+{% load translate %}
+{% load i18n %}
+{% block title %}{% trans 'تایید شماره موبایل' %}{% endblock title %}
+{% block header %}
+{% endblock header %}
+{% block main %}
+<div class="container">
+    <form action="" method="post">
+        <div class="form-box">
+            <div>
+                <h1>{% trans 'تایید شماره موبایل<' %}/h1>
+            </div>
+            {% csrf_token %}
+            {{form.as_p}}
+            <div>
+                <input type="submit" value="{% trans 'تایید' %}">
+            </div> 
+        </div>
+    </form>
+</div>
+{% endblock main  %}

@@ -1,0 +1,62 @@
+{% extends 'main_template.html' %}
+{% load translate %}
+{% load i18n %}
+{% block title %}{% trans 'دستورات غذایی من' %}{% endblock title %}
+{% block main %}
+<section>
+    <div>
+        <img src="{{media}}{{recipe.recipes_food.food_image}}" alt="{% trans 'فودینو' %} | {{recipe.recipes_food.food_name|translate}}" class="food-image-header" title="{{recipe.recipes_food.food_slug}}">
+    </div>
+    <div>
+        <div id="id_food_stuff_form">
+            <div class="title">
+                <h2>{% trans 'انتخاب مواد' %}</h2>
+            </div>
+            <div>
+                <div>
+                    {% for food_stuff_type in recipe.recipes_food.food_stuff_types.all %}
+                        <div class="title">
+                            <h3>{{food_stuff_type.type_name|translate}}</h3>
+                        </div>
+                        <div class="flex stuffs">
+                            {% for stuff in food_stuff_type.stuffs.all %}
+                            {% if stuff in recipe.recipes_stuffs.all %}
+                            <input type="checkbox" id="{{stuff.id}}" name="stuff_id__type_{{food_stuff_type.id}}" value="{{stuff.id}}" class="set-stuff-food hidden" checked>
+                            <label for="{{stuff.id}}" class="lbl-box-model-1"><img src="{{media}}{{stuff.stuff_image}}" alt=""><p>{{stuff.stuff_name|translate}}</p></label>
+                            {% else %}
+                            <input type="checkbox" id="{{stuff.id}}" name="stuff_id__type_{{food_stuff_type.id}}" value="{{stuff.id}}" class="set-stuff-food hidden">
+                            <label for="{{stuff.id}}" class="lbl-box-model-1"><img src="{{media}}{{stuff.stuff_image}}" alt=""><p>{{stuff.stuff_name|translate}}</p></label>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div>
+                    <a class="btn btn-show-more color-bl" onclick="delete_my_recipe('{{recipe.recipes_food.id}}','{{recipe.id}}','{{recipe.recipes_name}}')">{% trans 'حذف از علاقمندی‌ها' %}</a>
+                    <a class="btn btn-show-more color-bl" onclick="update_my_recipe('{{recipe.recipes_food.id}}','{{recipe.id}}','{{recipe.recipes_name|translate}}')">{% trans 'ثبت تغییرات' %}</a>
+                    <a class="btn btn-show-more color-bl" onclick="add_my_recipes('{{recipe.recipes_food.id}}')">{% trans 'افزودن به سبدخرید' %}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="food-info-box">
+        <div>
+            <span class="food-food-information">{{recipe.recipes_name|translate}}</span>
+        </div>
+        <div>
+            <span class="food-food-information">{% trans 'قیمت:' %} <span class="price">{{recipe.recipes_price}}</span></span>
+        </div>
+        <div id="id_cqc">
+            <div class="count-qty container" id="id_count_qty_food_page">
+                <span class="plus plus-food-qty tus-none" onclick="count_qty('add','{{food.id}}')">+</span>
+                <input type="number" class="input qty" id="qty-input-{{food.id}}" value="1">
+                <span class="negative negative-food-qty tus-none" onclick="count_qty('','{{food.id}}')">-</span>
+            </div>
+        </div>
+        <div><a id="add-to-cart" onclick="add_to_food_cart('{{food.id}}','input')">{% trans 'افزودن به سبد خرید' %}</a></div>  
+    </div>
+</section>
+<section>
+{% include 'partials/social_media.html' %}
+</section>  
+{% endblock main %}

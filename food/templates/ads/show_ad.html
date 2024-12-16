@@ -1,0 +1,16 @@
+{% load translate %}
+{% load i18n %}
+<div class="ad-box">
+    <div><i class="fa fa-times"></i></div>
+    <a href="{{ad.ad_url}}">
+        <div>
+            <div>
+                <img src="{{media}}{{ad.ad_image}}" alt="">
+            </div>
+            <div>
+                <p>{{ad.ad_title|translate}}</p>
+            </div>
+        </div>
+        <a href="{{ad.ad_url}}" class="btn btn-show-all sh-m2">{% trans 'جزئیات بیشتر' %}</a>
+    </a>
+</div>

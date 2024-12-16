@@ -1,0 +1,238 @@
+{% extends 'main_template.html' %}
+{% load render_partial %}
+{% load translate %}
+{% load i18n %}
+{% load static %}
+{% block title %}{% trans 'فاکتور سفارش' %}{% endblock title %}
+{% block main %}
+<section>
+<div class="title">
+    <h1>{% trans 'فاکتور سفارش' %}</h1>
+</div>
+<div class="container">
+    <div class="box-model-3" id="id_check_out_form">
+        <div class="title">
+            <h2 class="text-center">جزئیات پرداخت</h2>
+        </div>
+        <div class="container">
+            <form action="" method="post">
+                {% csrf_token %}
+                <input type="hidden" id="id_input_hidden_city_id" name="id_city" value="0">
+                <div>
+                    <div class="flex">
+                        <div>
+                            <div>
+                                <label for="id_name">{% trans 'نام:' %}</label>
+                            </div>
+                            <div>
+                                <input type="text" class="input" name="name" id="id_name" placeholder="{% trans 'نام خود را وارد کنید.' %}" title="{% trans 'لطفا نام خود را وارد کنید.' %}" required value="{{data.name|translate}}">
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                <label for="id_family">{% trans 'نام خانوادگی:' %}</label>
+                            </div>
+                            <div>
+                                <input type="text" class="input" name="family" id="id_family" placeholder="{% trans 'نام خانوادگی خود را وارد کنید.' %}" title="{% trans 'لطفا نام خانوادگی خود را وارد کنید.' %}" required value="{{data.family|translate}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <div>
+                            <div>
+                                <label for="id_email">{% trans 'ایمیل:' %}</label>
+                            </div>
+                            <div>
+                                <div  error_address="id_email">
+                                    <input type="email" class="input" name="email" id="id_email" placeholder="{% trans 'ایمیل خود را وارد کنید.' %}" title="{% trans 'لطفا ایمیل خود را وارد کنید.' %}" required value="{{data.email}}">
+                                </div>
+                                <ul>
+                                    <li class="error-message hidden"></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                <label for="id_mobile_number">{% trans 'شماره تماس:' %}</label>
+                            </div>
+                            <div>
+                                <div error_address="id_mobile_number">
+                                    <input type="number" class="input" name="phone_number" id="id_mobile_number" placeholder="{% trans 'شماره تماس خود را وارد کنید.' %}" title="{% trans 'لطفا شماره تماس خود را وارد کنید.' %}" required value="{{data.phone_number}}">
+                                </div>
+                                <ul>
+                                    <li class="error-message hidden"></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <div>
+                            <div>
+                                <label for="id_country">{% trans 'کشور:' %}</label>
+                            </div>
+                            <div>
+                                <div error_address="id_country">
+                                    <select id="id_country" name="country" class="input select" onchange="show_cities_with_country()">
+                                        <option value="none">{% trans 'کشور خود را انتخاب کنید.' %}</option>
+                                        {% for country in countries %}
+                                        <option value="{{country.id}}">{{country.name|translate}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <ul>
+                                    <li class="error-message hidden"></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                <label for="id_city">{% trans 'شهر:' %}</label>
+                            </div>
+                            <div id="city_id_options">
+                                <div error_address="id_city">
+                                    <select id="id_city" name="city" class="input select">
+                                        <option>{% trans 'شهر خود را انتخاب کنید.' %}</option>
+                                    </select>
+                                </div>
+                                <ul>
+                                    <li class="error-message hidden"></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <div>
+                            <div>
+                                <label for="id_branch">{% trans 'شعبه مورد نظر:' %}</label>
+                            </div>
+                            <div id="branch_id_options">
+                                <div error_address="id_branch">
+                                    <select id="id_branch" name="branch" class="input select">
+                                        <option>{% trans 'شعبه مورد نظر خود را انتخاب کنید.' %}</option>
+                                    </select>
+                                </div>
+                                <ul>
+                                    <li class="error-message hidden"></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="btn btn-show-all" onclick="find_branch()" style="box-shadow: none;height: 34px;margin-top: 27px;width: 365px;">{% trans 'پیدا کردن نزدیکترین شعبه' %}</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <label for="id_address">{% trans 'آدرس:' %}</label>
+                        </div>
+                        <div>
+                            <textarea name="address" class="input" id="id_address" cols="30" rows="3" placeholder="{% trans 'آدرس خود را وارد کنید.' %}" title="{% trans 'لطفا آدرس خود را وارد کنید.' %}" required>{{data.address|translate}}</textarea>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <label for="id_description">{% trans 'توضیحات' %} <span>{% trans '(اختیاری)' %}</span>:</label>
+                        </div>
+                        <div>
+                            <textarea name="description" class="input" id="id_description" cols="30" rows="4"  placeholder="توضیحات را وارد کنید." title="{% trans 'لطفا توضیحات را وارد کنید.' %}">{{data.description}}</textarea>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <label for="id_payment">{% trans 'نوع پرداخت:' %}</label>
+                        </div>
+                        <div>
+                            <div class="flex justify-content__space-between" style="width: 90%;margin: 0 auto;">
+                                {% for payment in payments %}
+                                <div>
+                                    <label for="id_payment_{{payment.id}}">{{payment.payment_title|translate}}</label>
+                                    {% if forloop.counter == 1 %}
+                                    <input type="radio" name="payment" id="id_payment_{{payment.id}}" value="{{payment.id}}" checked>
+                                    {% else %}
+                                    <input type="radio" name="payment" id="id_payment_{{payment.id}}" value="{{payment.id}}">
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="" id="" required>
+                        <label for=""><span>{% trans 'من' %}</span> <a href="{% url 'main_app:rules' %}" class="link">{% trans 'قوانین و مقررات' %}</a> <span>{% trans 'را خواندم و موافقم.' %}</span></label>
+                    </div>
+                    <div>
+                        <input type="submit" value="{% trans 'ثبت سفارش' %}">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div>
+        <div class="box-model-3" id="id_your_orders">
+            <div class="title"><h2>{% trans 'سفارشات شما' %}</h2></div>
+            <div>
+                <div class="scroll">
+                    {% for item in food_cart %}
+                    <div class="box-model-4 flex">
+                        <div><img src="{{media}}{{item.food.food_image}}" alt="{{item.food}}"></div>
+                        <div style="padding-top: 12px;">
+                            <div><span>{% trans 'نام محصول:' %}</span> <span>{{item.food.food_name|translate}}</span></div>
+                            <div><span>{% trans 'تعداد' %}:</span> <span>{{item.qty}}</span></div>
+                            <div><span>{% trans 'جمع کل' %}:</span> <span class="price">{{item.total_price}}</span></div>
+                            <div class="show-food-link-your-orders">
+                                <a href="{% url 'food_app:show_food' item.food.food_slug %}" class="link">{% trans 'مشاهده محصول' %}</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% for item in my_recipe_cart %}
+                    <div class="box-model-4 flex">
+                        <div><img src="{{media}}{{item.my_recipe.recipes_food.food_image}}" alt="{{item.my_recipe.recipes_food}}"></div>
+                        <div style="padding-top: 12px;">
+                            <div><span>{% trans 'نام محصول:' %}</span> <span>{{item.my_recipe.recipes_name}}</span></div>
+                            <div><span>{% trans 'تعداد:' %}</span> <span>{{item.qty}}</span></div>
+                            <div><span>{% trans 'جمع کل:' %}</span> <span class="price">{{item.total_price}}</span></div>
+                            <div class="show-food-link-your-orders">
+                                <a href="{% url 'food_app:show_my_recipe' item.my_recipe.id %}" class="link">{% trans 'مشاهده محصول' %}</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div id="id_your_orders_footer">
+                    <div class="text-box-model-1">
+                        <span>{% trans 'جمع جزء:' %}</span> <span class="price">{{total_price}}</span> <span>{% trans 'تومان' %}</span>
+                    </div>
+                    <div class="text-box-model-1">
+                        <span>{% trans 'حمل و نقل:' %}</span> 
+                        {% if delivery == 0 %}
+                        <span>{% trans 'رایگان' %}</span>
+                        {% else %}
+                        <span class="price">{{delivery}}</span> <span>{% trans 'تومان' %}</span>
+                        {% endif %}
+                    </div>
+                    <div class="text-box-model-1">
+                        <span>_{% trans 'مالیات:' %}</span> <span class="price">{{tax}}</span> <span>{% trans 'تومان' %}</span>
+                    </div>
+                    <div class="text-box-model-1">
+                        <span>{% trans 'جمع کل' %}:</span> <span class="order_final_price_text price">{{order_final_price}}</span> <span class="order_final_price_text">{% trans 'تومان' %}</span>
+                    </div>
+                    <div>
+                        <div>
+                            <input type="text" name="" id="id_discount" placeholder="{% trans 'کد تخفیف' %}" class="input">
+                            <input type="submit" value="{% trans 'اعمال کد' %}" onclick="apply_coupon('{{data.order_id}}')">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+<section>
+{% include 'partials/social_media.html' %}
+</section>  
+{% endblock main %}
+{% block script %}
+<script src="{% static 'js/check_out_validator_script.js' %}"></script>
+<script src="{% static 'js/get_location.js' %}"></script>
+{% endblock script %}

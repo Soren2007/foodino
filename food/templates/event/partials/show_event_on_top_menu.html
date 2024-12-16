@@ -1,0 +1,27 @@
+{% load translate %}
+{% load i18n %}
+<a href="{{top_menu_event.event_url}}"  class="top_menu_event_link" onloadstart="countdownTimer();">
+    <div class="event_top_menu"  style="background-image: url('http://127.0.0.1:8000{{media}}{{top_menu_event.event_image}}');">
+        <input type="hidden" id="bg_address_image" value="{{base_dir}}{{media}}{{top_menu_event.event_image}}">
+        <div class="event_top_menu_title"><span style="color: {{top_menu_event.event_title_color}};">{{top_menu_event.event_title|translate}} <span class="action-text">{{top_menu_event.event_action_text|translate}}</span></span></div>
+        <input type="hidden" id="event_end_date_input" value="{{event_end_date}}">
+        <div class="event_top_menu_time" id="event_top_menu_time" end_date="0000">
+            <div>
+                <div>{% trans 'ثانیه' %}</div>
+                <div id="seconds"></div>
+            </div>
+            <div>
+                <div>{% trans 'دقیقه' %}</div>
+                <div id="minutes"></div>
+            </div>
+            <div>
+                <div>{% trans 'ساعت' %}</div>
+                <div id="hours"></div>
+            </div>
+            <div>
+                <div>{% trans 'روز' %}</div>
+                <div id="days"></div>
+            </div>
+        </div> 
+    </div>
+</a>

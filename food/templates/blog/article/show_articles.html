@@ -1,0 +1,83 @@
+{% extends 'main_template.html' %}
+{% load translate %}
+{% load i18n %}
+{% block title %}{% trans 'مقالات' %}{% endblock title %}
+{% block header %}
+<div class="header-background-image" style="--header_image_address: url('{{media}}images/blog/header.jpg');"></div>
+{% endblock header %}
+{% block main %}
+<div>
+    <div class="title">
+        <h1>{% trans 'مقالات' %}</h1>
+    </div>
+    <div class="container">
+        {% if page_obj %}
+        {% for blog in page_obj %}
+        <div class="box-model-1">
+            <div>
+                <div class="box-model-1-price">
+                    <span>{{blog.article_register_date}}</span>
+                </div>
+                <div class="box-model-1-image">
+                    <img src="{{media}}{{blog.article_main_image}}" type="image/jpg" alt="" class="food-image">
+                </div>
+            </div>
+            <div class="box-model-1-title">
+                <div><h3>{{blog.article_title|translate}}</h3></div>
+            </div>
+            <div class="box-model-1-buttons">
+                <div>
+                    <a onclick="download_blog()" class="btn btn-model-1"><i class="fa fa-save"></i></a>
+                    {% if user.is_authenticated %}
+                    {% if blog.get_user_favorite_blog %}
+                    <a class="btn btn-model-1" title="{% trans 'حذف از علاقه‌مندی‌ها' %}" onclick="delete_to_favorite_blog('{{blog.id}}')"><i class="fa fa-heart" style="color:black"></i></a>
+                    {% else %}
+                    <a class="btn btn-model-1" title="{% trans 'افزودن به علاقه‌مندی‌ها' %}" onclick="add_to_favorite_blog('{{blog.id}}')"><i class="fa fa-heart"></i></a>
+                    {% endif %}
+                    {% endif %}
+                    <a class="btn btn-model-1" onclick="navigator.share({title:`{% trans 'اشتراک گذاری مقاله' %} {{blog.article_title|translate}} {% trans 'تارنما فودینو' %}`,text:'{{blog.article_summary_text|translate}}','url':`{% url 'blog_app:show_blog' blog.article_slug %}`})"><i class="fa fa-send"></i></a>
+                </div>
+                <div>
+                    <a href="{% url 'blog_app:show_blog' blog.article_slug %}" class="btn btn-show-more">{% trans 'ادامه مطلب' %}</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <span>{% trans 'مقاله‌ای وجود ندارد' %}</span>
+        {% endif %}
+    </div>
+    {% if obj_len > page_object_number %}
+    <div class="text-center">
+        <div>
+            <nav class="nav-pagination">
+                <ul>
+                    {% if page_obj.has_previous %}
+                    <li><a href="?page={{ page_obj.previous_page_number }}">قبلی</a>
+                    </li>
+                    {% endif %}
+                    {% if page_obj.number|add:'-4' > 1 %}
+                    <li><a href="?page={{ page_obj.number|add:'-5' }}">&hellip;</a>
+                    </li>
+                    {% endif %}
+                    {% for i in page_obj.paginator.page_range %}
+                    {% if page_obj.number == i %}
+                    <li class="page-item active" aria-current="page"><span>{{ i }}<span class="sr-only">(current)</span></span></li>
+                    {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %} <li><a href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                    {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
+                    <li><a href="?page={{ page_obj.number|add:'5' }}">&hellip;</a></li>
+                    {% endif %}
+                    {% if page_obj.has_next %}
+                    <li><a href="?page={{ page_obj.next_page_number }}">بعدی</a></li>
+                    {% else %}
+                    <li class="page-item-disabled"><a href="#" tabindex="-1" aria-disabled="True">بعدی</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock main %}

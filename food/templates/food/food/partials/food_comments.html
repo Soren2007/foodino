@@ -1,0 +1,87 @@
+{% load i18n %}
+{% load translate %}
+{% load render_partial %}
+<div class="comments-main-box">
+    <div class="title">
+        <h2>{% trans 'دیدگاه‌ها' %}</h2>
+    </div>
+    <div>
+        {% for comment in food.comments_food.all %}
+            {% if comment.is_active %}
+                {% if comment.comment_parent == None %}
+                    <div class="comment-box" id="{{comment.id}}">
+                        <div>
+                            <div>
+                                <img src="{{media}}{{comment.commenting_user.profile}}" alt="" class="profile">
+                            </div>
+                            <div>
+                                <div> 
+                                    {% if comment.commenting_user.is_support %}
+                                    <h3>{% trans 'پشتیبان سایت فودینو' %}</h3>
+                                    {% elif comment.commenting_user.name != "" %}
+                                    <h3>{{comment.commenting_user.name|translate}} {{comment.commenting_user.family|translate}}</h3>
+                                    {% else %}
+                                    <h3>{% trans 'کاربر' %} {{user.id}}</h3>
+                                    {% endif %}   
+                                </div>
+                                <div>
+                                    <p>{{comment.comment_text|translate}}</p>
+                                </div>
+                                <div>
+                                    <span>{{comment.register_date}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            {% if user.is_authenticated %}
+                            <div>
+                                <a class="btn" id="btn_reply_{{comment.id}}" onclick="show_comment_form('{{food.id}}','{{comment.id}}','{{food.food_slug}}','food')">{% trans 'پاسخ دادن' %}</a>
+                            </div>
+                            <div id="comment_form_{{comment.id}}" class="comment-form">
+                            </div>
+                            {% else %}
+                            <span>
+                                {% trans 'برای پاسخ دادن باید' %} <a href="{% url 'accounts_app:login' %}?next=/food/show-food/{{food.food_slug}}" class="link">{% trans 'وارد' %}</a> {% trans 'شوید.' %}
+                            </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% for item in comment.comments_child.all %}
+                    <div class="comment-box comment-box-child">
+                        <div>
+                            <div>
+                                <img src="{{media}}{{comment.commenting_user.profile}}" alt="" class="profile">
+                            </div>
+                            <div>
+                                <div>
+                                    {% if item.commenting_user.is_support %}
+                                    <h3>{% trans 'پشتیبان سایت فودینو' %}</h3>
+                                    {% elif comment.commenting_user.name != "" %}
+                                    <h3>{{item.commenting_user.name|translate}} {{item.commenting_user.family|translate}}</h3>
+                                    {% else %}
+                                    <h3>{% trans 'کاربر' %} {{user.id}}</h3>
+                                    {% endif %}   
+                                </div>
+                                <div>
+                                    <p>{{item.comment_text|translate}}</p>
+                                </div>
+                                <div>
+                                    <span>{{item.register_date}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="send-comment">
+        {% if user.is_authenticated %}
+        {% render_partial 'comments_app:create_comment' slug=slug model='food' %}
+        {% else %}
+        <h3 class="Log-in-first-box">{% trans 'برای ارسال دیدگاه باید' %} <a href="{% url 'accounts_app:login' %}?next=/food/show-food/{{food.food_slug}}" class="link">{% trans 'ورود' %}</a> یا <a href="{% url 'accounts_app:register' %}?next=/food/show-food/{{food.food_slug}}" class="link">{% trans 'ثبت‌نام' %}</a> {% trans 'کنید.' %}</h3>
+        {% endif %} 
+    </div>
+    <div class="container"></div>
+</div>

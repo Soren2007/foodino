@@ -1,0 +1,16 @@
+{% extends 'main_template.html' %}
+{% load translate %}
+{% load i18n %}
+{% load render_partial %}
+{% block title %}{% trans 'سبد خرید' %}{% endblock title %}
+{% block main %}
+<section>
+    <div class="title"><h1>{% trans 'سبد خرید شما' %}</h1></div>
+    <div>
+        <div id="food_cart_list">
+            {% render_partial 'orders_app:show_carts' %}
+        </div>
+    </div>
+</section>
+{% endblock main %}
+    

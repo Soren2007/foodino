@@ -1,0 +1,7 @@
+{% load translate %}
+<select id="id_branch" name="branch" class="input select">
+    <option>{{'شعبه مورد نظر خود را انتخاب کنید.'|translate}}</option>
+    {% for branch in branches %}
+    <option value="{{branch.id}}">{{branch.branch_name|translate}}</option>
+    {% endfor %}
+</select>

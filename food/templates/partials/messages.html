@@ -1,0 +1,23 @@
+{% load translate %}
+{% load i18n %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{message.tags}}" id="alert_id_1">
+    <i class="fa fa-times s-times" onclick="delete_element('alert_id_1')"></i>
+    <div>
+        {% if message.tags == "error error" %}
+        <img src="{{media}}/images/alerts/error.svg">
+        {% elif message.tags == "success success" %}
+        <img src="{{media}}/images/alerts/success.svg">
+        {% else %}
+        <img src="{{media}}/images/alerts/danger.svg">
+        {% endif %}
+        {% if message.message == "login" %}
+        <span>{% trans 'شما قبلا با این شماره ثبت‌نام کردید.' %}</span><a href="{% url 'accounts_app:login' %}" class="link" style="color:#555">{% trans 'وارد شوید.' %}</a>
+        {% else %}
+        <span>{{message.message|translate}}</<span>
+        {% endif %}
+    </div>
+</div>
+{% endfor %}
+{% endif %}

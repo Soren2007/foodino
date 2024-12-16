@@ -1,0 +1,253 @@
+{% extends 'main_template.html' %}
+{% load translate %}
+{% load i18n %}
+{% load static %}
+{% block title %}{% trans 'پنل کاربری' %}{% endblock title %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/user_panel.css' %}">
+{% endblock stylesheet %}
+{% block header %}
+{% endblock header %}
+{% block main %}
+<aside class="aside-user-panel">
+    <ul>
+        <li id="id_profile_information">
+            <div>
+                <div>
+                    <img class="profile" src="{{media}}{{user.profile}}" alt="" id="user_profile">
+                </div>
+                <div>
+                    {% if user.is_admin %}
+                    <span>
+                        <img src="{{media}}images/account/user_panel/blue-tick.svg" alt="" class="blue-tick">
+                        {{user.name|translate}} {{user.family|translate}}
+                    </span>
+                    <span id="profile_information_mobile_number">{{user.mobile_number}}</span>
+                    {% else %}
+                    <span>
+                        {{user.name|translate}} {{user.family|translate}}
+                    </span>
+                    <span>{{user.mobile_number}}</span>
+                    {% endif %}
+                </div>
+                <div>
+                    <a id="change_profile_and_full_name_btn"><i class="fa fa-edit"></i></a>
+                </div>
+            </div>
+        </li>
+        {% if user.is_admin %}
+        <li>
+            <div>
+                <a href="{% url 'admin:index' %}" class="user-menu-btn">
+                    <div><i class="fa fa-cog"></i></div>
+                    <div>
+                        {% trans 'پنل مدیریت سایت' %}
+                    </div>
+                </a>
+            </div>
+        </li>
+        <li>
+            <div>
+                <a href="https://soheil.irandns.com:2083/cpsess8736874517/frontend/jupiter/index.html?login=1&post_login=93746244839147" target="_blank" class="user-menu-btn">
+                    <div><i class="fa ">CP</i></div>
+                    <div>
+                        {% trans 'سی پنل' %}
+                    </div>
+                </a>
+            </div>
+        </li>
+        <li>
+            <div>
+                <a href="{% url 'data_manager_app:index' %}" class="user-menu-btn">
+                    <div><i class="fa fa-database"></i></div>
+                    <div>
+                        {% trans 'پنل مدیریت داده' %}
+                    </div>
+                </a>
+            </div>
+        </li>
+        <li>
+            <div>
+                <a href="http://127.0.0.1:8000/rosetta" class="user-menu-btn">
+                    <div><i class="fa fa-language"></i></div>
+                    <div>
+                        {% trans 'پنل مدیریت زبان سایت' %}
+                    </div>
+                </a>
+            </div>
+        </li>
+        {% endif %}
+        <li>
+            <div>
+                <a href="{% url 'favorites_app:user_favorite' %}" class="user-menu-btn">
+                    <div><i class="fa fa-heart"></i></div>
+                    <div>
+                        {% trans 'لیست علافه‌مندی‌ها' %}
+                    </div>
+                </a>
+            </div>
+        </li>
+        <li>
+            <div>
+                <a href="{% url 'food_app:show_my_recipes' %}" class="user-menu-btn">
+                    <div><i class="fa fa-spoon"></i></div>
+                    <div>
+                        {% trans 'دستورات غذایی من' %}
+                    </div>
+                </a>
+            </div>
+        </li>
+        <li>
+            <div>
+                <a href="{% url 'comments_app:show_my_comments' %}" class="user-menu-btn">
+                    <div><i class="fa fa-comments"></i></div>
+                    <div>
+                        {% trans 'دیدگاه‌ها' %}
+                    </div>
+                </a>
+            </div>
+        </li>
+        <li>
+            <div>
+                <a href="{% url 'accounts_app:show_my_messages' %}" class="user-menu-btn">
+                    <div><i class="fa fa-comment"></i></div>
+                    <div>
+                        {% trans 'پیغام‌ها' %}
+                    </div>
+                </a>
+            </div>
+        </li>
+        <li>
+            <div>
+                <a href="{% url 'accounts_app:show_my_gifts' %}" class="user-menu-btn">
+                    <div><i class="fa fa-gift"></i></div>
+                    <div>
+                        {% trans 'هدایای من' %}
+                    </div>
+                </a>
+            </div>
+        </li>
+        <li>
+            <div>
+                <a href="{% url 'accounts_app:show_my_transactions' %}" class="user-menu-btn">
+                    <div><i class="fa fa-credit-card"></i></div>
+                    <div>
+                        {% trans 'تراکنش‌ها' %}
+                    </div>
+                </a>
+            </div>
+        </li>
+        <li>
+            <div>
+                <a href="{% url 'accounts_app:compile_information' %}" class="user-menu-btn">
+                    <div><i class="fa fa-address-card-o"></i></div>
+                    <div>
+                        {% if user_info.is_user_compile %}
+                        {% trans 'تکمیل مشخصات' %}
+                        {% else %}
+                        {% trans 'تغییر مشخصات' %}
+                        {% endif %}
+                    </div>
+                </a>
+            </div>
+        </li>
+        <li>
+            <div>
+                <a href="{% url 'accounts_app:logout' %}" class="user-menu-btn">
+                    <div><i class="fa fa-sign-out"></i></div>
+                    <div>
+                        {% trans 'خروج' %}
+                    </div>
+                </a>
+            </div>
+        </li>
+    </ul>
+</aside>
+<section>
+    <div class="user-panel-part" style="margin: 8px auto">
+        <div class="title">
+            <h2>{% trans 'سفارش‌های من' %}</h2>
+        </div>
+        <div>
+            <div class="container orders" id="id_user_panel_orders_box">
+                <div class="container orders">
+                    <div><img src="{{media}}images/account/user_panel/status-processing.svg" alt=""></div>
+                    <div>
+                        <h3> {% trans 'سفارش' %}</h3>
+                        <h4><span class="orders-number-of-mod">{{user.current_order}}</span>{% trans 'جاری' %}</h4>
+                    </div>
+                </div>
+                <div class="container orders">
+                    <div><img src="{{media}}images/account/user_panel/status-delivered.svg" alt=""></div>
+                    <div>
+                        <h3> {% trans 'سفارش' %}</h3>
+                        <h4><span class="orders-number-of-mod">{{user.delivered_order}}</span>{% trans 'تحویل شده' %}</h4>
+                    </div>
+                </div>
+                <div class="container orders">
+                    <div><img src="{{media}}images/account/user_panel/status-returned.svg" alt=""></div>
+                    <div>
+                        <h3> {% trans 'سفارش' %}</h3>
+                        <h4><span class="orders-number-of-mod">{{user.returned_order}}</span>{% trans 'مرجوع شده' %}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if  last_orders %}
+<section class="box-model-3" id="user_panel_section_2">
+    <div>
+        <div class="title">
+        <h2>{% trans 'سفارشات اخیر' %}</h2>
+    </div>
+    <div class="container" style="width: 98%;">
+        <table class="table-recent-orders">
+            <thead>
+                <tr>
+                    <td>{% trans 'ردیف' %}a</td>
+                    <td>{% trans 'کیوارکد' %}</td>
+                    <td>{% trans 'سفارش' %}</td>
+                    <td>{% trans 'تاریخ' %}</td>
+                    <td>{% trans 'وضعیت' %}</td>
+                    <td>{% trans 'جمع کل' %}</td>
+                </tr>
+            </thead>
+            <tbody>
+            {% for last_order in last_orders %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>
+                    <div class="show-image-class-default">
+                        <img src="{{media}}{{last_order.qr_code_image}}" alt="">
+                    </div>
+                </td>
+                <td>{{last_order.order_code}}</td>
+                <td>{{last_order.register_date}}</td>
+                <td>{{last_order.status.order_status_title|translate}}</td>
+                <td><span class="price">{{last_order.get_order_total_price}}</span> <span>{% trans 'تومان' %}</span></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>            
+    </div>      
+</section>
+{% elif last_see %}
+<section class="box-model-3" id="user_panel_section_2">
+    <div>
+        <div class="title">
+        <h2>{% trans 'سفارشات اخیر' %}</h2>
+    </div>
+    <div class="container" style="width: 98%;">
+    </div>      
+</section>
+{% endif %}
+{% comment %}
+{% render_partial 'orders_app:show_food_cart' %}
+{% endcomment %}
+{% endblock main %}
+{% block script %}
+<script src="{% static 'js/show_image_scripts.js' %}"></script>
+<script src="{% static 'js/user_panel_script.js' %}"></script>
+{% endblock script %}

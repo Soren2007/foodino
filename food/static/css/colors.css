@@ -1,0 +1,55 @@
+/* root */
+:root{
+    --body_color : #fafafa;
+    --box_model_3_and_4_color : #afafaf;
+    --event_background_color: #dbdbdb;
+    --event_hover_btn_background_color: #ee3203;
+    --selection_color : #ff6600;
+    --scroll_color:#ff5405;
+    --top_menu : #e2e2e2;
+    --yellow : #ff7605;
+    --white : #ffffff;
+    --gray : #cccccc;
+    --color_number_1 : #ff4405;
+    --color_number_2 : #ff4005;
+    --color_number_3 : #f03d01;
+    --color_number_4 : #ff2600;
+    --color_number_5 : #f22;
+    --disable_btn:#686868;
+    --stuff-ch: #272727;
+    --dark_color_number_1: #888888;
+    --dark_color_number_2: #777777;
+    --dark_color_number_3: #5a5a5a;
+    --dark_color_number_4: #555555;
+    --dark_color_number_5: #444444;
+    --dark_color_number_6: #333333;
+    --dark_color_number_7: #3a3a3a;
+    --dark_color_number_8: #222222;
+    --dark_color_number_9: #111111;
+    --dark_color_number_10:#000000;
+    --no_valid: #ff0000;
+    --valid:#55ff44;
+    --active_dot_slider: #ff3300;
+    --dot_slider: #f85b75;
+    --active_liner_slider: #ff002b;
+    --fa_send:#00ff55;
+    --fa_heart_and_instagram:#ff0037;
+    --loading_page: #ffffffc5;
+    --swal_icon_success: #00ff55; 
+    --tree_icon_div: #00ff37; 
+    --btn_aside: #ff4000; 
+    --fa_github: #a200ff; 
+    --fa_share_alt: #00ff9d; 
+    --fa_telegram: #008cff; 
+    --fa_gitlab: #ff0080; 
+    --alert_error_bg: #ff6d85; 
+    --alert_error_c: #ad031f; 
+    --alert_danger_bg: #ffeb7c; 
+    --alert_danger_c: #ffbc58; 
+    --alert_success_bg: #9ef7b1; 
+    --alert_success_c: #03be2b;
+    --box_shadow_1: #0000004a;
+    --box_shadow_2: #00000069;
+    --phone_number_user_panel_information:var(--dark_color_number_5)
+} 
+/* root */

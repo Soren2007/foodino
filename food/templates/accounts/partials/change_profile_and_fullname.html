@@ -1,0 +1,38 @@
+{% load translate %}
+{% load static %}
+{% load i18n %}
+<div class="on-page">
+    <form action="{% url 'accounts_app:change_profile_and_full_name' %}" method="post" enctype="multipart/form-data">
+        <div class="form-box bg-white">
+            <div id="close_window_on_page"><i class="fa fa-times"></i></div>
+            <div>
+                <h1>{% trans 'تغییر مشخصات' %}</h1>
+            </div>
+            {% csrf_token %}
+            <div class="text-center">
+                <label for="change_profile_input"><img src="{{media}}{{user.profile}}" alt="{% trans 'فوودینو | پپروقایل' %}" class="profile"></label>
+                <input type="file" name="profile" id="change_profile_input" title="{% trans 'تصویر ورد نظر خود را وارد کنید.' %}" class="hidden">
+            </div>
+            <div>
+                <label for="change_name_input">{% trans 'نام' %}:</label>
+            </div>
+            <div>
+                <input type="text" name="name" id="change_name_input" placeholder="{% trans 'نام خود را وادر کنید.' %}" title="{% trans 'لطفا نام خود را وارد کنید.' %}" value="{{user.name|translate}}" class="input">
+            </div>
+            <div>
+                <label for="change_last_name_input">{% trans 'نام‌خانوادگی' %}:</label>
+            </div>
+            <div>
+                <input type="text" name="last_name" id="change_last_name_input" placeholder="{% trans 'نام‌خانوادگی خود را وارد کنید.' %}" title="{% trans 'لطفا نام‌خانوادگی خود را وارد کنید.' %}" value="{{user.family|translate}}" class="input">
+            </div>
+            <div>
+                <input type="submit" value="{% trans 'ثبت تغییرات' %}">
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    document.getElementById("close_window_on_page").addEventListener("click",function(){
+        document.getElementsByClassName("on-page")[0].remove()
+    })
+</script>

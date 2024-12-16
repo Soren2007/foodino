@@ -1,0 +1,44 @@
+{% load render_partial %}
+{% load static %}
+{% load i18n %}
+<!-- {% trans ' -->
+<div class="chat-box hidden" id="id_chat_box">
+<!-- <div class="chat-box show" id="id_chat_box"> -->
+    {% if chat_session.is_exist %}
+    <div class="chat-box-header">
+        <div class="chat-box-icon" id="chat_box_menu_icon">
+            <i class="fa fa-bars"></i>
+            <ul>
+                <li title="{% trans 'رفرش' %}" id="id_refresh_chat_btn"><i class="fa fa-refresh"></i></li>
+                <li title="{% trans 'حذف پیام‌های من' %}" id="id_clear_chats_btn"><i class="fa fa-trash"></i></li>
+                <li title="{% trans 'راهنمایی' %}"><i class="fa fa-info-circle"></i></li>
+                <li title="{% trans 'بستن پنجره' %}"><i class="fa fa-window-close"></i></li>
+            </ul>
+        </div>
+        <div style="display: inline">
+            <span>{% trans 'پشتیبانی سایت فودینو' %}</span>
+        </div>
+        <div class="chat-box-icon chat-box-close">
+            <i class="fa fa-times"></i>
+        </div>
+    </div>
+    <div class="chat-box-body" id="id_chat_box_body">
+        {% render_partial 'message_app:show_messages' %}
+    </div>
+    <div class="chat-box-footer">
+        <div>
+            <input type="text" name="message" id="id_chat_message"class="chat-box-input-message" placeholder="{% trans 'پیام خود را وارد کنید.' %}" title="{% trans 'لطفا پیام خود را وارد کنید.' %}">
+        </div>
+        <div class="send-message-btn">
+            <a id="id_send_message_btn"><i class="fa fa-send"></i></a>
+        </div>
+    </div>
+{% else %}
+    {% render_partial 'message_app:start_online_chat' %}
+{% endif %}
+</div>
+<script src="{% static 'js/chat_box_script.js' %}"></script>
+{% block data %}
+<input type="hidden" value="{{chat_session.phone_number}}" id="chat_session_phone_number">  
+<input type="hidden" value="false" id="is_manage_chat">  
+{% endblock data %}

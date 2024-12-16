@@ -1,0 +1,146 @@
+.aside-user-panel{
+    position: absolute;
+    right: 33px;
+    width: 360px;
+}
+
+.aside-user-panel li{
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #00000060;
+    background-color: var(--white);
+    list-style: none;
+    margin-top: 8px;
+}
+
+#user_profile{
+    width: 60px;
+    height: 60px;
+    margin: 0;
+    margin-top: 10px;
+}
+
+#id_profile_information{
+    background-color: var(--selection_color);
+    height: 120px;
+}
+#id_profile_information>div{
+    display: flex;
+    align-items: center;
+}
+#id_profile_information>div>div:nth-child(2){
+    margin-right: 5px;
+    width: 246px;
+}
+#id_profile_information>div>div:nth-child(2)>span{
+    display: block;
+}
+#id_profile_information>div>div:nth-child(2)>span:first-child{
+    font-size: 1.2rem !important;
+}
+#id_profile_information>div>div:nth-child(2)>span:last-child{
+    font-size: .9rem !important;
+    color: var(--phone_number_user_panel_information);
+}
+#id_profile_information>div>div:nth-child(3)>a>i{
+    font-size: 1.5rem !important;
+    color: var(--phone_number_user_panel_information);
+    margin-top: 7px;
+}
+
+
+.aside-user-panel li:nth-child(n+2){
+    background-color: #ffffff;
+    border: 1px solid #444;
+    border-radius: 106px;
+    position: relative;
+    bottom: 54px;
+}
+
+.aside-user-panel li:nth-child(n+2):hover{
+    background-color: #444;
+}
+
+.aside-user-panel li:nth-child(n+2):hover .user-menu-btn>div:first-child{
+    border-color: var(--color_number_1);
+    background-color: #ffffff;
+    color: var(--color_number_1);
+}
+.aside-user-panel li:nth-child(n+2):hover .user-menu-btn>div:last-child{
+    color: #ffffff;
+}
+.user-menu-btn{
+    height: 50px;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+}
+.user-menu-btn>div:first-child{
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    border: 2px solid #444;
+    line-height: 55px;
+}
+.user-menu-btn>div:last-child{
+    width: 75%;
+    text-align: center;
+}
+
+.blue-tick{
+    width: 20px;
+    height: 20px;
+    position: relative;
+    top: 6px;
+}
+
+
+#profile_information_mobile_number{
+    padding-right: 15px;
+}
+
+.user-panel-part{
+    width: 55%;
+    box-shadow:  0 0 10px var(--box_shadow_1);
+    border-radius: 10px;
+    background-color: var(--white);
+    padding: 5px;
+    margin-top: 20px;
+}
+
+
+.orders-number-of-mod{
+    background-color: var(--color_number_1);
+    padding: 5px;
+    padding-left: 7px;
+    padding-top: 7px;
+    padding-right: 7px;
+    margin: 2px;
+    width: 13px;
+    height: 13px;
+    line-height: 15px;
+    border-radius: 5px;
+    font-size: .9rem !important;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+#change_profile_and_full_name_btn i{
+    transition: all .5s;
+}
+#change_profile_and_full_name_btn i:hover{
+    cursor: pointer;
+    scale: 1.1;
+    color: var(--white);
+    transition: all .5s;
+}
+label[for="change_profile_input"]>img{
+    cursor: pointer;
+    transition: all .5s;
+}
+label[for="change_profile_input"]>img:hover{
+    scale: 1.1;
+    transition: all .5s;
+}
